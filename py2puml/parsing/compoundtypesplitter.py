@@ -6,7 +6,7 @@ from typing import Tuple
 FORWARD_REFERENCES: Pattern = re_compile(r"ForwardRef\('([^']+)'\)")
 
 # valid characters for class names and compound types
-IS_COMPOUND_TYPE: Pattern = re_compile(r'^[a-z|A-Z|0-9|\[|\]|\.|,|\s|_|\|]+$')
+IS_COMPOUND_TYPE: Pattern = re_compile(r'^[a-z|A-Z|0-9|\[|\]|\.|,|\s|_|\||\"\']+$')
 
 # characters involved in the build-up of compound types
 SPLITTING_CHARACTERS = '[', ']', ',', '|'
@@ -51,6 +51,13 @@ def replace_nonetype_occurrences_in_union_types(type_annotation: str) -> str:
     return cleaned_type_annotation
 
 
+def remove_surrounding_quotes(s: str) -> str:
+    if ((s.startswith('"') and s.endswith('"'))
+            or (s.startswith("'") and s.endswith("'"))):
+        return s[1:-1]
+    return s
+
+
 class CompoundTypeSplitter:
     """
     Splits the representation of a compound type annotation into a list of:
@@ -81,5 +88,7 @@ class CompoundTypeSplitter:
                     for splitted_part in splitted_parts[1:]:
                         new_parts.extend([splitting_character, splitted_part])
             parts = (new_part.strip() for new_part in new_parts if len(new_part.strip()) > 0)
+
+        parts = (remove_surrounding_quotes(part) for part in parts)
 
         return tuple(parts)
