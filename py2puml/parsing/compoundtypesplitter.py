@@ -6,7 +6,7 @@ from typing import Tuple
 FORWARD_REFERENCES: Pattern = re_compile(r"ForwardRef\('([^']+)'\)")
 
 # valid characters for class names and compound types
-IS_COMPOUND_TYPE: Pattern = re_compile(r'^[a-z|A-Z|0-9|\[|\]|\.|,|\s|_|\||\"\']+$')
+IS_COMPOUND_TYPE: Pattern = re_compile(r'^[a-z|A-Z|0-9|\[|\]|\.|,|\s|_|\||\"|\']+$')
 
 # characters involved in the build-up of compound types
 SPLITTING_CHARACTERS = '[', ']', ',', '|'
