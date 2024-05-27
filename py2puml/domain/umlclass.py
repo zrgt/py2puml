@@ -10,6 +10,15 @@ class UmlAttribute:
     type: str
     static: bool
 
+    @property
+    def visibility(self) -> str:
+        if self.name.startswith("__"):
+            return '-'
+        elif self.name.startswith("__"):
+            return '#'
+        else:
+            return '+'
+
 
 @dataclass
 class UmlClass(UmlItem):

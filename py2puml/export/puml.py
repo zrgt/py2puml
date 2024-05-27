@@ -7,13 +7,14 @@ from py2puml.domain.umlrelation import UmlRelation
 
 PUML_FILE_START = """@startuml {diagram_name}
 !pragma useIntermediatePackages false
+skinparam classAttributeIconSize 0
 
 """
 PUML_FILE_END = """@enduml
 """
 PUML_ITEM_START_TPL = """{item_type} {item_fqn} {{
 """
-PUML_ATTR_TPL = """  {attr_name}: {attr_type}{staticity}
+PUML_ATTR_TPL = """  {visibility}{attr_name}: {attr_type}{staticity}
 """
 PUML_ITEM_END = """}
 """
@@ -33,7 +34,7 @@ def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: 
             uml_enum: UmlEnum = uml_item
             yield PUML_ITEM_START_TPL.format(item_type='enum', item_fqn=uml_enum.fqn)
             for member in uml_enum.members:
-                yield PUML_ATTR_TPL.format(attr_name=member.name, attr_type=member.value, staticity=FEATURE_STATIC)
+                yield PUML_ATTR_TPL.format(visibility="", attr_name=member.name, attr_type=member.value, staticity=FEATURE_STATIC)
             yield PUML_ITEM_END
         elif isinstance(uml_item, UmlClass):
             uml_class: UmlClass = uml_item
@@ -42,6 +43,7 @@ def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: 
             )
             for uml_attr in uml_class.attributes:
                 yield PUML_ATTR_TPL.format(
+                    visibility=uml_attr.visibility,
                     attr_name=uml_attr.name,
                     attr_type=uml_attr.type,
                     staticity=FEATURE_STATIC if uml_attr.static else FEATURE_INSTANCE,
