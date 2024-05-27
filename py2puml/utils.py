@@ -1,4 +1,7 @@
-from typing import Type
+from typing import Type, Dict, List
+
+from py2puml.domain.umlitem import UmlItem
+from py2puml.domain.umlrelation import UmlRelation
 
 
 def investigate_domain_definition(type_to_inspect: Type):
@@ -19,3 +22,14 @@ def investigate_domain_definition(type_to_inspect: Type):
                     print(
                         f'{type_to_inspect.__name__}.{attr_name}:', attr_class_key, getattr(attr_class, attr_class_key)
                     )
+
+
+def filter_items_and_relations(domain_items: Dict[str, UmlItem],
+                               domain_relations: List[UmlRelation],
+                               only_domain_items: List[str]):
+    for fqn in list(domain_items.keys()):
+        if fqn not in only_domain_items:
+            del domain_items[fqn]
+    for relation in list(domain_relations):
+        if relation.source_fqn not in only_domain_items or relation.target_fqn not in only_domain_items:
+            domain_relations.remove(relation)
