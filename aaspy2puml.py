@@ -1,8 +1,15 @@
 import re
+from ast import parse
+from inspect import getsource
 from pathlib import Path
-from typing import Iterable, Union, Optional, Dict
+from typing import Iterable, Union, Optional, Dict, List
 
-from py2puml.py2puml import py2puml
+from py2puml.domain.umlclass import UmlClass
+from py2puml.domain.umlitem import UmlItem
+from py2puml.domain.umlrelation import UmlRelation
+from py2puml.export.puml import to_puml_content
+from py2puml.inspection.inspectpackage import inspect_package
+from py2puml.utils import filter_items_and_relations
 
 DOMAIN_PATH = DOMAIN_MODULE = 'aas_core_meta'
 STRS_TO_REMOVE = ["{static}", "aas_core_meta.v3."]
@@ -28,6 +35,47 @@ PUML_CLS_DIAGRAMS = (
 )
 
 
+def has_decorator(class_type, decorator_name):
+    if class_type is None:
+        return
+    # Get the source code of the class
+    source = getsource(class_type)
+    # Parse the source code into an AST
+    parsed_ast = parse(source)
+    if hasattr(parsed_ast.body[0], 'decorator_list') and parsed_ast.body[0].decorator_list:
+        for decorator in parsed_ast.body[0].decorator_list:
+            if hasattr(decorator, 'id') and decorator.id == decorator_name:
+                return True
+    return False
+
+
+def set_aas_core_meta_abstract_classes_as_abstract(domain_items: Dict[str, UmlItem]):
+    """
+    Set the is_abstract attribute to True for abstract classes from aas-core-meta
+
+    This is done, because standard isabstract() function does not work for abstract classes in aas-core-meta,
+    as they are not defined as abstract classes in the source code, but marked with a decorator 'abstract'
+    """
+    for item in domain_items.values():
+        if isinstance(item, UmlClass) and has_decorator(item.class_type, 'abstract'):
+            item.is_abstract = True
+
+
+def aas_core_meta_py2puml(domain_path: str, domain_module: str, only_domain_items: Optional[List[str]] = None) -> \
+Iterable[str]:
+    domain_items_by_fqn: Dict[str, UmlItem] = {}
+    domain_relations: List[UmlRelation] = []
+    inspect_package(domain_path, domain_module, domain_items_by_fqn, domain_relations)
+
+    # Filter only the classes in the list
+    if only_domain_items:
+        filter_items_and_relations(domain_items_by_fqn, domain_relations, only_domain_items)
+
+    set_aas_core_meta_abstract_classes_as_abstract(domain_items_by_fqn)
+
+    return to_puml_content(domain_module, domain_items_by_fqn.values(), domain_relations)
+
+
 def create_puml(output_file: Path, classes: Optional[Iterable[str]] = None):
     """Create a PlantUML file from the classes in the domain module.
     :param output_file: the output file
@@ -35,7 +83,7 @@ def create_puml(output_file: Path, classes: Optional[Iterable[str]] = None):
     """
     # writes the PlantUML content in a file
     with open(output_file, 'w', encoding='utf8') as puml_file:
-        puml_file.writelines(py2puml(DOMAIN_PATH, DOMAIN_MODULE, only_domain_items=classes))
+        puml_file.writelines(aas_core_meta_py2puml(DOMAIN_PATH, DOMAIN_MODULE, only_domain_items=classes))
     apply_changes(output_file, output_file.with_name(output_file.stem + '_IDTA.puml'))
 
 
