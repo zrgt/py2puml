@@ -19,9 +19,11 @@ REGEX_TO_REPLACE = {
     r"\{static\}": "",
     r"aas_core_meta\.v3\.": "",
     # Replace the following strings from the PlantUML file
-    r"Optional\[List\[(.+?)\]\]": "\\1[0..*]",
-    r"List\[(.+?)\]": "\\1[1..*]",
-    r"Optional\[(.+?)\]": "\\1[0..1]",
+    r"Optional\[List\[(.+?)\]\]": "\\1[0..*]", # Optional[List[...]] -> ...[0..*]
+    r"List\[(.+?)\]": "\\1[1..*]", # List[...] -> ...[1..*]
+    r"Optional\[(.+?)\]": "\\1[0..1]", # Optional[...] -> ...[0..1]
+    r"abstract class (.+?) \{": r"abstract class \1 <<abstract>> {", # abstract class ... { -> abstract class ... <<abstract>> {
+    r"enum (.+?) \{": r"enum \1 <<enumeration>> {", # enum ... { -> enum ... <<enumeration>> {
 }
 
 PUML_CLS_DIAGRAMS = (
