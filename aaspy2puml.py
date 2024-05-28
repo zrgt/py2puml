@@ -2,11 +2,11 @@ import re
 from ast import parse
 from inspect import getsource
 from pathlib import Path
-from typing import Iterable, Union, Optional, Dict, List
+from typing import Iterable, Union, Optional, Dict, List, Tuple
 
 from py2puml.domain.umlclass import UmlClass
 from py2puml.domain.umlitem import UmlItem
-from py2puml.domain.umlrelation import UmlRelation
+from py2puml.domain.umlrelation import UmlRelation, RelType
 from py2puml.export.puml import to_puml_content
 from py2puml.inspection.inspectpackage import inspect_package
 from py2puml.utils import filter_items_and_relations
@@ -63,15 +63,34 @@ def set_aas_core_meta_abstract_classes_as_abstract(domain_items: Dict[str, UmlIt
             item.is_abstract = True
 
 
+def get_inheritances(domain_relations: List[UmlRelation]) -> List[Tuple[str, str]]:
+    return [(rel.source_fqn, rel.target_fqn) for rel in domain_relations if rel.type == RelType.INHERITANCE]
+
+
+def add_filtered_out_parent_classes_as_generics(domain_items: Dict[str, UmlItem],
+                                                removed_inheritances: List[Tuple[str, str]]):
+    for parent, child in removed_inheritances:
+        if child in domain_items:
+            if domain_items[child].generics:
+                domain_items[child].generics = rf"{domain_items[child].generics}\n{parent}"
+            else:
+                domain_items[child].generics = parent
+
+
 def aas_core_meta_py2puml(domain_path: str, domain_module: str, only_domain_items: Optional[List[str]] = None) -> \
-Iterable[str]:
+        Iterable[str]:
     domain_items_by_fqn: Dict[str, UmlItem] = {}
     domain_relations: List[UmlRelation] = []
     inspect_package(domain_path, domain_module, domain_items_by_fqn, domain_relations)
 
+    all_inheritances: List[Tuple[str, str]] = get_inheritances(domain_relations)
     # Filter only the classes in the list
     if only_domain_items:
         filter_items_and_relations(domain_items_by_fqn, domain_relations, only_domain_items)
+        remaining_inheritances: List[Tuple[str, str]] = get_inheritances(domain_relations)
+        removed_inheritances = [inheritance for inheritance in all_inheritances if
+                                inheritance not in remaining_inheritances]
+        add_filtered_out_parent_classes_as_generics(domain_items_by_fqn, removed_inheritances)
 
     set_aas_core_meta_abstract_classes_as_abstract(domain_items_by_fqn)
 
