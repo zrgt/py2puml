@@ -40,7 +40,8 @@ def inspect_static_attributes(
     # defines the class being inspected
     definition_attrs: List[UmlAttribute] = []
     uml_class = UmlClass(
-        name=class_type.__name__, fqn=class_type_fqn, attributes=definition_attrs, is_abstract=isabstract(class_type)
+        name=class_type.__name__, fqn=class_type_fqn, attributes=definition_attrs, is_abstract=isabstract(class_type),
+        class_type=class_type
     )
     domain_items_by_fqn[class_type_fqn] = uml_class
     # investigate_domain_definition(class_type)

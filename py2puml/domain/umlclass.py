@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Type, Optional
 
 from py2puml.domain.umlitem import UmlItem
 
@@ -24,3 +24,4 @@ class UmlAttribute:
 class UmlClass(UmlItem):
     attributes: List[UmlAttribute]
     is_abstract: bool = False
+    class_type: Optional[Type] = None
