@@ -28,42 +28,6 @@ PUML_CLS_DIAGRAMS = (
 )
 
 
-def apply_replacements(replacements: Dict[str, str], text: str):
-    for pattern, repl in replacements.items():
-        text = re.sub(pattern, repl, text)
-    return text
-
-
-def apply_replacements_from_file(replacements: Dict[str, str], input: Path, output: Path = None):
-    with open(input, 'r') as f:
-        text = f.read()
-    text = apply_replacements(replacements, text)
-
-    if output is None:
-        output = input
-    with open(output, 'w') as f:
-        f.write(text)
-
-
-def remove_duplicate_lines_from_file(input_file: Path, output_file: Path = None, exceptions=("{\n", "}\n", "\n")):
-    lines_seen = set()  # Create a set to store seen lines
-    unique_lines = []
-
-    # Read input file
-    with open(input_file, 'r') as file:
-        for line in file:
-            if line not in lines_seen or line in exceptions:
-                unique_lines.append(line)
-                lines_seen.add(line)
-
-    if output_file is None:
-        output_file = input_file
-
-    # Write output file
-    with open(output_file, 'w') as file:
-        file.writelines(unique_lines)
-
-
 def create_puml(output_file: Path, classes: Optional[Iterable[str]] = None):
     """Create a PlantUML file from the classes in the domain module.
     :param output_file: the output file
@@ -72,10 +36,57 @@ def create_puml(output_file: Path, classes: Optional[Iterable[str]] = None):
     # writes the PlantUML content in a file
     with open(output_file, 'w', encoding='utf8') as puml_file:
         puml_file.writelines(py2puml(DOMAIN_PATH, DOMAIN_MODULE, only_domain_items=classes))
+    apply_changes(output_file, output_file.with_name(output_file.stem + '_IDTA.puml'))
 
-    remove_duplicate_lines_from_file(output_file)
 
-    apply_replacements_from_file(REGEX_TO_REPLACE, output_file, output_file.with_name(output_file.stem + '_card.puml'))
+def apply_changes(input: Path, output: Path = None):
+    text = read_file(input)
+    text = _apply_changes(text)
+    write_file(output if output else input, text)
+
+
+def read_file(file: Union[str, Path]) -> str:
+    with open(file, 'r') as f:
+        return f.read()
+
+
+def write_file(file: Union[str, Path], content: str):
+    with open(file, 'w') as f:
+        f.write(content)
+
+
+def _apply_changes(text: str) -> str:
+    text = apply_replacements(REGEX_TO_REPLACE, text)
+    text = remove_duplicate_lines(text)
+    text = snake_to_camel(text)
+    return text
+
+
+def apply_replacements(replacements: Dict[str, str], text: str):
+    for pattern, repl in replacements.items():
+        text = re.sub(pattern, repl, text)
+    return text
+
+
+def remove_duplicate_lines(text: str = None, exceptions=("{", "}", "")):
+    lines = text.splitlines()
+    lines_seen = set()  # Create a set to store seen lines
+    unique_lines = []
+
+    # Read input file
+    for line in lines:
+        if line not in lines_seen or line in exceptions:
+            unique_lines.append(line)
+            lines_seen.add(line)
+    return '\n'.join(unique_lines)
+
+
+def snake_to_camel(snake_str):
+    camel_str = re.sub(r'([a-z])_([a-z])', lambda match: match.group(1) + match.group(2).upper(), snake_str)
+    camel_str = re.sub(r'([a-z])_([A-Z])([A-Z]+)',
+                       lambda match: match.group(1) + match.group(2).upper() + match.group(3).lower(), camel_str)
+    camel_str = re.sub(r'([A-Z]+)_([a-z])', lambda match: match.group(1).lower() + match.group(2).upper(), camel_str)
+    return camel_str
 
 
 if __name__ == '__main__':
