@@ -12,7 +12,7 @@ skinparam classAttributeIconSize 0
 """
 PUML_FILE_END = """@enduml
 """
-PUML_ITEM_START_TPL = """{item_type} {item_fqn} {{
+PUML_ITEM_START_TPL = """{item_type} {item_fqn}{generics} {{
 """
 PUML_ATTR_TPL = """  {visibility}{attr_name}: {attr_type}{staticity}
 """
@@ -32,14 +32,16 @@ def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: 
     for uml_item in uml_items:
         if isinstance(uml_item, UmlEnum):
             uml_enum: UmlEnum = uml_item
-            yield PUML_ITEM_START_TPL.format(item_type='enum', item_fqn=uml_enum.fqn)
+            yield PUML_ITEM_START_TPL.format(item_type='enum', item_fqn=uml_enum.fqn,
+                                             generics=f'<{uml_class.generics}>' if uml_class.generics else '')
             for member in uml_enum.members:
                 yield PUML_ATTR_TPL.format(visibility="", attr_name=member.name, attr_type=member.value, staticity=FEATURE_STATIC)
             yield PUML_ITEM_END
         elif isinstance(uml_item, UmlClass):
             uml_class: UmlClass = uml_item
             yield PUML_ITEM_START_TPL.format(
-                item_type='abstract class' if uml_item.is_abstract else 'class', item_fqn=uml_class.fqn
+                item_type='abstract class' if uml_item.is_abstract else 'class', item_fqn=uml_class.fqn,
+                generics=f'<{uml_class.generics}>' if uml_class.generics else ''
             )
             for uml_attr in uml_class.attributes:
                 yield PUML_ATTR_TPL.format(

@@ -13,3 +13,4 @@ class Member:
 @dataclass
 class UmlEnum(UmlItem):
     members: List[Member]
+    generics: str = ""

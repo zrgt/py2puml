@@ -24,4 +24,5 @@ class UmlAttribute:
 class UmlClass(UmlItem):
     attributes: List[UmlAttribute]
     is_abstract: bool = False
+    generics: str = ""
     class_type: Optional[Type] = None
