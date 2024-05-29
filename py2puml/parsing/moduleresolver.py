@@ -34,6 +34,11 @@ def search_in_module_or_builtins(searched_module: ModuleType, namespace: str):
 
 def search_in_module(namespaces: List[str], module: ModuleType):
     leaf_type: Type = reduce(search_in_module_or_builtins, namespaces, module)
+
+    if leaf_type is None:
+        # searches the class in the builtins
+        leaf_type: Type = reduce(search_in_module_or_builtins, namespaces[-1:], module)
+
     if leaf_type is None:
         return EMPTY_NAMESPACED_TYPE
     else:
