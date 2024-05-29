@@ -12,19 +12,6 @@ from py2puml.inspection.inspectpackage import inspect_package
 from py2puml.utils import filter_items_and_relations
 
 DOMAIN_PATH = DOMAIN_MODULE = 'aas_core_meta'
-STRS_TO_REMOVE = ["{static}", "aas_core_meta.v3."]
-
-REGEX_TO_REPLACE = {
-    # Remove the following strings from the PlantUML file
-    r"\{static\}": "",
-    r"aas_core_meta\.v3\.": "",
-    # Replace the following strings from the PlantUML file
-    r"Optional\[List\[(.+?)\]\]": "\\1[0..*]", # Optional[List[...]] -> ...[0..*]
-    r"List\[(.+?)\]": "\\1[1..*]", # List[...] -> ...[1..*]
-    r"Optional\[(.+?)\]": "\\1[0..1]", # Optional[...] -> ...[0..1]
-    r"abstract class (.+?) \{": r"abstract class \1 <<abstract>> {", # abstract class ... { -> abstract class ... <<abstract>> {
-    r"enum (.+?) \{": r"enum \1 <<enumeration>> {", # enum ... { -> enum ... <<enumeration>> {
-}
 
 PUML_CLS_DIAGRAMS = (
     ('Environment', 'Asset_administration_shell', 'Submodel', 'Concept_description'),
@@ -35,6 +22,95 @@ PUML_CLS_DIAGRAMS = (
     ('Has_semantics',),
     ('Referable', 'Identifiable', 'Administrative_information',),
 )
+
+REGEX_TO_REPLACE = {
+    # Remove the following strings from the PlantUML file
+    r"\{static\}": "",
+    r"aas_core_meta\.v3\.": "",
+    # Replace the following strings from the PlantUML file
+    r"Optional\[List\[(.+?)\]\]": "\\1[0..*]",  # Optional[List[...]] -> ...[0..*]
+    r"List\[(.+?)\]": "\\1[1..*]",  # List[...] -> ...[1..*]
+    r"Optional\[(.+?)\]": "\\1[0..1]",  # Optional[...] -> ...[0..1]
+    r"abstract class (.+?) \{":
+        r"abstract class \1 <<abstract>> {",  # abstract class ... { -> abstract class ... <<abstract>> {
+    r"enum (.+?) \{": r"enum \1 <<enumeration>> {",  # enum ... { -> enum ... <<enumeration>> {
+}
+
+
+def create_puml(output_file: Path, classes: Optional[Iterable[str]] = None):
+    """Create a PlantUML file from the classes in the domain module.
+    :param output_file: the output file
+    :param classes: the classes to include in the PlantUML file. If None, all classes are included.
+    """
+    # create the PlantUML file and write it to the output file
+    puml_content: str = ''.join(aas_core_meta_py2puml(DOMAIN_PATH, DOMAIN_MODULE, domain_items_to_keep=classes))
+    write_file(output_file.with_name('original_' + output_file.name), puml_content)
+
+    # Apply IDTA specific changes to the PlantUML content and write it to the output file
+    idta_puml_content = apply_changes(puml_content)
+    write_file(output_file, idta_puml_content)
+
+
+def read_file(file: Union[str, Path]) -> str:
+    with open(file, 'r', encoding='utf8') as f:
+        return f.read()
+
+
+def write_file(file: Union[str, Path], content: str):
+    with open(file, 'w', encoding='utf8') as f:
+        f.write(content)
+
+
+def aas_core_meta_py2puml(domain_path: str, domain_module: str, domain_items_to_keep: Optional[List[str]] = None) -> \
+        Iterable[str]:
+    domain_items_by_fqn: Dict[str, UmlItem] = {}
+    domain_relations: List[UmlRelation] = []
+    inspect_package(domain_path, domain_module, domain_items_by_fqn, domain_relations)
+
+    # Filter only the classes in the list
+    if domain_items_to_keep:
+        handle_classes_and_relations_filtering(domain_items_by_fqn, domain_relations, domain_items_to_keep)
+
+    set_aas_core_meta_abstract_classes_as_abstract(domain_items_by_fqn)
+    return to_puml_content(domain_module, domain_items_by_fqn.values(), domain_relations)
+
+
+def handle_classes_and_relations_filtering(domain_items: Dict[str, UmlItem], domain_relations: List[UmlRelation],
+                                           domain_items_to_keep: List[str]):
+    all_inheritances: List[Tuple[str, str]] = get_inheritances(domain_relations)
+    filter_items_and_relations(domain_items, domain_relations, domain_items_to_keep)
+    remain_inheritances: List[Tuple[str, str]] = get_inheritances(domain_relations)
+    removed_inheritances = [inheritance for inheritance in all_inheritances if inheritance not in remain_inheritances]
+    add_filtered_out_parent_classes_as_generics(domain_items, removed_inheritances)
+
+
+def get_inheritances(domain_relations: List[UmlRelation]) -> List[Tuple[str, str]]:
+    return [(rel.source_fqn, rel.target_fqn) for rel in domain_relations if rel.type == RelType.INHERITANCE]
+
+
+def add_filtered_out_parent_classes_as_generics(domain_items: Dict[str, UmlItem],
+                                                removed_inheritances: List[Tuple[str, str]]):
+    """Add classes that are filtered out from the PlantUML file and will be not shown in the diagram,
+    as generics to the classes that inherit from them.
+    """
+    for parent, child in removed_inheritances:
+        if child in domain_items:
+            if domain_items[child].generics:
+                domain_items[child].generics = rf"{domain_items[child].generics}\n{parent}"
+            else:
+                domain_items[child].generics = parent
+
+
+def set_aas_core_meta_abstract_classes_as_abstract(domain_items: Dict[str, UmlItem]):
+    """
+    Set the is_abstract attribute to True for abstract classes from aas-core-meta
+
+    This is done, because standard isabstract() function does not work for abstract classes in aas-core-meta,
+    as they are not defined as abstract classes in the source code, but marked with a decorator 'abstract'
+    """
+    for item in domain_items.values():
+        if isinstance(item, UmlClass) and has_decorator(item.class_type, 'abstract'):
+            item.is_abstract = True
 
 
 def has_decorator(class_type, decorator_name):
@@ -51,80 +127,7 @@ def has_decorator(class_type, decorator_name):
     return False
 
 
-def set_aas_core_meta_abstract_classes_as_abstract(domain_items: Dict[str, UmlItem]):
-    """
-    Set the is_abstract attribute to True for abstract classes from aas-core-meta
-
-    This is done, because standard isabstract() function does not work for abstract classes in aas-core-meta,
-    as they are not defined as abstract classes in the source code, but marked with a decorator 'abstract'
-    """
-    for item in domain_items.values():
-        if isinstance(item, UmlClass) and has_decorator(item.class_type, 'abstract'):
-            item.is_abstract = True
-
-
-def get_inheritances(domain_relations: List[UmlRelation]) -> List[Tuple[str, str]]:
-    return [(rel.source_fqn, rel.target_fqn) for rel in domain_relations if rel.type == RelType.INHERITANCE]
-
-
-def add_filtered_out_parent_classes_as_generics(domain_items: Dict[str, UmlItem],
-                                                removed_inheritances: List[Tuple[str, str]]):
-    for parent, child in removed_inheritances:
-        if child in domain_items:
-            if domain_items[child].generics:
-                domain_items[child].generics = rf"{domain_items[child].generics}\n{parent}"
-            else:
-                domain_items[child].generics = parent
-
-
-def aas_core_meta_py2puml(domain_path: str, domain_module: str, only_domain_items: Optional[List[str]] = None) -> \
-        Iterable[str]:
-    domain_items_by_fqn: Dict[str, UmlItem] = {}
-    domain_relations: List[UmlRelation] = []
-    inspect_package(domain_path, domain_module, domain_items_by_fqn, domain_relations)
-
-    all_inheritances: List[Tuple[str, str]] = get_inheritances(domain_relations)
-    # Filter only the classes in the list
-    if only_domain_items:
-        filter_items_and_relations(domain_items_by_fqn, domain_relations, only_domain_items)
-        remaining_inheritances: List[Tuple[str, str]] = get_inheritances(domain_relations)
-        removed_inheritances = [inheritance for inheritance in all_inheritances if
-                                inheritance not in remaining_inheritances]
-        add_filtered_out_parent_classes_as_generics(domain_items_by_fqn, removed_inheritances)
-
-    set_aas_core_meta_abstract_classes_as_abstract(domain_items_by_fqn)
-
-    return to_puml_content(domain_module, domain_items_by_fqn.values(), domain_relations)
-
-
-def create_puml(output_file: Path, classes: Optional[Iterable[str]] = None):
-    """Create a PlantUML file from the classes in the domain module.
-    :param output_file: the output file
-    :param classes: the classes to include in the PlantUML file. If None, all classes are included.
-    """
-    # writes the PlantUML content in a file
-    with open(output_file, 'w', encoding='utf8') as puml_file:
-        puml_file.writelines(aas_core_meta_py2puml(DOMAIN_PATH, DOMAIN_MODULE, only_domain_items=classes))
-    apply_changes(output_file, output_file.with_name(output_file.stem + '_IDTA.puml'))
-
-
-def apply_changes(input: Path, output: Path = None):
-    text = read_file(input)
-    text = _apply_changes(text)
-    write_file(output if output else input, text)
-
-
-def read_file(file: Union[str, Path]) -> str:
-    with open(file, 'r') as f:
-        return f.read()
-
-
-def write_file(file: Union[str, Path], content: str):
-    with open(file, 'w') as f:
-        f.write(content)
-
-
-def _apply_changes(text: str) -> str:
+def apply_changes(text: str) -> str:
     text = apply_replacements(REGEX_TO_REPLACE, text)
     text = remove_duplicate_lines(text)
     text = snake_to_camel(text)
@@ -159,12 +162,12 @@ def snake_to_camel(snake_str):
 
 
 if __name__ == '__main__':
-    aas_core_all_file = Path('aas_core_meta_all.puml')
-
+    # Create the PlantUML for all classes in the domain module
+    aas_core_all_file = Path('output/IDTA_aas_core_meta_all.puml')
     create_puml(aas_core_all_file)
 
-    # List of classes to include
     for i, classes in enumerate(PUML_CLS_DIAGRAMS):
+        # Create the PlantUML for each set of classes defined in PUML_CLS_DIAGRAMS
         classes = [f'aas_core_meta.v3.{cls}' for cls in classes]
-        cls_diagr_file = Path(f'aas_core_meta_{i}.puml')
+        cls_diagr_file = Path(f'output/IDTA_aas_core_meta_{i}.puml')
         create_puml(cls_diagr_file, classes)
