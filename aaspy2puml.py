@@ -26,7 +26,7 @@ PUML_CLS_DIAGRAMS = (
 REGEX_TO_REPLACE = {
     # Remove the following strings from the PlantUML file
     r"\{static\}": "",
-    r"aas_core_meta\.v3\.": "",
+    ":  \n": "\n",
     # Replace the following strings from the PlantUML file
     r"Optional\[List\[(.+?)\]\]": "\\1[0..*]",  # Optional[List[...]] -> ...[0..*]
     r"List\[(.+?)\]": "\\1[1..*]",  # List[...] -> ...[1..*]
@@ -73,6 +73,7 @@ def aas_core_meta_py2puml(domain_path: str, domain_module: str, domain_items_to_
         domain_items_by_fqn = sort_classes(domain_items_by_fqn, domain_items_to_keep)
 
     set_aas_core_meta_abstract_classes_as_abstract(domain_items_by_fqn)
+    use_values_in_enumerations_as_names(domain_items_by_fqn)
     return to_puml_content(domain_module, domain_items_by_fqn.values(), domain_relations)
 
 
@@ -117,6 +118,14 @@ def set_aas_core_meta_abstract_classes_as_abstract(domain_items: Dict[str, UmlIt
     for item in domain_items.values():
         if isinstance(item, UmlClass) and has_decorator(item.class_type, 'abstract'):
             item.is_abstract = True
+
+
+def use_values_in_enumerations_as_names(domain_items: Dict[str, UmlItem]):
+    for item in domain_items.values():
+        if isinstance(item, UmlEnum):
+            for enum_item in item.members:
+                enum_item.name = enum_item.value
+                enum_item.value = ""
 
 
 def has_decorator(class_type, decorator_name):
