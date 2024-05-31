@@ -33,7 +33,7 @@ def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: 
         if isinstance(uml_item, UmlEnum):
             uml_enum: UmlEnum = uml_item
             yield PUML_ITEM_START_TPL.format(item_type='enum', item_fqn=uml_enum.fqn,
-                                             generics=f'<{uml_class.generics}>' if uml_class.generics else '')
+                                             generics=f'<{uml_enum.generics}>' if uml_enum.generics else '')
             for member in uml_enum.members:
                 yield PUML_ATTR_TPL.format(visibility="", attr_name=member.name, attr_type=member.value, staticity=FEATURE_STATIC)
             yield PUML_ITEM_END
