@@ -70,6 +70,7 @@ def aas_core_meta_py2puml(domain_path: str, domain_module: str, domain_items_to_
     # Filter only the classes in the list
     if domain_items_to_keep:
         handle_classes_and_relations_filtering(domain_items_by_fqn, domain_relations, domain_items_to_keep)
+        domain_items_by_fqn = sort_classes(domain_items_by_fqn, domain_items_to_keep)
 
     set_aas_core_meta_abstract_classes_as_abstract(domain_items_by_fqn)
     return to_puml_content(domain_module, domain_items_by_fqn.values(), domain_relations)
@@ -82,6 +83,11 @@ def handle_classes_and_relations_filtering(domain_items: Dict[str, UmlItem], dom
     remain_inheritances: List[Tuple[str, str]] = get_inheritances(domain_relations)
     removed_inheritances = [inheritance for inheritance in all_inheritances if inheritance not in remain_inheritances]
     add_filtered_out_parent_classes_as_generics(domain_items, removed_inheritances)
+
+
+def sort_classes(items: Dict[str, UmlItem], items_order: Iterable[str]):
+    # Sort the classes in the order as they should appear in the PlantUML file
+    return {fqn: items[fqn] for fqn in items_order if fqn in items}
 
 
 def get_inheritances(domain_relations: List[UmlRelation]) -> List[Tuple[str, str]]:
