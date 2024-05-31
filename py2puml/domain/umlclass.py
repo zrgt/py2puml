@@ -14,7 +14,7 @@ class UmlAttribute:
     def visibility(self) -> str:
         if self.name.startswith("__"):
             return '-'
-        elif self.name.startswith("__"):
+        elif self.name.startswith("_"):
             return '#'
         else:
             return '+'
