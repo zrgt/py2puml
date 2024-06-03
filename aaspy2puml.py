@@ -204,6 +204,7 @@ def snake_to_camel(snake_str):
     camel_str = re.sub(r'([a-z])_([A-Z])([A-Z]+)',
                        lambda match: match.group(1) + match.group(2).upper() + match.group(3).lower(), camel_str)
     camel_str = re.sub(r'([A-Z]+)_([a-z])', lambda match: match.group(1).lower() + match.group(2).upper(), camel_str)
+    camel_str = re.sub(r'([^A-Z])ID([^A-Z])', lambda match: match.group(1) + "id" + match.group(2).upper(), camel_str)
     return camel_str
 
 
