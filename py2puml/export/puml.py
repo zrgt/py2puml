@@ -5,9 +5,9 @@ from py2puml.domain.umlenum import UmlEnum
 from py2puml.domain.umlitem import UmlItem
 from py2puml.domain.umlrelation import UmlRelation
 
-PUML_FILE_START = """@startuml {diagram_name}
-!pragma useIntermediatePackages false
+PUML_FILE_START = """@startuml
 skinparam classAttributeIconSize 0
+hide methods
 
 """
 PUML_FILE_END = """@enduml
