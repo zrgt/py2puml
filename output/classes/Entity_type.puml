@@ -1,0 +1,9 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+enum EntityType <<enumeration>> {
+  CoManagedEntity
+  SelfManagedEntity
+}
+@enduml

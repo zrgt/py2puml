@@ -1,0 +1,11 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class LevelType {
+  +max: bool 
+  +min: bool 
+  +nom: bool 
+  +typ: bool 
+}
+@enduml

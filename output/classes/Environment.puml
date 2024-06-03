@@ -1,0 +1,10 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class Environment {
+  +assetAdministrationShells: AssetAdministrationShell[0..*] 
+  +conceptDescriptions: ConceptDescription[0..*] 
+  +submodels: Submodel[0..*] 
+}
+@enduml

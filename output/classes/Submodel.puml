@@ -1,0 +1,20 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class Submodel<Identifiable\nHasKind\nHasSemantics\nQualifiable\nHasDataSpecification> {
+  +administration: AdministrativeInformation[0..1] 
+  +category: NameType[0..1] 
+  +description: LangStringTextType[0..*] 
+  +displayName: LangStringNameType[0..*] 
+  +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
+  +extensions: Extension[0..*] 
+  +id: Identifier 
+  +idShort: idShortType[0..1] 
+  +kind: ModellingKind[0..1] 
+  +qualifiers: Qualifier[0..*] 
+  +semanticId: Reference[0..1] 
+  +submodelElements: SubmodelElement[0..*] 
+  +supplementalSemanticIds: Reference[0..*] 
+}
+@enduml

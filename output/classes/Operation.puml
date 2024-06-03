@@ -1,0 +1,19 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class Operation<SubmodelElement> {
+  +category: NameType[0..1] 
+  +description: LangStringTextType[0..*] 
+  +displayName: LangStringNameType[0..*] 
+  +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
+  +extensions: Extension[0..*] 
+  +idShort: idShortType[0..1] 
+  +inoutputVariables: OperationVariable[0..*] 
+  +inputVariables: OperationVariable[0..*] 
+  +outputVariables: OperationVariable[0..*] 
+  +qualifiers: Qualifier[0..*] 
+  +semanticId: Reference[0..1] 
+  +supplementalSemanticIds: Reference[0..*] 
+}
+@enduml

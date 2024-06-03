@@ -1,0 +1,8 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+abstract class HasExtensions <<abstract>> {
+  +extensions: Extension[0..*] 
+}
+@enduml

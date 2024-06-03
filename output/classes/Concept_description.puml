@@ -1,0 +1,16 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class ConceptDescription<Identifiable\nHasDataSpecification> {
+  +administration: AdministrativeInformation[0..1] 
+  +category: NameType[0..1] 
+  +description: LangStringTextType[0..*] 
+  +displayName: LangStringNameType[0..*] 
+  +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
+  +extensions: Extension[0..*] 
+  +id: Identifier 
+  +idShort: idShortType[0..1] 
+  +isCaseOf: Reference[0..*] 
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class Range<DataElement> {
+  +max: ValueDataType[0..1] 
+  +min: ValueDataType[0..1] 
+  +valueType: DataTypeDefXsd 
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+enum QualifierKind <<enumeration>> {
+  ConceptQualifier
+  TemplateQualifier
+  ValueQualifier
+}
+@enduml

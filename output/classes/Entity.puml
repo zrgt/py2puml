@@ -1,0 +1,20 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class Entity<SubmodelElement> {
+  +category: NameType[0..1] 
+  +description: LangStringTextType[0..*] 
+  +displayName: LangStringNameType[0..*] 
+  +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
+  +entityType: EntityType 
+  +extensions: Extension[0..*] 
+  +globalAssetId: Identifier[0..1] 
+  +idShort: idShortType[0..1] 
+  +qualifiers: Qualifier[0..*] 
+  +semanticId: Reference[0..1] 
+  +specificAssetIds: SpecificAssetId[0..*] 
+  +statements: SubmodelElement[0..*] 
+  +supplementalSemanticIds: Reference[0..*] 
+}
+@enduml

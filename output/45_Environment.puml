@@ -1,0 +1,24 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class Environment {
+  +assetAdministrationShells: AssetAdministrationShell[0..*] 
+  +conceptDescriptions: ConceptDescription[0..*] 
+  +submodels: Submodel[0..*] 
+}
+class AssetAdministrationShell<Identifiable\nHasDataSpecification> {
+  +assetInformation: AssetInformation 
+  +derivedFrom: Reference[0..1] 
+  +submodels: Reference[0..*] 
+}
+class Submodel<Identifiable\nHasKind\nHasSemantics\nQualifiable\nHasDataSpecification> {
+  +submodelElements: SubmodelElement[0..*] 
+}
+class ConceptDescription<Identifiable\nHasDataSpecification> {
+  +isCaseOf: Reference[0..*] 
+}
+Environment *-- AssetAdministrationShell
+Environment *-- Submodel
+Environment *-- ConceptDescription
+@enduml

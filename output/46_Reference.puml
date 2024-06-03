@@ -1,0 +1,21 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class Reference {
+  +keys: Key[1..*] 
+  +referredSemanticId: Reference[0..1] 
+  +type: ReferenceTypes 
+}
+class Key {
+  +type: KeyTypes 
+  +value: Identifier 
+}
+enum ReferenceTypes <<enumeration>> {
+  ExternalReference
+  ModelReference
+}
+Reference *-- ReferenceTypes
+Reference *-- Reference
+Reference *-- Key
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class AssetInformation {
+  +assetKind: AssetKind 
+  +assetType: Identifier[0..1] 
+  +defaultThumbnail: Resource[0..1] 
+  +globalAssetId: Identifier[0..1] 
+  +specificAssetIds: SpecificAssetId[0..*] 
+}
+@enduml

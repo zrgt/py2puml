@@ -1,0 +1,19 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class AnnotatedRelationshipElement<RelationshipElement> {
+  +annotations: DataElement[0..*] 
+  +category: NameType[0..1] 
+  +description: LangStringTextType[0..*] 
+  +displayName: LangStringNameType[0..*] 
+  +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
+  +extensions: Extension[0..*] 
+  +first: Reference 
+  +idShort: idShortType[0..1] 
+  +qualifiers: Qualifier[0..*] 
+  +second: Reference 
+  +semanticId: Reference[0..1] 
+  +supplementalSemanticIds: Reference[0..*] 
+}
+@enduml

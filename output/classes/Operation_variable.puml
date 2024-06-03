@@ -1,0 +1,8 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class OperationVariable {
+  +value: SubmodelElement 
+}
+@enduml

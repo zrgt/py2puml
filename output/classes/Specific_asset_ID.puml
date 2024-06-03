@@ -1,0 +1,12 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class SpecificAssetId<HasSemantics> {
+  +externalSubjectId: Reference[0..1] 
+  +name: LabelType 
+  +semanticId: Reference[0..1] 
+  +supplementalSemanticIds: Reference[0..*] 
+  +value: Identifier 
+}
+@enduml

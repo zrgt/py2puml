@@ -1,0 +1,9 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class ValueReferencePair {
+  +value: ValueTypeIec_61360 
+  +valueId: Reference 
+}
+@enduml
