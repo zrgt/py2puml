@@ -1,3 +1,4 @@
+from aas_core_meta.v3 import *
 import re
 from ast import parse
 from inspect import getsource
@@ -15,20 +16,71 @@ from py2puml.utils import filter_items_and_relations
 DOMAIN_PATH = DOMAIN_MODULE = 'aas_core_meta'
 
 PUML_CLS_DIAGRAMS = (
-    ('Environment', 'Asset_administration_shell', 'Submodel', 'Concept_description'),
-    ('Administrative_information',),
-    ('Has_data_specification',),
-    ('Has_extensions', 'Extension', 'Referable',),
-    ('Has_kind', 'Modelling_kind',),
-    ('Has_semantics',),
-    ('Referable', 'Identifiable', 'Administrative_information',),
+    (Asset_administration_shell, Asset_information, Asset_kind, Specific_asset_ID, Submodel, Qualifier, Submodel_element, Property),
+    (Environment, Asset_administration_shell, Submodel, Concept_description),
+    (Administrative_information,),
+    (Has_data_specification,),
+    (Has_extensions, Referable, Extension,),
+    (Has_kind, Modelling_kind,),
+    (Has_semantics,),
+    (Referable, Identifiable, Administrative_information,),
+    (Qualifiable, Qualifier,),
+    (Qualifier, Qualifier_kind,),
+    (Referable,),
+    (Asset_administration_shell, Asset_information, Submodel,),
+    (Asset_information, Specific_asset_ID, Resource, Asset_kind,),
+    (Submodel, Submodel_element),
+    (Submodel_element,),
+    (Submodel_element, Relationship_element, Annotated_relationship_element, Data_element, Property, Multi_language_property, Range, Blob, File, Reference_element, Capability, Submodel_element_list, Submodel_element_collection, Entity, Event_element, Basic_event_element, Operation, Operation_variable,),
+    (Relationship_element, Annotated_relationship_element,),
+    (Basic_event_element, Direction, State_of_event),
+    (Event_payload,),
+    (Blob,),
+    (Capability,),
+    (Data_element, Property, Multi_language_property, Range, Blob, File, Reference_element),
+    (Entity, Entity_type,),
+    (Event_element,),
+    (File,),
+    (Multi_language_property,),
+    (Operation, Operation_variable),
+    (Property,),
+    (Range,),
+    (Reference_element,),
+    (Submodel_element_collection, Submodel_element),
+    (Submodel_element_list, Submodel_element),
+    (Concept_description,),
+    (Environment, Asset_administration_shell, Submodel, Concept_description),
+    (Reference, Key, Reference_types),
+    (Key, Key_types),
+    #(Key, Key_types, Fragment_keys, Generic_fragment_keys, AAS_referables, AAS_referable_non_identifiables, AAS_submodel_elements, AAS_identifiables, Globally_identifiables, Generic_globally_identifiables),
+    (Key_types,),
+    (AAS_submodel_elements,),
+    #image53
+    (Data_type_def_XSD,),
+    #image56
+    #image57
+    #image59
+    (Asset_information, Specific_asset_ID, Entity, Entity_type, Asset_administration_shell, Submodel, Submodel_element, Relationship_element),
+    #image89
+    #image90
 )
+
+def classname(cls):
+    module = cls.__module__
+    name = cls.__qualname__
+    if module is not None and module != "__builtin__":
+        name = module + "." + name
+    return name
+
+# Transform PUML_CLS_DIAGRAMS into a list of class names
+PUML_CLS_DIAGRAMS = [[classname(cls) for cls in classes] for classes in PUML_CLS_DIAGRAMS]
 
 REGEX_TO_REPLACE = {
     # Remove the following strings from the PlantUML file
     r"\{static\}": "",
     ":  \n": "\n",
     # Replace the following strings from the PlantUML file
+    fr"{DOMAIN_MODULE}\.v3\.": "",
     r"\*\|--": "<\.\.", # Replace compositions with dependencies
     r"Optional\[List\[(.+?)\]\]": "\\1[0..*]",  # Optional[List[...]] -> ...[0..*]
     r"List\[(.+?)\]": "\\1[1..*]",  # List[...] -> ...[1..*]
@@ -209,12 +261,24 @@ def snake_to_camel(snake_str):
 
 
 if __name__ == '__main__':
-    # Create the PlantUML for all classes in the domain module
-    aas_core_all_file = Path('output/IDTA_aas_core_meta_all.puml')
-    create_puml(aas_core_all_file)
+    output_path = Path('output')
+    output_path.mkdir(exist_ok=True)
 
-    for i, classes in enumerate(PUML_CLS_DIAGRAMS):
-        # Create the PlantUML for each set of classes defined in PUML_CLS_DIAGRAMS
-        classes = [f'aas_core_meta.v3.{cls}' for cls in classes]
-        cls_diagr_file = Path(f'output/IDTA_aas_core_meta_{i}.puml')
-        create_puml(cls_diagr_file, classes)
+    # Create the PlantUML for each set of classes defined in PUML_CLS_DIAGRAMS
+    for i, classes_in_diagram in enumerate(PUML_CLS_DIAGRAMS, 12):
+        cls_diagr_file = Path(f'output/{i}_{classes_in_diagram[0].removeprefix("aas_core_meta.v3.")}.puml')
+        create_puml(cls_diagr_file, classes_in_diagram)
+
+    aas_classes_files = output_path / 'classes'
+    aas_classes_files.mkdir(exist_ok=True)
+
+    # Create the PlantUML for all classes in the domain module
+    aas_all_classes_file = aas_classes_files / 'aas_core_meta_all.puml'
+    create_puml(aas_all_classes_file)
+
+    # Create the PlantUML file for each class in the domain module
+    domain_items_by_fqn: Dict[str, UmlItem] = {}
+    inspect_package(DOMAIN_PATH, DOMAIN_MODULE, domain_items_by_fqn, [])
+    for item in domain_items_by_fqn:
+        cls_diagr_file = aas_classes_files / f'{item.removeprefix("aas_core_meta.v3.")}.puml'
+        create_puml(cls_diagr_file, classes=[item], to_include_members_from_parents=True)
