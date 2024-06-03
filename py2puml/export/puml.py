@@ -25,7 +25,8 @@ FEATURE_STATIC = ' {static}'
 FEATURE_INSTANCE = ''
 
 
-def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: List[UmlRelation]) -> Iterable[str]:
+def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: List[UmlRelation],
+                    sort_members: bool = True) -> Iterable[str]:
     yield PUML_FILE_START.format(diagram_name=diagram_name)
 
     # exports the domain classes and enums
@@ -34,6 +35,8 @@ def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: 
             uml_enum: UmlEnum = uml_item
             yield PUML_ITEM_START_TPL.format(item_type='enum', item_fqn=uml_enum.fqn,
                                              generics=f'<{uml_enum.generics}>' if uml_enum.generics else '')
+            if sort_members:
+                uml_enum.members.sort(key=lambda member: member.name.lower())
             for member in uml_enum.members:
                 yield PUML_ATTR_TPL.format(visibility="", attr_name=member.name, attr_type=member.value, staticity=FEATURE_STATIC)
             yield PUML_ITEM_END
@@ -43,6 +46,8 @@ def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: 
                 item_type='abstract class' if uml_item.is_abstract else 'class', item_fqn=uml_class.fqn,
                 generics=f'<{uml_class.generics}>' if uml_class.generics else ''
             )
+            if sort_members:
+                uml_class.attributes.sort(key=lambda attr: attr.name.lower())
             for uml_attr in uml_class.attributes:
                 yield PUML_ATTR_TPL.format(
                     visibility=uml_attr.visibility,

@@ -10,6 +10,9 @@ class UmlAttribute:
     type: str
     static: bool
 
+    def __eq__(self, other):
+        return self.name == other.name and self.type == other.type and self.static == other.static
+
     @property
     def visibility(self) -> str:
         if self.name.startswith("__"):

@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Iterable, Union, Optional, Dict, List, Tuple
 
 from py2puml.domain.umlclass import UmlClass
+from py2puml.domain.umlenum import UmlEnum
 from py2puml.domain.umlitem import UmlItem
 from py2puml.domain.umlrelation import UmlRelation, RelType
 from py2puml.export.puml import to_puml_content
@@ -37,14 +38,17 @@ REGEX_TO_REPLACE = {
 }
 
 
-def create_puml(output_file: Path, classes: Optional[Iterable[str]] = None):
+def create_puml(output_file: Path, classes: Optional[Iterable[str]] = None,
+                create_original_file: bool = False, to_include_members_from_parents: bool = False):
     """Create a PlantUML file from the classes in the domain module.
     :param output_file: the output file
     :param classes: the classes to include in the PlantUML file. If None, all classes are included.
     """
     # create the PlantUML file and write it to the output file
-    puml_content: str = ''.join(aas_core_meta_py2puml(DOMAIN_PATH, DOMAIN_MODULE, domain_items_to_keep=classes))
-    write_file(output_file.with_name('original_' + output_file.name), puml_content)
+    puml_content: str = ''.join(aas_core_meta_py2puml(DOMAIN_PATH, DOMAIN_MODULE, domain_items_to_keep=classes,
+                                                      to_include_members_from_parents=to_include_members_from_parents))
+    if create_original_file:
+        write_file(output_file.with_name('original_' + output_file.name), puml_content)
 
     # Apply IDTA specific changes to the PlantUML content and write it to the output file
     idta_puml_content = apply_changes(puml_content)
@@ -61,11 +65,14 @@ def write_file(file: Union[str, Path], content: str):
         f.write(content)
 
 
-def aas_core_meta_py2puml(domain_path: str, domain_module: str, domain_items_to_keep: Optional[List[str]] = None) -> \
-        Iterable[str]:
+def aas_core_meta_py2puml(domain_path: str, domain_module: str, domain_items_to_keep: Optional[List[str]] = None,
+                          to_include_members_from_parents: bool = False, sort_members=True) -> Iterable[str]:
     domain_items_by_fqn: Dict[str, UmlItem] = {}
     domain_relations: List[UmlRelation] = []
     inspect_package(domain_path, domain_module, domain_items_by_fqn, domain_relations)
+
+    if to_include_members_from_parents:
+        include_members_from_parents(domain_items_by_fqn, domain_relations)
 
     # Filter only the classes in the list
     if domain_items_to_keep:
@@ -74,7 +81,30 @@ def aas_core_meta_py2puml(domain_path: str, domain_module: str, domain_items_to_
 
     set_aas_core_meta_abstract_classes_as_abstract(domain_items_by_fqn)
     use_values_in_enumerations_as_names(domain_items_by_fqn)
-    return to_puml_content(domain_module, domain_items_by_fqn.values(), domain_relations)
+    return to_puml_content(domain_module, domain_items_by_fqn.values(), domain_relations, sort_members)
+
+
+def include_members_from_parents(domain_items_by_fqn: Dict[str, UmlItem], domain_relations: List[UmlRelation]):
+    """Include the members from the parent classes in the child classes."""
+    inheritance_rels = [rel for rel in domain_relations if rel.type == RelType.INHERITANCE]
+    while len(inheritance_rels) > 0:
+        _include_members_from_parents(domain_items_by_fqn, inheritance_rels, inheritance_rels[0])
+
+
+def _include_members_from_parents(domain_items_by_fqn: Dict[str, UmlItem], inheritance_relations: List[UmlRelation], inheritance_rel):
+    parent = domain_items_by_fqn.get(inheritance_rel.source_fqn)
+    child = domain_items_by_fqn.get(inheritance_rel.target_fqn)
+
+    parent_inheritance_rels = [rel for rel in inheritance_relations if rel.target_fqn == parent.fqn]
+    for rel in parent_inheritance_rels:
+        _include_members_from_parents(domain_items_by_fqn, inheritance_relations, rel)
+
+    for attr in parent.attributes:
+        if attr in child.attributes:
+            continue
+        child.attributes.append(attr)
+    inheritance_relations.remove(inheritance_rel)
+
 
 
 def handle_classes_and_relations_filtering(domain_items: Dict[str, UmlItem], domain_relations: List[UmlRelation],
