@@ -18,6 +18,6 @@ class AdministrativeInformation<HasDataSpecification> {
   +templateId: Identifier[0..1] 
   +version: VersionType[0..1] 
 }
-Identifiable *-- AdministrativeInformation
+Identifiable <.. AdministrativeInformation
 Referable <|-- Identifiable
 @enduml

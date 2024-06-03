@@ -17,5 +17,5 @@ class AssetInformation {
 class Submodel<Identifiable\nHasKind\nHasSemantics\nQualifiable\nHasDataSpecification> {
   +submodelElements: SubmodelElement[0..*] 
 }
-AssetAdministrationShell *-- AssetInformation
+AssetAdministrationShell <.. AssetInformation
 @enduml

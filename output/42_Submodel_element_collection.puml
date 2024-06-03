@@ -7,6 +7,6 @@ class SubmodelElementCollection {
 }
 abstract class SubmodelElement<Referable\nHasSemantics\nQualifiable\nHasDataSpecification> <<abstract>> {
 }
-SubmodelElementCollection *-- SubmodelElement
+SubmodelElementCollection <.. SubmodelElement
 SubmodelElement <|-- SubmodelElementCollection
 @enduml

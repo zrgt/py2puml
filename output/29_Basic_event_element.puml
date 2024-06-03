@@ -20,6 +20,6 @@ enum StateOfEvent <<enumeration>> {
   off
   on
 }
-BasicEventElement *-- Direction
-BasicEventElement *-- StateOfEvent
+BasicEventElement <.. Direction
+BasicEventElement <.. StateOfEvent
 @enduml

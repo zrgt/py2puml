@@ -17,6 +17,6 @@ class Extension<HasSemantics> {
   +value: ValueDataType[0..1] 
   +valueType: DataTypeDefXsd[0..1] 
 }
-HasExtensions *-- Extension
+HasExtensions <.. Extension
 HasExtensions <|-- Referable
 @enduml

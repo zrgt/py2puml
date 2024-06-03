@@ -32,5 +32,5 @@ enum KeyTypes <<enumeration>> {
   SubmodelElementCollection
   SubmodelElementList
 }
-Key *-- KeyTypes
+Key <.. KeyTypes
 @enduml

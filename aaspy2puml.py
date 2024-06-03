@@ -81,7 +81,7 @@ REGEX_TO_REPLACE = {
     ":  \n": "\n",
     # Replace the following strings from the PlantUML file
     fr"{DOMAIN_MODULE}\.v3\.": "",
-    r"\*\|--": "<\.\.", # Replace compositions with dependencies
+    r"\*--": "<..", # Replace compositions with dependencies
     r"Optional\[List\[(.+?)\]\]": "\\1[0..*]",  # Optional[List[...]] -> ...[0..*]
     r"List\[(.+?)\]": "\\1[1..*]",  # List[...] -> ...[1..*]
     r"Optional\[(.+?)\]": "\\1[0..1]",  # Optional[...] -> ...[0..1]

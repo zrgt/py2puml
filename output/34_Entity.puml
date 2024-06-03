@@ -12,5 +12,5 @@ enum EntityType <<enumeration>> {
   CoManagedEntity
   SelfManagedEntity
 }
-Entity *-- EntityType
+Entity <.. EntityType
 @enduml

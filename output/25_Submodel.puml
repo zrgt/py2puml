@@ -7,5 +7,5 @@ class Submodel<Identifiable\nHasKind\nHasSemantics\nQualifiable\nHasDataSpecific
 }
 abstract class SubmodelElement<Referable\nHasSemantics\nQualifiable\nHasDataSpecification> <<abstract>> {
 }
-Submodel *-- SubmodelElement
+Submodel <.. SubmodelElement
 @enduml

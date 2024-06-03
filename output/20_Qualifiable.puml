@@ -12,5 +12,5 @@ class Qualifier<HasSemantics> {
   +valueId: Reference[0..1] 
   +valueType: DataTypeDefXsd 
 }
-Qualifiable *-- Qualifier
+Qualifiable <.. Qualifier
 @enduml
