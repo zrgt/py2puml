@@ -34,19 +34,19 @@ class AdministrativeInformation {
   +version: VersionType[0..1] 
 }
 class AnnotatedRelationshipElement {
-  +annotations: DataElement[0..*] 
+  +annotation: DataElement[0..*] 
 }
 class AssetAdministrationShell {
   +assetInformation: AssetInformation 
   +derivedFrom: Reference[0..1] 
-  +submodels: Reference[0..*] 
+  +submodel: Reference[0..*] 
 }
 class AssetInformation {
   +assetKind: AssetKind 
   +assetType: Identifier[0..1] 
   +defaultThumbnail: Resource[0..1] 
   +globalAssetId: Identifier[0..1] 
-  +specificAssetIds: SpecificAssetId[0..*] 
+  +specificAssetId: SpecificAssetId[0..*] 
 }
 enum AssetKind <<enumeration>> {
   Instance
@@ -164,17 +164,17 @@ class EmbeddedDataSpecification {
 class Entity {
   +entityType: EntityType 
   +globalAssetId: Identifier[0..1] 
-  +specificAssetIds: SpecificAssetId[0..*] 
-  +statements: SubmodelElement[0..*] 
+  +specificAssetId: SpecificAssetId[0..*] 
+  +statement: SubmodelElement[0..*] 
 }
 enum EntityType <<enumeration>> {
   CoManagedEntity
   SelfManagedEntity
 }
 class Environment {
-  +assetAdministrationShells: AssetAdministrationShell[0..*] 
-  +conceptDescriptions: ConceptDescription[0..*] 
-  +submodels: Submodel[0..*] 
+  +assetAdministrationShell: AssetAdministrationShell[0..*] 
+  +conceptDescription: ConceptDescription[0..*] 
+  +submodel: Submodel[0..*] 
 }
 abstract class EventElement <<abstract>> {
 }
@@ -199,17 +199,17 @@ class File {
   +value: PathType[0..1] 
 }
 abstract class HasDataSpecification <<abstract>> {
-  +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
+  +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
 }
 abstract class HasExtensions <<abstract>> {
-  +extensions: Extension[0..*] 
+  +extension: Extension[0..*] 
 }
 abstract class HasKind <<abstract>> {
   +kind: ModellingKind[0..1] 
 }
 abstract class HasSemantics <<abstract>> {
   +semanticId: Reference[0..1] 
-  +supplementalSemanticIds: Reference[0..*] 
+  +supplementalSemanticId: Reference[0..*] 
 }
 class IdShortType {
 }
@@ -282,9 +282,9 @@ class NameType {
 class NonEmptyXmlSerializableString {
 }
 class Operation {
-  +inoutputVariables: OperationVariable[0..*] 
-  +inputVariables: OperationVariable[0..*] 
-  +outputVariables: OperationVariable[0..*] 
+  +inoutputVariable: OperationVariable[0..*] 
+  +inputVariable: OperationVariable[0..*] 
+  +outputVariable: OperationVariable[0..*] 
 }
 class OperationVariable {
   +value: SubmodelElement 
@@ -297,7 +297,7 @@ class Property {
   +valueType: DataTypeDefXsd 
 }
 abstract class Qualifiable <<abstract>> {
-  +qualifiers: Qualifier[0..*] 
+  +qualifier: Qualifier[0..*] 
 }
 class Qualifier {
   +kind: QualifierKind[0..1] 
@@ -325,7 +325,7 @@ abstract class Referable <<abstract>> {
   +idShort: IdShortType[0..1] 
 }
 class Reference {
-  +keys: Key[1..*] 
+  +key: Key[1..*] 
   +referredSemanticId: Reference[0..1] 
   +type: ReferenceTypes 
 }
@@ -356,7 +356,7 @@ enum StateOfEvent <<enumeration>> {
   on
 }
 class Submodel {
-  +submodelElements: SubmodelElement[0..*] 
+  +submodelElement: SubmodelElement[0..*] 
 }
 abstract class SubmodelElement <<abstract>> {
 }
@@ -373,7 +373,7 @@ class SubmodelElementList {
 class ValueDataType {
 }
 class ValueList {
-  +valueReferencePairs: ValueReferencePair[1..*] 
+  +valueReferencePair: ValueReferencePair[1..*] 
 }
 class ValueReferencePair {
   +value: ValueTypeIec_61360 

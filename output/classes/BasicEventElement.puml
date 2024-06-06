@@ -7,8 +7,8 @@ class BasicEventElement<EventElement> {
   +description: LangStringTextType[0..*] 
   +direction: Direction 
   +displayName: LangStringNameType[0..*] 
-  +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
-  +extensions: Extension[0..*] 
+  +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
+  +extension: Extension[0..*] 
   +idShort: IdShortType[0..1] 
   +lastUpdate: DateTimeUtc[0..1] 
   +maxInterval: Duration[0..1] 
@@ -16,9 +16,9 @@ class BasicEventElement<EventElement> {
   +messageTopic: MessageTopicType[0..1] 
   +minInterval: Duration[0..1] 
   +observed: Reference 
-  +qualifiers: Qualifier[0..*] 
+  +qualifier: Qualifier[0..*] 
   +semanticId: Reference[0..1] 
   +state: StateOfEvent 
-  +supplementalSemanticIds: Reference[0..*] 
+  +supplementalSemanticId: Reference[0..*] 
 }
 @enduml

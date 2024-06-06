@@ -7,7 +7,7 @@ abstract class Identifiable<Referable> <<abstract>> {
   +category: NameType[0..1] 
   +description: LangStringTextType[0..*] 
   +displayName: LangStringNameType[0..*] 
-  +extensions: Extension[0..*] 
+  +extension: Extension[0..*] 
   +ID: Identifier 
   +idShort: IdShortType[0..1] 
 }

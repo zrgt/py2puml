@@ -4,6 +4,6 @@ hide methods
 
 abstract class HasSemantics <<abstract>> {
   +semanticId: Reference[0..1] 
-  +supplementalSemanticIds: Reference[0..*] 
+  +supplementalSemanticId: Reference[0..*] 
 }
 @enduml

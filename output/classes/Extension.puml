@@ -6,7 +6,7 @@ class Extension<HasSemantics> {
   +name: NameType 
   +refersTo: Reference[0..*] 
   +semanticId: Reference[0..1] 
-  +supplementalSemanticIds: Reference[0..*] 
+  +supplementalSemanticId: Reference[0..*] 
   +value: ValueDataType[0..1] 
   +valueType: DataTypeDefXsd[0..1] 
 }

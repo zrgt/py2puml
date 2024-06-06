@@ -5,8 +5,8 @@ hide methods
 class Entity<SubmodelElement> {
   +entityType: EntityType 
   +globalAssetId: Identifier[0..1] 
-  +specificAssetIds: SpecificAssetId[0..*] 
-  +statements: SubmodelElement[0..*] 
+  +specificAssetId: SpecificAssetId[0..*] 
+  +statement: SubmodelElement[0..*] 
 }
 enum EntityType <<enumeration>> {
   CoManagedEntity

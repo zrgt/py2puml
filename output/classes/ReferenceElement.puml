@@ -6,12 +6,12 @@ class ReferenceElement<DataElement> {
   +category: NameType[0..1] 
   +description: LangStringTextType[0..*] 
   +displayName: LangStringNameType[0..*] 
-  +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
-  +extensions: Extension[0..*] 
+  +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
+  +extension: Extension[0..*] 
   +idShort: IdShortType[0..1] 
-  +qualifiers: Qualifier[0..*] 
+  +qualifier: Qualifier[0..*] 
   +semanticId: Reference[0..1] 
-  +supplementalSemanticIds: Reference[0..*] 
+  +supplementalSemanticId: Reference[0..*] 
   +value: Reference[0..1] 
 }
 @enduml

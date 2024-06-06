@@ -5,14 +5,14 @@ hide methods
 class AssetAdministrationShell<Identifiable\nHasDataSpecification> {
   +assetInformation: AssetInformation 
   +derivedFrom: Reference[0..1] 
-  +submodels: Reference[0..*] 
+  +submodel: Reference[0..*] 
 }
 class AssetInformation {
   +assetKind: AssetKind 
   +assetType: Identifier[0..1] 
   +defaultThumbnail: Resource[0..1] 
   +globalAssetId: Identifier[0..1] 
-  +specificAssetIds: SpecificAssetId[0..*] 
+  +specificAssetId: SpecificAssetId[0..*] 
 }
 enum AssetKind <<enumeration>> {
   Instance
@@ -25,7 +25,7 @@ class SpecificAssetId<HasSemantics> {
   +value: Identifier 
 }
 class Submodel<Identifiable\nHasKind\nHasSemantics\nQualifiable\nHasDataSpecification> {
-  +submodelElements: SubmodelElement[0..*] 
+  +submodelElement: SubmodelElement[0..*] 
 }
 class Qualifier<HasSemantics> {
   +kind: QualifierKind[0..1] 

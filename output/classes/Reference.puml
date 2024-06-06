@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class Reference {
-  +keys: Key[1..*] 
+  +key: Key[1..*] 
   +referredSemanticId: Reference[0..1] 
   +type: ReferenceTypes 
 }

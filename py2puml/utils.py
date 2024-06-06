@@ -69,3 +69,7 @@ def snake_to_camel(snake_str):
         new_str = re.sub(r'([A-Z])([A-Z]+)([A-Z])',
                          lambda match: match.group(1) + match.group(2).lower() + match.group(3), new_str)
     return new_str
+
+
+def plural_attribute_to_singular(text):
+    return re.sub(r'([a-zA-Z]{2,})s$', r'\1', text)

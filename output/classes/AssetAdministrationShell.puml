@@ -9,11 +9,11 @@ class AssetAdministrationShell<Identifiable\nHasDataSpecification> {
   +derivedFrom: Reference[0..1] 
   +description: LangStringTextType[0..*] 
   +displayName: LangStringNameType[0..*] 
-  +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
-  +extensions: Extension[0..*] 
+  +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
+  +extension: Extension[0..*] 
   +ID: Identifier 
   +idShort: IdShortType[0..1] 
-  +submodels: Reference[0..*] 
+  +submodel: Reference[0..*] 
 }
 AssetAdministrationShell --> AssetAdministrationShell : derivedFrom
 @enduml

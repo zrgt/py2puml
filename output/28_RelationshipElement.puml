@@ -7,7 +7,7 @@ class RelationshipElement<SubmodelElement> {
   +second: Reference 
 }
 class AnnotatedRelationshipElement {
-  +annotations: DataElement[0..*] 
+  +annotation: DataElement[0..*] 
 }
 RelationshipElement <|-- AnnotatedRelationshipElement
 @enduml

@@ -9,7 +9,7 @@ from py2puml.domain.umlitem import UmlItem
 from py2puml.domain.umlrelation import UmlRelation, RelType
 from py2puml.export.puml import to_puml_content
 from py2puml.inspection.inspectpackage import inspect_package
-from py2puml.utils import classname, has_decorator, snake_to_camel
+from py2puml.utils import classname, has_decorator, snake_to_camel, plural_attribute_to_singular
 
 
 class AasPumlGenerator:
@@ -47,6 +47,7 @@ class AasPumlGenerator:
         self._set_aas_core_meta_abstract_classes_as_abstract()
         self._use_values_in_enumerations_as_names()
         self._rename_snake_case_to_camel_case()
+        self._rename_plural_attrs_to_singular()
 
     def _remove_duplicated_relations(self):
         """Remove duplicated relations from the domain relations."""
@@ -76,6 +77,12 @@ class AasPumlGenerator:
             rel.label_ = snake_to_camel(rel.label_) if rel.label_ else rel.label_
             renamed_domain_relations.append(rel)
         self.domain_relations = renamed_domain_relations
+
+    def _rename_plural_attrs_to_singular(self):
+        for item in self.domain_items.values():
+            if isinstance(item, UmlClass):
+                for attr in item.attributes:
+                    attr.name = plural_attribute_to_singular(attr.name)
 
     def _add_reference_relations(self):
         domain_classes_with_invariant_decorator = [i for i in self.domain_items.values() if

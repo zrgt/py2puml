@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 hide methods
 
 abstract class Qualifiable <<abstract>> {
-  +qualifiers: Qualifier[0..*] 
+  +qualifier: Qualifier[0..*] 
 }
 class Qualifier<HasSemantics> {
   +kind: QualifierKind[0..1] 

@@ -9,7 +9,7 @@ class RelationshipElement {
   +second: Reference 
 }
 class AnnotatedRelationshipElement {
-  +annotations: DataElement[0..*] 
+  +annotation: DataElement[0..*] 
 }
 abstract class DataElement <<abstract>> {
 }
@@ -53,8 +53,8 @@ class SubmodelElementCollection {
 class Entity {
   +entityType: EntityType 
   +globalAssetId: Identifier[0..1] 
-  +specificAssetIds: SpecificAssetId[0..*] 
-  +statements: SubmodelElement[0..*] 
+  +specificAssetId: SpecificAssetId[0..*] 
+  +statement: SubmodelElement[0..*] 
 }
 abstract class EventElement <<abstract>> {
 }
@@ -69,9 +69,9 @@ class BasicEventElement {
   +state: StateOfEvent 
 }
 class Operation {
-  +inoutputVariables: OperationVariable[0..*] 
-  +inputVariables: OperationVariable[0..*] 
-  +outputVariables: OperationVariable[0..*] 
+  +inoutputVariable: OperationVariable[0..*] 
+  +inputVariable: OperationVariable[0..*] 
+  +outputVariable: OperationVariable[0..*] 
 }
 class OperationVariable {
   +value: SubmodelElement 

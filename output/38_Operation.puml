@@ -3,9 +3,9 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class Operation<SubmodelElement> {
-  +inoutputVariables: OperationVariable[0..*] 
-  +inputVariables: OperationVariable[0..*] 
-  +outputVariables: OperationVariable[0..*] 
+  +inoutputVariable: OperationVariable[0..*] 
+  +inputVariable: OperationVariable[0..*] 
+  +outputVariable: OperationVariable[0..*] 
 }
 class OperationVariable {
   +value: SubmodelElement 
