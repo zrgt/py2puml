@@ -2,6 +2,6 @@
 skinparam classAttributeIconSize 0
 hide methods
 
-class Identifier<NonEmptyXmlSerializableString> {
+class ValueTypeIec_61360<NonEmptyXmlSerializableString> {
 }
 @enduml

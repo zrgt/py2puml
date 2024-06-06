@@ -2,6 +2,6 @@
 skinparam classAttributeIconSize 0
 hide methods
 
-class Identifier<NonEmptyXmlSerializableString> {
+class BcP_47LanguageTag {
 }
 @enduml

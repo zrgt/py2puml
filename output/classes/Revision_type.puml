@@ -1,7 +1,0 @@
-@startuml
-skinparam classAttributeIconSize 0
-hide methods
-
-class RevisionType<NonEmptyXml_serializableString> {
-}
-@enduml

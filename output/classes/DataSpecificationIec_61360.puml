@@ -1,0 +1,19 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class DataSpecificationIec_61360<DataSpecificationContent> {
+  +dataType: DataTypeIec_61360[0..1] 
+  +definition: LangStringDefinitionTypeIec_61360[0..*] 
+  +levelType: LevelType[0..1] 
+  +preferredName: LangStringPreferredNameTypeIec_61360[1..*] 
+  +shortName: LangStringShortNameTypeIec_61360[0..*] 
+  +sourceOfDefinition: NonEmptyXmlSerializableString[0..1] 
+  +symbol: NonEmptyXmlSerializableString[0..1] 
+  +unit: NonEmptyXmlSerializableString[0..1] 
+  +unitId: Reference[0..1] 
+  +value: ValueTypeIec_61360[0..1] 
+  +valueFormat: NonEmptyXmlSerializableString[0..1] 
+  +valueList: ValueList[0..1] 
+}
+@enduml

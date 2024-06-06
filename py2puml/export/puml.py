@@ -49,6 +49,8 @@ def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: 
             if sort_members:
                 uml_class.attributes.sort(key=lambda attr: attr.name.lower())
             for uml_attr in uml_class.attributes:
+                if not uml_attr.static:
+                    continue
                 yield PUML_ATTR_TPL.format(
                     visibility=uml_attr.visibility,
                     attr_name=uml_attr.name,

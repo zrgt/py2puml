@@ -1,7 +1,0 @@
-@startuml
-skinparam classAttributeIconSize 0
-hide methods
-
-class ValueTypeIec_61360<NonEmptyXml_serializableString> {
-}
-@enduml

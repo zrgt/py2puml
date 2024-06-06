@@ -24,8 +24,8 @@ enum AasSubmodelElements <<enumeration>> {
   SubmodelElementList
 }
 abstract class AbstractLangString <<abstract>> {
-  +language: BCP_47_languageTag 
-  +text: NonEmptyXml_serializableString 
+  +language: BcP_47LanguageTag 
+  +text: NonEmptyXmlSerializableString 
 }
 class AdministrativeInformation {
   +creator: Reference[0..1] 
@@ -53,7 +53,7 @@ enum AssetKind <<enumeration>> {
   NotApplicable
   Type
 }
-class BCP_47_languageTag {
+class BcP_47LanguageTag {
 }
 class BasicEventElement {
   +direction: Direction 
@@ -86,12 +86,12 @@ class DataSpecificationIec_61360 {
   +levelType: LevelType[0..1] 
   +preferredName: LangStringPreferredNameTypeIec_61360[1..*] 
   +shortName: LangStringShortNameTypeIec_61360[0..*] 
-  +sourceOfDefinition: NonEmptyXml_serializableString[0..1] 
-  +symbol: NonEmptyXml_serializableString[0..1] 
-  +unit: NonEmptyXml_serializableString[0..1] 
+  +sourceOfDefinition: NonEmptyXmlSerializableString[0..1] 
+  +symbol: NonEmptyXmlSerializableString[0..1] 
+  +unit: NonEmptyXmlSerializableString[0..1] 
   +unitId: Reference[0..1] 
   +value: ValueTypeIec_61360[0..1] 
-  +valueFormat: NonEmptyXml_serializableString[0..1] 
+  +valueFormat: NonEmptyXmlSerializableString[0..1] 
   +valueList: ValueList[0..1] 
 }
 abstract class DataSpecificationContent <<abstract>> {
@@ -163,6 +163,8 @@ class EmbeddedDataSpecification {
 }
 class Entity {
   +entityType: EntityType 
+  +globalAssetId: Identifier[0..1] 
+  +specificAssetIds: SpecificAssetId[0..*] 
   +statements: SubmodelElement[0..*] 
 }
 enum EntityType <<enumeration>> {
@@ -193,6 +195,7 @@ class Extension {
   +valueType: DataTypeDefXsd[0..1] 
 }
 class File {
+  +contentType: ContentType 
   +value: PathType[0..1] 
 }
 abstract class HasDataSpecification <<abstract>> {
@@ -212,7 +215,7 @@ class IdShortType {
 }
 abstract class Identifiable <<abstract>> {
   +administration: AdministrativeInformation[0..1] 
-  +id: Identifier 
+  +ID: Identifier 
 }
 class Identifier {
 }
@@ -221,13 +224,30 @@ class Key {
   +value: Identifier 
 }
 enum KeyTypes <<enumeration>> {
+  AnnotatedRelationshipElement
   AssetAdministrationShell
+  BasicEventElement
+  Blob
+  Capability
   ConceptDescription
+  DataElement
+  Entity
+  EventElement
+  File
   FragmentReference
   GlobalReference
   Identifiable
+  MultiLanguageProperty
+  Operation
+  Property
+  Range
   Referable
+  ReferenceElement
+  RelationshipElement
   Submodel
+  SubmodelElement
+  SubmodelElementCollection
+  SubmodelElementList
 }
 class LabelType {
 }
@@ -250,6 +270,7 @@ class LevelType {
 class MessageTopicType {
 }
 enum ModellingKind <<enumeration>> {
+  Instance
   Template
 }
 class MultiLanguageProperty {
@@ -258,7 +279,7 @@ class MultiLanguageProperty {
 }
 class NameType {
 }
-class NonEmptyXml_serializableString {
+class NonEmptyXmlSerializableString {
 }
 class Operation {
   +inoutputVariables: OperationVariable[0..*] 
@@ -271,6 +292,8 @@ class OperationVariable {
 class PathType {
 }
 class Property {
+  +value: ValueDataType[0..1] 
+  +valueId: Reference[0..1] 
   +valueType: DataTypeDefXsd 
 }
 abstract class Qualifiable <<abstract>> {
@@ -279,6 +302,9 @@ abstract class Qualifiable <<abstract>> {
 class Qualifier {
   +kind: QualifierKind[0..1] 
   +type: QualifierType 
+  +value: ValueDataType[0..1] 
+  +valueId: Reference[0..1] 
+  +valueType: DataTypeDefXsd 
 }
 enum QualifierKind <<enumeration>> {
   ConceptQualifier
@@ -290,12 +316,13 @@ class QualifierType {
 class Range {
   +max: ValueDataType[0..1] 
   +min: ValueDataType[0..1] 
+  +valueType: DataTypeDefXsd 
 }
 abstract class Referable <<abstract>> {
   +category: NameType[0..1] 
   +description: LangStringTextType[0..*] 
   +displayName: LangStringNameType[0..*] 
-  +IdShort: IdShortType[0..1] 
+  +idShort: IdShortType[0..1] 
 }
 class Reference {
   +keys: Key[1..*] 
@@ -322,6 +349,7 @@ class RevisionType {
 class SpecificAssetId {
   +externalSubjectId: Reference[0..1] 
   +name: LabelType 
+  +value: Identifier 
 }
 enum StateOfEvent <<enumeration>> {
   off
@@ -337,8 +365,9 @@ class SubmodelElementCollection {
 }
 class SubmodelElementList {
   +orderRelevant: bool[0..1] 
-  +semanticId_listElement: Reference[0..1] 
+  +semanticIdListElement: Reference[0..1] 
   +typeValueListElement: AasSubmodelElements 
+  +value: SubmodelElement[0..*] 
   +valueTypeListElement: DataTypeDefXsd[0..1] 
 }
 class ValueDataType {
@@ -354,8 +383,8 @@ class ValueTypeIec_61360 {
 }
 class VersionType {
 }
-AbstractLangString ..> BCP_47_languageTag
-AbstractLangString ..> NonEmptyXml_serializableString
+AbstractLangString ..> BcP_47LanguageTag
+AbstractLangString ..> NonEmptyXmlSerializableString
 AdministrativeInformation ..> VersionType
 AdministrativeInformation ..> RevisionType
 AdministrativeInformation ..> Reference
@@ -385,11 +414,11 @@ SubmodelElement <|-- Capability
 ConceptDescription ..> Reference
 Identifiable <|-- ConceptDescription
 HasDataSpecification <|-- ConceptDescription
-NonEmptyXml_serializableString <|-- ContentType
+NonEmptyXmlSerializableString <|-- ContentType
 SubmodelElement <|-- DataElement
 DataSpecificationIec_61360 ..> LangStringPreferredNameTypeIec_61360
 DataSpecificationIec_61360 ..> LangStringShortNameTypeIec_61360
-DataSpecificationIec_61360 ..> NonEmptyXml_serializableString
+DataSpecificationIec_61360 ..> NonEmptyXmlSerializableString
 DataSpecificationIec_61360 ..> Reference
 DataSpecificationIec_61360 ..> DataTypeIec_61360
 DataSpecificationIec_61360 ..> LangStringDefinitionTypeIec_61360
@@ -428,20 +457,20 @@ NameType <|-- IdShortType
 Identifiable ..> AdministrativeInformation
 Identifiable ..> Identifier
 Referable <|-- Identifiable
-NonEmptyXml_serializableString <|-- Identifier
+NonEmptyXmlSerializableString <|-- Identifier
 Key ..> KeyTypes
 Key ..> Identifier
-NonEmptyXml_serializableString <|-- LabelType
+NonEmptyXmlSerializableString <|-- LabelType
 AbstractLangString <|-- LangStringDefinitionTypeIec_61360
 AbstractLangString <|-- LangStringNameType
 AbstractLangString <|-- LangStringPreferredNameTypeIec_61360
 AbstractLangString <|-- LangStringShortNameTypeIec_61360
 AbstractLangString <|-- LangStringTextType
-NonEmptyXml_serializableString <|-- MessageTopicType
+NonEmptyXmlSerializableString <|-- MessageTopicType
 MultiLanguageProperty ..> LangStringTextType
 MultiLanguageProperty ..> Reference
 DataElement <|-- MultiLanguageProperty
-NonEmptyXml_serializableString <|-- NameType
+NonEmptyXmlSerializableString <|-- NameType
 Operation ..> OperationVariable
 SubmodelElement <|-- Operation
 OperationVariable ..> SubmodelElement
@@ -475,7 +504,7 @@ RelationshipElement ..> Reference
 SubmodelElement <|-- RelationshipElement
 Resource ..> PathType
 Resource ..> ContentType
-NonEmptyXml_serializableString <|-- RevisionType
+NonEmptyXmlSerializableString <|-- RevisionType
 SpecificAssetId ..> LabelType
 SpecificAssetId ..> Identifier
 SpecificAssetId ..> Reference
@@ -500,8 +529,8 @@ SubmodelElement <|-- SubmodelElementList
 ValueList ..> ValueReferencePair
 ValueReferencePair ..> ValueTypeIec_61360
 ValueReferencePair ..> Reference
-NonEmptyXml_serializableString <|-- ValueTypeIec_61360
-NonEmptyXml_serializableString <|-- VersionType
+NonEmptyXmlSerializableString <|-- ValueTypeIec_61360
+NonEmptyXmlSerializableString <|-- VersionType
 AssetAdministrationShell --> Submodel : submodels
 AssetAdministrationShell --> AssetAdministrationShell : derivedFrom
 BasicEventElement --> Referable : messageBroker

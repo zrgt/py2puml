@@ -2,19 +2,15 @@
 skinparam classAttributeIconSize 0
 hide methods
 
-class Entity<SubmodelElement> {
+class ConceptDescription<Identifiable\nHasDataSpecification> {
+  +administration: AdministrativeInformation[0..1] 
   +category: NameType[0..1] 
   +description: LangStringTextType[0..*] 
   +displayName: LangStringNameType[0..*] 
   +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
-  +entityType: EntityType 
   +extensions: Extension[0..*] 
-  +globalAssetId: Identifier[0..1] 
+  +ID: Identifier 
   +idShort: IdShortType[0..1] 
-  +qualifiers: Qualifier[0..*] 
-  +semanticId: Reference[0..1] 
-  +specificAssetIds: SpecificAssetId[0..*] 
-  +statements: SubmodelElement[0..*] 
-  +supplementalSemanticIds: Reference[0..*] 
+  +isCaseOf: Reference[0..*] 
 }
 @enduml

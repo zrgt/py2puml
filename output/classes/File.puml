@@ -9,7 +9,7 @@ class File<DataElement> {
   +displayName: LangStringNameType[0..*] 
   +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
   +extensions: Extension[0..*] 
-  +IdShort: IdShortType[0..1] 
+  +idShort: IdShortType[0..1] 
   +qualifiers: Qualifier[0..*] 
   +semanticId: Reference[0..1] 
   +supplementalSemanticIds: Reference[0..*] 

@@ -1,0 +1,9 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class LangStringNameType<AbstractLangString> {
+  +language: BcP_47LanguageTag 
+  +text: NonEmptyXmlSerializableString 
+}
+@enduml
