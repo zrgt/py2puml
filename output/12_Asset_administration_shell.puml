@@ -38,8 +38,10 @@ abstract class SubmodelElement<Referable\nHasSemantics\nQualifiable\nHasDataSpec
 }
 class Property<DataElement> {
 }
-AssetAdministrationShell <.. AssetInformation
-AssetInformation <.. AssetKind
-AssetInformation <.. SpecificAssetId
-Submodel <.. SubmodelElement
+AssetAdministrationShell ..> AssetInformation
+AssetInformation ..> AssetKind
+AssetInformation ..> SpecificAssetId
+Submodel ..> SubmodelElement
+AssetAdministrationShell --> Submodel : submodels
+AssetAdministrationShell --> AssetAdministrationShell : derivedFrom
 @enduml

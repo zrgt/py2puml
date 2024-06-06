@@ -15,7 +15,7 @@ enum ReferenceTypes <<enumeration>> {
   ExternalReference
   ModelReference
 }
-Reference <.. ReferenceTypes
-Reference <.. Reference
-Reference <.. Key
+Reference ..> ReferenceTypes
+Reference ..> Reference
+Reference ..> Key
 @enduml

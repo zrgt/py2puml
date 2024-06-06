@@ -9,6 +9,6 @@ abstract class Identifiable<Referable> <<abstract>> {
   +displayName: LangStringNameType[0..*] 
   +extensions: Extension[0..*] 
   +id: Identifier 
-  +idShort: idShortType[0..1] 
+  +IdShort: IdShortType[0..1] 
 }
 @enduml

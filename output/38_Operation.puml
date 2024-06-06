@@ -10,5 +10,5 @@ class Operation<SubmodelElement> {
 class OperationVariable {
   +value: SubmodelElement 
 }
-Operation <.. OperationVariable
+Operation ..> OperationVariable
 @enduml

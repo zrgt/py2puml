@@ -9,7 +9,7 @@ abstract class Referable <<abstract>> {
   +category: NameType[0..1] 
   +description: LangStringTextType[0..*] 
   +displayName: LangStringNameType[0..*] 
-  +idShort: idShortType[0..1] 
+  +IdShort: IdShortType[0..1] 
 }
 class Extension<HasSemantics> {
   +name: NameType 
@@ -17,6 +17,6 @@ class Extension<HasSemantics> {
   +value: ValueDataType[0..1] 
   +valueType: DataTypeDefXsd[0..1] 
 }
-HasExtensions <.. Extension
+HasExtensions ..> Extension
 HasExtensions <|-- Referable
 @enduml

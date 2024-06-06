@@ -10,7 +10,7 @@ class Submodel<Identifiable\nHasKind\nHasSemantics\nQualifiable\nHasDataSpecific
   +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
   +extensions: Extension[0..*] 
   +id: Identifier 
-  +idShort: idShortType[0..1] 
+  +IdShort: IdShortType[0..1] 
   +kind: ModellingKind[0..1] 
   +qualifiers: Qualifier[0..*] 
   +semanticId: Reference[0..1] 

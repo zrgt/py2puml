@@ -23,7 +23,7 @@ enum AssetKind <<enumeration>> {
   NotApplicable
   Type
 }
-AssetInformation <.. AssetKind
-AssetInformation <.. SpecificAssetId
-AssetInformation <.. Resource
+AssetInformation ..> AssetKind
+AssetInformation ..> SpecificAssetId
+AssetInformation ..> Resource
 @enduml

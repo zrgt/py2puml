@@ -18,7 +18,7 @@ PUML_ATTR_TPL = """  {visibility}{attr_name}: {attr_type}{staticity}
 """
 PUML_ITEM_END = """}
 """
-PUML_RELATION_TPL = """{source_fqn} {rel_type}-- {target_fqn}
+PUML_RELATION_TPL = """{source_fqn} {rel_type} {target_fqn}{label}
 """
 
 FEATURE_STATIC = ' {static}'
@@ -62,7 +62,7 @@ def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: 
     # exports the domain relationships between classes and enums
     for uml_relation in uml_relations:
         yield PUML_RELATION_TPL.format(
-            source_fqn=uml_relation.source_fqn, rel_type=uml_relation.type.value, target_fqn=uml_relation.target_fqn
+            source_fqn=uml_relation.source_fqn, rel_type=uml_relation.type.value, target_fqn=uml_relation.target_fqn, label=uml_relation.label
         )
 
     yield PUML_FILE_END

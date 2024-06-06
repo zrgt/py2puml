@@ -9,7 +9,7 @@ class BasicEventElement<EventElement> {
   +displayName: LangStringNameType[0..*] 
   +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
   +extensions: Extension[0..*] 
-  +idShort: idShortType[0..1] 
+  +IdShort: IdShortType[0..1] 
   +lastUpdate: DateTimeUtc[0..1] 
   +maxInterval: Duration[0..1] 
   +messageBroker: Reference[0..1] 

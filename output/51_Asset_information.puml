@@ -36,12 +36,14 @@ class RelationshipElement {
   +first: Reference 
   +second: Reference 
 }
-AssetAdministrationShell <.. AssetInformation
-AssetInformation <.. SpecificAssetId
-Entity <.. SubmodelElement
-Entity <.. EntityType
-Entity <.. SpecificAssetId
+AssetAdministrationShell ..> AssetInformation
+AssetInformation ..> SpecificAssetId
+Entity ..> SubmodelElement
+Entity ..> EntityType
+Entity ..> SpecificAssetId
 SubmodelElement <|-- Entity
 SubmodelElement <|-- RelationshipElement
-Submodel <.. SubmodelElement
+Submodel ..> SubmodelElement
+AssetAdministrationShell --> Submodel : submodels
+AssetAdministrationShell --> AssetAdministrationShell : derivedFrom
 @enduml

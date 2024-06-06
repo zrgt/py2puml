@@ -14,5 +14,5 @@ enum QualifierKind <<enumeration>> {
   TemplateQualifier
   ValueQualifier
 }
-Qualifier <.. QualifierKind
+Qualifier ..> QualifierKind
 @enduml

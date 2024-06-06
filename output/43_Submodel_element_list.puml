@@ -5,12 +5,12 @@ hide methods
 class SubmodelElementList {
   +orderRelevant: bool[0..1] 
   +semanticId_listElement: Reference[0..1] 
-  +typeValueListElement: aasSubmodelElements 
+  +typeValueListElement: AasSubmodelElements 
   +value: SubmodelElement[0..*] 
   +valueTypeListElement: DataTypeDefXsd[0..1] 
 }
 abstract class SubmodelElement<Referable\nHasSemantics\nQualifiable\nHasDataSpecification> <<abstract>> {
 }
-SubmodelElementList <.. SubmodelElement
+SubmodelElementList ..> SubmodelElement
 SubmodelElement <|-- SubmodelElementList
 @enduml

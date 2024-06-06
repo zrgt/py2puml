@@ -4,7 +4,7 @@ hide methods
 
 class aasCoreMeta.marker.serialization {
 }
-enum aasSubmodelElements <<enumeration>> {
+enum AasSubmodelElements <<enumeration>> {
   AnnotatedRelationshipElement
   BasicEventElement
   Blob
@@ -208,7 +208,7 @@ abstract class HasSemantics <<abstract>> {
   +semanticId: Reference[0..1] 
   +supplementalSemanticIds: Reference[0..*] 
 }
-class idShortType {
+class IdShortType {
 }
 abstract class Identifiable <<abstract>> {
   +administration: AdministrativeInformation[0..1] 
@@ -295,7 +295,7 @@ abstract class Referable <<abstract>> {
   +category: NameType[0..1] 
   +description: LangStringTextType[0..*] 
   +displayName: LangStringNameType[0..*] 
-  +idShort: idShortType[0..1] 
+  +IdShort: IdShortType[0..1] 
 }
 class Reference {
   +keys: Key[1..*] 
@@ -338,7 +338,7 @@ class SubmodelElementCollection {
 class SubmodelElementList {
   +orderRelevant: bool[0..1] 
   +semanticId_listElement: Reference[0..1] 
-  +typeValueListElement: aasSubmodelElements 
+  +typeValueListElement: AasSubmodelElements 
   +valueTypeListElement: DataTypeDefXsd[0..1] 
 }
 class ValueDataType {
@@ -354,83 +354,83 @@ class ValueTypeIec_61360 {
 }
 class VersionType {
 }
-AbstractLangString <.. BCP_47_languageTag
-AbstractLangString <.. NonEmptyXml_serializableString
-AdministrativeInformation <.. VersionType
-AdministrativeInformation <.. RevisionType
-AdministrativeInformation <.. Reference
-AdministrativeInformation <.. Identifier
+AbstractLangString ..> BCP_47_languageTag
+AbstractLangString ..> NonEmptyXml_serializableString
+AdministrativeInformation ..> VersionType
+AdministrativeInformation ..> RevisionType
+AdministrativeInformation ..> Reference
+AdministrativeInformation ..> Identifier
 HasDataSpecification <|-- AdministrativeInformation
-AnnotatedRelationshipElement <.. DataElement
+AnnotatedRelationshipElement ..> DataElement
 RelationshipElement <|-- AnnotatedRelationshipElement
-AssetAdministrationShell <.. Reference
-AssetAdministrationShell <.. AssetInformation
+AssetAdministrationShell ..> Reference
+AssetAdministrationShell ..> AssetInformation
 Identifiable <|-- AssetAdministrationShell
 HasDataSpecification <|-- AssetAdministrationShell
-AssetInformation <.. AssetKind
-AssetInformation <.. Identifier
-AssetInformation <.. SpecificAssetId
-AssetInformation <.. Resource
-BasicEventElement <.. Reference
-BasicEventElement <.. Direction
-BasicEventElement <.. StateOfEvent
-BasicEventElement <.. MessageTopicType
-BasicEventElement <.. DateTimeUtc
-BasicEventElement <.. Duration
+AssetInformation ..> AssetKind
+AssetInformation ..> Identifier
+AssetInformation ..> SpecificAssetId
+AssetInformation ..> Resource
+BasicEventElement ..> Reference
+BasicEventElement ..> Direction
+BasicEventElement ..> StateOfEvent
+BasicEventElement ..> MessageTopicType
+BasicEventElement ..> DateTimeUtc
+BasicEventElement ..> Duration
 EventElement <|-- BasicEventElement
-Blob <.. BlobType
-Blob <.. ContentType
+Blob ..> BlobType
+Blob ..> ContentType
 DataElement <|-- Blob
 SubmodelElement <|-- Capability
-ConceptDescription <.. Reference
+ConceptDescription ..> Reference
 Identifiable <|-- ConceptDescription
 HasDataSpecification <|-- ConceptDescription
 NonEmptyXml_serializableString <|-- ContentType
 SubmodelElement <|-- DataElement
-DataSpecificationIec_61360 <.. LangStringPreferredNameTypeIec_61360
-DataSpecificationIec_61360 <.. LangStringShortNameTypeIec_61360
-DataSpecificationIec_61360 <.. NonEmptyXml_serializableString
-DataSpecificationIec_61360 <.. Reference
-DataSpecificationIec_61360 <.. DataTypeIec_61360
-DataSpecificationIec_61360 <.. LangStringDefinitionTypeIec_61360
-DataSpecificationIec_61360 <.. ValueList
-DataSpecificationIec_61360 <.. ValueTypeIec_61360
-DataSpecificationIec_61360 <.. LevelType
+DataSpecificationIec_61360 ..> LangStringPreferredNameTypeIec_61360
+DataSpecificationIec_61360 ..> LangStringShortNameTypeIec_61360
+DataSpecificationIec_61360 ..> NonEmptyXml_serializableString
+DataSpecificationIec_61360 ..> Reference
+DataSpecificationIec_61360 ..> DataTypeIec_61360
+DataSpecificationIec_61360 ..> LangStringDefinitionTypeIec_61360
+DataSpecificationIec_61360 ..> ValueList
+DataSpecificationIec_61360 ..> ValueTypeIec_61360
+DataSpecificationIec_61360 ..> LevelType
 DataSpecificationContent <|-- DataSpecificationIec_61360
-EmbeddedDataSpecification <.. DataSpecificationContent
-EmbeddedDataSpecification <.. Reference
-Entity <.. SubmodelElement
-Entity <.. EntityType
-Entity <.. Identifier
-Entity <.. SpecificAssetId
+EmbeddedDataSpecification ..> DataSpecificationContent
+EmbeddedDataSpecification ..> Reference
+Entity ..> SubmodelElement
+Entity ..> EntityType
+Entity ..> Identifier
+Entity ..> SpecificAssetId
 SubmodelElement <|-- Entity
-Environment <.. AssetAdministrationShell
-Environment <.. Submodel
-Environment <.. ConceptDescription
+Environment ..> AssetAdministrationShell
+Environment ..> Submodel
+Environment ..> ConceptDescription
 SubmodelElement <|-- EventElement
-EventPayload <.. Reference
-EventPayload <.. MessageTopicType
-EventPayload <.. DateTimeUtc
-EventPayload <.. BlobType
-Extension <.. NameType
-Extension <.. DataTypeDefXsd
-Extension <.. ValueDataType
-Extension <.. Reference
+EventPayload ..> Reference
+EventPayload ..> MessageTopicType
+EventPayload ..> DateTimeUtc
+EventPayload ..> BlobType
+Extension ..> NameType
+Extension ..> DataTypeDefXsd
+Extension ..> ValueDataType
+Extension ..> Reference
 HasSemantics <|-- Extension
-File <.. PathType
-File <.. ContentType
+File ..> PathType
+File ..> ContentType
 DataElement <|-- File
-HasDataSpecification <.. EmbeddedDataSpecification
-HasExtensions <.. Extension
-HasKind <.. ModellingKind
-HasSemantics <.. Reference
-NameType <|-- idShortType
-Identifiable <.. AdministrativeInformation
-Identifiable <.. Identifier
+HasDataSpecification ..> EmbeddedDataSpecification
+HasExtensions ..> Extension
+HasKind ..> ModellingKind
+HasSemantics ..> Reference
+NameType <|-- IdShortType
+Identifiable ..> AdministrativeInformation
+Identifiable ..> Identifier
 Referable <|-- Identifiable
 NonEmptyXml_serializableString <|-- Identifier
-Key <.. KeyTypes
-Key <.. Identifier
+Key ..> KeyTypes
+Key ..> Identifier
 NonEmptyXml_serializableString <|-- LabelType
 AbstractLangString <|-- LangStringDefinitionTypeIec_61360
 AbstractLangString <|-- LangStringNameType
@@ -438,49 +438,49 @@ AbstractLangString <|-- LangStringPreferredNameTypeIec_61360
 AbstractLangString <|-- LangStringShortNameTypeIec_61360
 AbstractLangString <|-- LangStringTextType
 NonEmptyXml_serializableString <|-- MessageTopicType
-MultiLanguageProperty <.. LangStringTextType
-MultiLanguageProperty <.. Reference
+MultiLanguageProperty ..> LangStringTextType
+MultiLanguageProperty ..> Reference
 DataElement <|-- MultiLanguageProperty
 NonEmptyXml_serializableString <|-- NameType
-Operation <.. OperationVariable
+Operation ..> OperationVariable
 SubmodelElement <|-- Operation
-OperationVariable <.. SubmodelElement
+OperationVariable ..> SubmodelElement
 Identifier <|-- PathType
-Property <.. DataTypeDefXsd
-Property <.. ValueDataType
-Property <.. Reference
+Property ..> DataTypeDefXsd
+Property ..> ValueDataType
+Property ..> Reference
 DataElement <|-- Property
-Qualifiable <.. Qualifier
-Qualifier <.. QualifierKind
-Qualifier <.. QualifierType
-Qualifier <.. DataTypeDefXsd
-Qualifier <.. ValueDataType
-Qualifier <.. Reference
+Qualifiable ..> Qualifier
+Qualifier ..> QualifierKind
+Qualifier ..> QualifierType
+Qualifier ..> DataTypeDefXsd
+Qualifier ..> ValueDataType
+Qualifier ..> Reference
 HasSemantics <|-- Qualifier
 NameType <|-- QualifierType
-Range <.. DataTypeDefXsd
-Range <.. ValueDataType
+Range ..> DataTypeDefXsd
+Range ..> ValueDataType
 DataElement <|-- Range
-Referable <.. NameType
-Referable <.. idShortType
-Referable <.. LangStringNameType
-Referable <.. LangStringTextType
+Referable ..> NameType
+Referable ..> IdShortType
+Referable ..> LangStringNameType
+Referable ..> LangStringTextType
 HasExtensions <|-- Referable
-Reference <.. ReferenceTypes
-Reference <.. Reference
-Reference <.. Key
-ReferenceElement <.. Reference
+Reference ..> ReferenceTypes
+Reference ..> Reference
+Reference ..> Key
+ReferenceElement ..> Reference
 DataElement <|-- ReferenceElement
-RelationshipElement <.. Reference
+RelationshipElement ..> Reference
 SubmodelElement <|-- RelationshipElement
-Resource <.. PathType
-Resource <.. ContentType
+Resource ..> PathType
+Resource ..> ContentType
 NonEmptyXml_serializableString <|-- RevisionType
-SpecificAssetId <.. LabelType
-SpecificAssetId <.. Identifier
-SpecificAssetId <.. Reference
+SpecificAssetId ..> LabelType
+SpecificAssetId ..> Identifier
+SpecificAssetId ..> Reference
 HasSemantics <|-- SpecificAssetId
-Submodel <.. SubmodelElement
+Submodel ..> SubmodelElement
 Identifiable <|-- Submodel
 HasKind <|-- Submodel
 HasSemantics <|-- Submodel
@@ -490,16 +490,22 @@ Referable <|-- SubmodelElement
 HasSemantics <|-- SubmodelElement
 Qualifiable <|-- SubmodelElement
 HasDataSpecification <|-- SubmodelElement
-SubmodelElementCollection <.. SubmodelElement
+SubmodelElementCollection ..> SubmodelElement
 SubmodelElement <|-- SubmodelElementCollection
-SubmodelElementList <.. Reference
-SubmodelElementList <.. aasSubmodelElements
-SubmodelElementList <.. DataTypeDefXsd
-SubmodelElementList <.. SubmodelElement
+SubmodelElementList ..> Reference
+SubmodelElementList ..> AasSubmodelElements
+SubmodelElementList ..> DataTypeDefXsd
+SubmodelElementList ..> SubmodelElement
 SubmodelElement <|-- SubmodelElementList
-ValueList <.. ValueReferencePair
-ValueReferencePair <.. ValueTypeIec_61360
-ValueReferencePair <.. Reference
+ValueList ..> ValueReferencePair
+ValueReferencePair ..> ValueTypeIec_61360
+ValueReferencePair ..> Reference
 NonEmptyXml_serializableString <|-- ValueTypeIec_61360
 NonEmptyXml_serializableString <|-- VersionType
+AssetAdministrationShell --> Submodel : submodels
+AssetAdministrationShell --> AssetAdministrationShell : derivedFrom
+BasicEventElement --> Referable : messageBroker
+BasicEventElement --> Referable : observed
+EventPayload --> Referable : observableReference
+EventPayload --> EventElement : source
 @enduml

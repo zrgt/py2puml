@@ -8,7 +8,7 @@ class Operation<SubmodelElement> {
   +displayName: LangStringNameType[0..*] 
   +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
   +extensions: Extension[0..*] 
-  +idShort: idShortType[0..1] 
+  +IdShort: IdShortType[0..1] 
   +inoutputVariables: OperationVariable[0..*] 
   +inputVariables: OperationVariable[0..*] 
   +outputVariables: OperationVariable[0..*] 

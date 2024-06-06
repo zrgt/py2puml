@@ -6,6 +6,6 @@ abstract class Referable<HasExtensions> <<abstract>> {
   +category: NameType[0..1] 
   +description: LangStringTextType[0..*] 
   +displayName: LangStringNameType[0..*] 
-  +idShort: idShortType[0..1] 
+  +IdShort: IdShortType[0..1] 
 }
 @enduml

@@ -16,7 +16,10 @@ from py2puml.utils import filter_items_and_relations
 DOMAIN_PATH = DOMAIN_MODULE = 'aas_core_meta'
 
 PUML_CLS_DIAGRAMS = (
-    (Asset_administration_shell, Asset_information, Asset_kind, Specific_asset_ID, Submodel, Qualifier, Submodel_element, Property),
+    (
+        Asset_administration_shell, Asset_information, Asset_kind, Specific_asset_ID, Submodel, Qualifier,
+        Submodel_element,
+        Property),
     (Environment, Asset_administration_shell, Submodel, Concept_description),
     (Administrative_information,),
     (Has_data_specification,),
@@ -31,7 +34,9 @@ PUML_CLS_DIAGRAMS = (
     (Asset_information, Specific_asset_ID, Resource, Asset_kind,),
     (Submodel, Submodel_element),
     (Submodel_element,),
-    (Submodel_element, Relationship_element, Annotated_relationship_element, Data_element, Property, Multi_language_property, Range, Blob, File, Reference_element, Capability, Submodel_element_list, Submodel_element_collection, Entity, Event_element, Basic_event_element, Operation, Operation_variable,),
+    (Submodel_element, Relationship_element, Annotated_relationship_element, Data_element, Property,
+     Multi_language_property, Range, Blob, File, Reference_element, Capability, Submodel_element_list,
+     Submodel_element_collection, Entity, Event_element, Basic_event_element, Operation, Operation_variable,),
     (Relationship_element, Annotated_relationship_element,),
     (Basic_event_element, Direction, State_of_event),
     (Event_payload,),
@@ -52,18 +57,20 @@ PUML_CLS_DIAGRAMS = (
     (Environment, Asset_administration_shell, Submodel, Concept_description),
     (Reference, Key, Reference_types),
     (Key, Key_types),
-    #(Key, Key_types, Fragment_keys, Generic_fragment_keys, AAS_referables, AAS_referable_non_identifiables, AAS_submodel_elements, AAS_identifiables, Globally_identifiables, Generic_globally_identifiables),
+    # (Key, Key_types, Fragment_keys, Generic_fragment_keys, AAS_referables, AAS_referable_non_identifiables, AAS_submodel_elements, AAS_identifiables, Globally_identifiables, Generic_globally_identifiables),
     (Key_types,),
     (AAS_submodel_elements,),
-    #image53
+    # image53
     (Data_type_def_XSD,),
-    #image56
-    #image57
-    #image59
-    (Asset_information, Specific_asset_ID, Entity, Entity_type, Asset_administration_shell, Submodel, Submodel_element, Relationship_element),
-    #image89
-    #image90
+    # image56
+    # image57
+    # image59
+    (Asset_information, Specific_asset_ID, Entity, Entity_type, Asset_administration_shell, Submodel, Submodel_element,
+     Relationship_element),
+    # image89
+    # image90
 )
+
 
 def classname(cls):
     module = cls.__module__
@@ -71,6 +78,7 @@ def classname(cls):
     if module is not None and module != "__builtin__":
         name = module + "." + name
     return name
+
 
 # Transform PUML_CLS_DIAGRAMS into a list of class names
 PUML_CLS_DIAGRAMS = [[classname(cls) for cls in classes] for classes in PUML_CLS_DIAGRAMS]
@@ -81,7 +89,6 @@ REGEX_TO_REPLACE = {
     ":  \n": "\n",
     # Replace the following strings from the PlantUML file
     fr"{DOMAIN_MODULE}\.v3\.": "",
-    r"\*--": "<..", # Replace compositions with dependencies
     r"Optional\[List\[(.+?)\]\]": "\\1[0..*]",  # Optional[List[...]] -> ...[0..*]
     r"List\[(.+?)\]": "\\1[1..*]",  # List[...] -> ...[1..*]
     r"Optional\[(.+?)\]": "\\1[0..1]",  # Optional[...] -> ...[0..1]
@@ -124,6 +131,9 @@ def aas_core_meta_py2puml(domain_path: str, domain_module: str, domain_items_to_
     domain_relations: List[UmlRelation] = []
     inspect_package(domain_path, domain_module, domain_items_by_fqn, domain_relations)
 
+    add_reference_relations(domain_items_by_fqn, domain_relations)
+    replace_compositions_with_dependencies(domain_relations)
+
     if to_include_members_from_parents:
         include_members_from_parents(domain_items_by_fqn, domain_relations)
 
@@ -137,6 +147,57 @@ def aas_core_meta_py2puml(domain_path: str, domain_module: str, domain_items_to_
     return to_puml_content(domain_module, domain_items_by_fqn.values(), domain_relations, sort_members)
 
 
+def add_reference_relations(domain_items: Dict[str, UmlItem], domain_relations):
+    domain_classes_with_invariant_decorator = [i for i in domain_items.values() if
+                                               isinstance(i, UmlClass) and has_decorator(i.class_type, "invariant")]
+    for item in domain_classes_with_invariant_decorator:
+        # Get the source code of the class
+        source = getsource(item.class_type)
+        # Get list of decorators source code
+        decorators = source[:source.find("\nclass ")].lstrip("@").split("\n@")
+        # Make a list of invariant decorators source code
+        invariants = [decorator for decorator in decorators if decorator.split("(")[0] == "invariant"]
+        # In each decorator search for 'is_model_reference_to' and for its args (including list comprehensions)
+        for invariant_src in invariants:
+            if "is_model_reference_to" not in invariant_src:
+                continue
+
+            # Get the args of the 'is_model_reference_to' or 'is_model_reference_to_referable' func
+            if "is_model_reference_to_referable" in invariant_src:
+                is_model_ref_to_regex = r"is_model_reference_to_referable\(\s*(\S+)\s*\)"
+                is_model_ref_to_search = re.search(is_model_ref_to_regex, invariant_src)
+                ref_attr = is_model_ref_to_search.group(1)
+                target_cls = classname(Referable)
+            elif "is_model_reference_to" in invariant_src:
+                is_model_ref_to_regex = r"is_model_reference_to\(\s*(\S+)\s*,\s*(\S+)?\s*\)"
+                is_model_ref_to_search = re.search(is_model_ref_to_regex, invariant_src)
+                ref_attr = is_model_ref_to_search.group(1)
+                key_type_attr = is_model_ref_to_search.group(2)
+                target_cls = classname(Key_types).removesuffix(".Key_types") + "." + key_type_attr.split(".")[-1]
+
+            if not ref_attr.startswith("self."):
+                # Search for list comprehension
+                is_model_ref_to_regex_with_list_comprehension = rf"\(\s*{is_model_ref_to_regex}\s*for (.+?) in (\S+)\s*\)"
+                ref_attr = re.search(is_model_ref_to_regex_with_list_comprehension, invariant_src).group(4)
+            # Get the class name from the args
+            # Create a relation between the current class and found class argument
+            create_ref_relation(domain_items, domain_relations, item.fqn, ref_attr.removeprefix("self."), target_cls)
+
+
+def create_ref_relation(domain_items, domain_relations, source_cls, attr, target_cls):
+    assert domain_items.get(source_cls) is not None, f"Class {source_cls} not found in the domain items"
+    assert domain_items.get(target_cls) is not None, f"Class {target_cls} not found in the domain items"
+    domain_relations.append(UmlRelation(source_fqn=source_cls, target_fqn=target_cls, type=RelType.REFERENCE,
+                                        label_=attr))
+
+
+def replace_compositions_with_dependencies(domain_relations: List[UmlRelation]):
+    """Replace compositions with dependencies in the domain relations."""
+    for rel in domain_relations:
+        if rel.type == RelType.COMPOSITION:
+            rel.type = RelType.DEPENDENCY
+
+
 def include_members_from_parents(domain_items_by_fqn: Dict[str, UmlItem], domain_relations: List[UmlRelation]):
     """Include the members from the parent classes in the child classes."""
     inheritance_rels = [rel for rel in domain_relations if rel.type == RelType.INHERITANCE]
@@ -144,7 +205,8 @@ def include_members_from_parents(domain_items_by_fqn: Dict[str, UmlItem], domain
         _include_members_from_parents(domain_items_by_fqn, inheritance_rels, inheritance_rels[0])
 
 
-def _include_members_from_parents(domain_items_by_fqn: Dict[str, UmlItem], inheritance_relations: List[UmlRelation], inheritance_rel):
+def _include_members_from_parents(domain_items_by_fqn: Dict[str, UmlItem], inheritance_relations: List[UmlRelation],
+                                  inheritance_rel):
     parent = domain_items_by_fqn.get(inheritance_rel.source_fqn)
     child = domain_items_by_fqn.get(inheritance_rel.target_fqn)
 
@@ -157,7 +219,6 @@ def _include_members_from_parents(domain_items_by_fqn: Dict[str, UmlItem], inher
             continue
         child.attributes.append(attr)
     inheritance_relations.remove(inheritance_rel)
-
 
 
 def handle_classes_and_relations_filtering(domain_items: Dict[str, UmlItem], domain_relations: List[UmlRelation],
@@ -211,7 +272,7 @@ def use_values_in_enumerations_as_names(domain_items: Dict[str, UmlItem]):
                 enum_item.value = ""
 
 
-def has_decorator(class_type, decorator_name):
+def has_decorator(class_type, decorator_name: Optional[str] = None):
     if class_type is None:
         return
     # Get the source code of the class
@@ -219,8 +280,12 @@ def has_decorator(class_type, decorator_name):
     # Parse the source code into an AST
     parsed_ast = parse(source)
     if hasattr(parsed_ast.body[0], 'decorator_list') and parsed_ast.body[0].decorator_list:
+        if decorator_name is None:
+            return True
         for decorator in parsed_ast.body[0].decorator_list:
             if hasattr(decorator, 'id') and decorator.id == decorator_name:
+                return True
+            elif hasattr(decorator, 'func') and decorator.func.id == decorator_name:
                 return True
     return False
 
@@ -252,33 +317,39 @@ def remove_duplicate_lines(text: str = None, exceptions=("{", "}", "")):
 
 
 def snake_to_camel(snake_str):
-    camel_str = re.sub(r'([a-z])_([a-z])', lambda match: match.group(1) + match.group(2).upper(), snake_str)
-    camel_str = re.sub(r'([a-z])_([A-Z])([A-Z]+)',
-                       lambda match: match.group(1) + match.group(2).upper() + match.group(3).lower(), camel_str)
-    camel_str = re.sub(r'([A-Z]+)_([a-z])', lambda match: match.group(1).lower() + match.group(2).upper(), camel_str)
-    camel_str = re.sub(r'([^A-Z])ID([^A-Z])', lambda match: match.group(1) + "id" + match.group(2).upper(), camel_str)
-    return camel_str
+    new_str = snake_str
+    new_str = re.sub(r'([a-z])_([a-z])',
+                     lambda match: match.group(1) + match.group(2).upper(), new_str)
+    new_str = re.sub(r'([a-z])_([A-Z])([A-Z]+)',
+                     lambda match: match.group(1) + match.group(2).upper() + match.group(3).lower(), new_str)
+    new_str = re.sub(r'([A-Z])([A-Z]+)_([a-z])',
+                     lambda match: match.group(1) + match.group(2).lower() + match.group(3).upper(), new_str)
+    new_str = re.sub(r'([^A-Z])ID([^A-Z])',
+                     lambda match: match.group(1) + "id" + match.group(2).upper(), new_str)
+    return new_str
 
 
 if __name__ == '__main__':
     output_path = Path('output')
     output_path.mkdir(exist_ok=True)
 
-    # Create the PlantUML for each set of classes defined in PUML_CLS_DIAGRAMS
+    print("Creating PlantUML files for each set of classes defined in PUML_CLS_DIAGRAMS")
     for i, classes_in_diagram in enumerate(PUML_CLS_DIAGRAMS, 12):
         cls_diagr_file = Path(f'output/{i}_{classes_in_diagram[0].removeprefix("aas_core_meta.v3.")}.puml')
+        print(f"Creating PlantUML file for classes: {', '.join(cls.removeprefix('aas_core_meta.v3.') for cls in classes_in_diagram)}")
         create_puml(cls_diagr_file, classes_in_diagram)
 
     aas_classes_files = output_path / 'classes'
     aas_classes_files.mkdir(exist_ok=True)
 
-    # Create the PlantUML for all classes in the domain module
+    print("Creating PlantUML file for all classes in the domain module")
     aas_all_classes_file = aas_classes_files / 'aas_core_meta_all.puml'
     create_puml(aas_all_classes_file)
 
-    # Create the PlantUML file for each class in the domain module
+    print("Creating PlantUML files for each class in the domain module")
     domain_items_by_fqn: Dict[str, UmlItem] = {}
     inspect_package(DOMAIN_PATH, DOMAIN_MODULE, domain_items_by_fqn, [])
     for item in domain_items_by_fqn:
+        print("Creating PlantUML file for class:", item.removeprefix("aas_core_meta.v3."))
         cls_diagr_file = aas_classes_files / f'{item.removeprefix("aas_core_meta.v3.")}.puml'
         create_puml(cls_diagr_file, classes=[item], to_include_members_from_parents=True)

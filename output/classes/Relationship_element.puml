@@ -9,7 +9,7 @@ class RelationshipElement<SubmodelElement> {
   +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
   +extensions: Extension[0..*] 
   +first: Reference 
-  +idShort: idShortType[0..1] 
+  +IdShort: IdShortType[0..1] 
   +qualifiers: Qualifier[0..*] 
   +second: Reference 
   +semanticId: Reference[0..1] 

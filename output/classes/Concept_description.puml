@@ -10,7 +10,7 @@ class ConceptDescription<Identifiable\nHasDataSpecification> {
   +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
   +extensions: Extension[0..*] 
   +id: Identifier 
-  +idShort: idShortType[0..1] 
+  +IdShort: IdShortType[0..1] 
   +isCaseOf: Reference[0..*] 
 }
 @enduml

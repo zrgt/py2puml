@@ -8,13 +8,13 @@ class SubmodelElementList<SubmodelElement> {
   +displayName: LangStringNameType[0..*] 
   +embeddedDataSpecifications: EmbeddedDataSpecification[0..*] 
   +extensions: Extension[0..*] 
-  +idShort: idShortType[0..1] 
+  +IdShort: IdShortType[0..1] 
   +orderRelevant: bool[0..1] 
   +qualifiers: Qualifier[0..*] 
   +semanticId: Reference[0..1] 
   +semanticId_listElement: Reference[0..1] 
   +supplementalSemanticIds: Reference[0..*] 
-  +typeValueListElement: aasSubmodelElements 
+  +typeValueListElement: AasSubmodelElements 
   +value: SubmodelElement[0..*] 
   +valueTypeListElement: DataTypeDefXsd[0..1] 
 }

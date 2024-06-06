@@ -2,7 +2,7 @@
 skinparam classAttributeIconSize 0
 hide methods
 
-enum aasSubmodelElements <<enumeration>> {
+enum AasSubmodelElements <<enumeration>> {
   AnnotatedRelationshipElement
   BasicEventElement
   Blob
