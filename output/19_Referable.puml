@@ -10,7 +10,7 @@ abstract class Referable<HasExtensions> <<abstract>> {
 }
 abstract class Identifiable <<abstract>> {
   +administration: AdministrativeInformation[0..1] 
-  +ID: Identifier 
+  +id: Identifier 
 }
 class AdministrativeInformation<HasDataSpecification> {
   +creator: Reference[0..1] 

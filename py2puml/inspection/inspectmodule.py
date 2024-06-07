@@ -11,6 +11,12 @@ from py2puml.inspection.inspectenum import inspect_enum_type
 from py2puml.inspection.inspectnamedtuple import inspect_namedtuple_type
 
 
+def filter_domain_relations(domain_items: Dict[str, UmlItem], domain_relations: List[UmlRelation]):
+    for relation in list(domain_relations):
+        if relation.source_fqn not in domain_items or relation.target_fqn not in domain_items:
+            domain_relations.remove(relation)
+
+
 def filter_domain_definitions(module: ModuleType, root_module_name: str) -> Iterable[Type]:
     for definition_key in dir(module):
         definition_type = getattr(module, definition_key)

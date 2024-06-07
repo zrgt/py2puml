@@ -9,7 +9,7 @@ class ConceptDescription<Identifiable\nHasDataSpecification> {
   +displayName: LangStringNameType[0..*] 
   +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
   +extension: Extension[0..*] 
-  +ID: Identifier 
+  +id: Identifier 
   +idShort: IdShortType[0..1] 
   +isCaseOf: Reference[0..*] 
 }

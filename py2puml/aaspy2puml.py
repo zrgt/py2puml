@@ -8,6 +8,7 @@ from py2puml.domain.umlenum import UmlEnum
 from py2puml.domain.umlitem import UmlItem
 from py2puml.domain.umlrelation import UmlRelation, RelType
 from py2puml.export.puml import to_puml_content
+from py2puml.inspection.inspectmodule import filter_domain_relations
 from py2puml.inspection.inspectpackage import inspect_package
 from py2puml.utils import classname, has_decorator, snake_to_camel, plural_attribute_to_singular
 
@@ -15,10 +16,20 @@ from py2puml.utils import classname, has_decorator, snake_to_camel, plural_attri
 class AasPumlGenerator:
     REF_RELATION_SUFFIX = ":ref"
 
-    def __init__(self, domain_path: str, domain_module: str,
+    def __init__(self, domain_path: str, domain_module: str, domain_submodules: Iterable[str] = None,
                  domain_items: Dict[str, UmlItem] = None, domain_relations: List[UmlRelation] = None):
+        """ Initialize the AAS PlantUML generator.
+        :param domain_path: the path to the domain module.
+        :param domain_module: the name of the domain module.
+        :param domain_submodules: the submodules of the domain module, which should be included in the PlantUML.
+        If None, all submodules are included.
+        :param domain_items: the domain items to include in the PlantUML. If given the domain module is not inspected.
+        :param domain_relations: the domain relations to include in the PlantUML. If given the domain module is not
+        inspected.
+        """
         self.domain_path = domain_path
         self.domain_module = domain_module
+        self.domain_submodules = domain_submodules
         if domain_items is None:
             self.domain_items: Dict[str, UmlItem] = {}
             self.domain_relations: List[UmlRelation] = []
@@ -32,7 +43,8 @@ class AasPumlGenerator:
             r"\{static\}": "",
             ":  \n": "\n",
             # Replace the following strings from the PlantUML file
-            fr"{snake_to_camel(domain_module)}\.v3\.": "",
+            fr"{snake_to_camel(domain_module)}\.": "",
+            r"\+ID:": "+id:",
             r"Optional\[List\[(.+?)\]\]": "\\1[0..*]",  # Optional[List[...]] -> ...[0..*]
             r"List\[(.+?)\]": "\\1[1..*]",  # List[...] -> ...[1..*]
             r"Optional\[(.+?)\]": "\\1[0..1]",  # Optional[...] -> ...[0..1]
@@ -40,9 +52,14 @@ class AasPumlGenerator:
                 r"abstract class \1 <<abstract>> {",  # abstract class ... { -> abstract class ... <<abstract>> {
             r"enum (.+?) \{": r"enum \1 <<enumeration>> {",  # enum ... { -> enum ... <<enumeration>> {
         }
+        if domain_submodules:
+            for submodule in domain_submodules:
+                self.regex_to_replace[fr"{snake_to_camel(submodule)}\."] = ""
 
     def _inspect_package(self):
         inspect_package(self.domain_path, self.domain_module, self.domain_items, self.domain_relations)
+        if self.domain_submodules:
+            self._filter_domain_items_from_submodules()
         self._remove_duplicated_relations()
         self._add_reference_relations()
         self._replace_compositions_with_dependencies()
@@ -50,6 +67,18 @@ class AasPumlGenerator:
         self._use_values_in_enumerations_as_names()
         self._rename_snake_case_to_camel_case()
         self._rename_plural_attrs_labels_to_singular()
+
+    def _filter_domain_items_from_submodules(self):
+        items_from_submodules = []
+        for item in self.domain_items:
+            for submodule in self.domain_submodules:
+                if item.startswith(f"{self.domain_module}.{submodule}."):
+                    items_from_submodules.append(item)
+                    break
+        items_to_remove = [item for item in self.domain_items if item not in items_from_submodules]
+        for item in items_to_remove:
+            del self.domain_items[item]
+        filter_domain_relations(self.domain_items, self.domain_relations)
 
     def _remove_duplicated_relations(self):
         """Remove duplicated relations from the domain relations."""
@@ -209,9 +238,7 @@ class AasPumlGenerator:
         for fqn in list(self.domain_items.keys()):
             if fqn not in only_domain_items:
                 del self.domain_items[fqn]
-        for relation in list(self.domain_relations):
-            if relation.source_fqn not in only_domain_items or relation.target_fqn not in only_domain_items:
-                self.domain_relations.remove(relation)
+        filter_domain_relations(self.domain_items, self.domain_relations)
 
     def _add_filtered_out_parent_classes_as_generics(self, removed_inheritances: List[Tuple[str, str]]):
         """Add classes that are filtered out from the PlantUML file and will be not shown in the diagram,

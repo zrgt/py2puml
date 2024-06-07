@@ -2,8 +2,6 @@
 skinparam classAttributeIconSize 0
 hide methods
 
-class aasCoreMeta.marker.serialization {
-}
 enum AasSubmodelElements <<enumeration>> {
   AnnotatedRelationshipElement
   BasicEventElement
@@ -215,7 +213,7 @@ class IdShortType {
 }
 abstract class Identifiable <<abstract>> {
   +administration: AdministrativeInformation[0..1] 
-  +ID: Identifier 
+  +id: Identifier 
 }
 class Identifier {
 }
