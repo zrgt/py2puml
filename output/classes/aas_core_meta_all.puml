@@ -531,10 +531,10 @@ ValueReferencePair ..> ValueTypeIec_61360
 ValueReferencePair ..> Reference
 NonEmptyXmlSerializableString <|-- ValueTypeIec_61360
 NonEmptyXmlSerializableString <|-- VersionType
-AssetAdministrationShell --> Submodel : submodels
-AssetAdministrationShell --> AssetAdministrationShell : derivedFrom
-BasicEventElement --> Referable : messageBroker
-BasicEventElement --> Referable : observed
-EventPayload --> Referable : observableReference
-EventPayload --> EventElement : source
+AssetAdministrationShell --> Submodel : submodel:ref
+AssetAdministrationShell --> AssetAdministrationShell : derivedFrom:ref
+BasicEventElement --> Referable : messageBroker:ref
+BasicEventElement --> Referable : observed:ref
+EventPayload --> Referable : observableReference:ref
+EventPayload --> EventElement : source:ref
 @enduml

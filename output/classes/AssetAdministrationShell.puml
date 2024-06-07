@@ -15,5 +15,5 @@ class AssetAdministrationShell<Identifiable\nHasDataSpecification> {
   +idShort: IdShortType[0..1] 
   +submodel: Reference[0..*] 
 }
-AssetAdministrationShell --> AssetAdministrationShell : derivedFrom
+AssetAdministrationShell --> AssetAdministrationShell : derivedFrom:ref
 @enduml

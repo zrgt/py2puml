@@ -46,6 +46,6 @@ Entity ..> SpecificAssetId
 SubmodelElement <|-- Entity
 SubmodelElement <|-- RelationshipElement
 Submodel ..> SubmodelElement
-AssetAdministrationShell --> Submodel : submodels
-AssetAdministrationShell --> AssetAdministrationShell : derivedFrom
+AssetAdministrationShell --> Submodel : submodel:ref
+AssetAdministrationShell --> AssetAdministrationShell : derivedFrom:ref
 @enduml

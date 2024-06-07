@@ -13,6 +13,8 @@ from py2puml.utils import classname, has_decorator, snake_to_camel, plural_attri
 
 
 class AasPumlGenerator:
+    REF_RELATION_SUFFIX = ":ref"
+
     def __init__(self, domain_path: str, domain_module: str,
                  domain_items: Dict[str, UmlItem] = None, domain_relations: List[UmlRelation] = None):
         self.domain_path = domain_path
@@ -47,7 +49,7 @@ class AasPumlGenerator:
         self._set_aas_core_meta_abstract_classes_as_abstract()
         self._use_values_in_enumerations_as_names()
         self._rename_snake_case_to_camel_case()
-        self._rename_plural_attrs_to_singular()
+        self._rename_plural_attrs_labels_to_singular()
 
     def _remove_duplicated_relations(self):
         """Remove duplicated relations from the domain relations."""
@@ -70,19 +72,20 @@ class AasPumlGenerator:
             renamed_domain_items[item.fqn] = item
         self.domain_items = renamed_domain_items
 
-        renamed_domain_relations = []
         for rel in self.domain_relations:
             rel.source_fqn = snake_to_camel(rel.source_fqn)
             rel.target_fqn = snake_to_camel(rel.target_fqn)
             rel.label_ = snake_to_camel(rel.label_) if rel.label_ else rel.label_
-            renamed_domain_relations.append(rel)
-        self.domain_relations = renamed_domain_relations
 
-    def _rename_plural_attrs_to_singular(self):
+    def _rename_plural_attrs_labels_to_singular(self):
         for item in self.domain_items.values():
             if isinstance(item, UmlClass):
                 for attr in item.attributes:
                     attr.name = plural_attribute_to_singular(attr.name)
+        for rel in self.domain_relations:
+            if rel.label_ and rel.label_.endswith(self.REF_RELATION_SUFFIX):
+                attr_name = plural_attribute_to_singular(rel.label_.removesuffix(self.REF_RELATION_SUFFIX))
+                rel.label_ = f"{attr_name}{self.REF_RELATION_SUFFIX}"
 
     def _add_reference_relations(self):
         domain_classes_with_invariant_decorator = [i for i in self.domain_items.values() if
@@ -123,8 +126,8 @@ class AasPumlGenerator:
     def _create_ref_relation(self, source_cls, attr, target_cls):
         assert self.domain_items.get(source_cls) is not None, f"Class {source_cls} not found in the domain items"
         assert self.domain_items.get(target_cls) is not None, f"Class {target_cls} not found in the domain items"
-        self.domain_relations.append(
-            UmlRelation(source_fqn=source_cls, target_fqn=target_cls, type=RelType.REFERENCE, label_=attr))
+        self.domain_relations.append(UmlRelation(source_fqn=source_cls, target_fqn=target_cls, type=RelType.REFERENCE,
+                                                 label_=f"{attr}{self.REF_RELATION_SUFFIX}"))
 
     def _replace_compositions_with_dependencies(self):
         """Replace compositions with dependencies in the domain relations."""

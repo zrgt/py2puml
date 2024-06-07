@@ -45,6 +45,6 @@ AssetAdministrationShell ..> AssetInformation
 AssetInformation ..> AssetKind
 AssetInformation ..> SpecificAssetId
 Submodel ..> SubmodelElement
-AssetAdministrationShell --> Submodel : submodels
-AssetAdministrationShell --> AssetAdministrationShell : derivedFrom
+AssetAdministrationShell --> Submodel : submodel:ref
+AssetAdministrationShell --> AssetAdministrationShell : derivedFrom:ref
 @enduml

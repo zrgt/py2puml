@@ -21,6 +21,6 @@ class ConceptDescription<Identifiable\nHasDataSpecification> {
 Environment ..> AssetAdministrationShell
 Environment ..> Submodel
 Environment ..> ConceptDescription
-AssetAdministrationShell --> Submodel : submodels
-AssetAdministrationShell --> AssetAdministrationShell : derivedFrom
+AssetAdministrationShell --> Submodel : submodel:ref
+AssetAdministrationShell --> AssetAdministrationShell : derivedFrom:ref
 @enduml
