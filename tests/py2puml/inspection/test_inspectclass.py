@@ -1,10 +1,10 @@
 from importlib import import_module
 from typing import Dict, List
 
-from py2puml.domain.umlclass import UmlAttribute, UmlClass
-from py2puml.domain.umlitem import UmlItem
-from py2puml.domain.umlrelation import RelType, UmlRelation
-from py2puml.inspection.inspectmodule import inspect_module
+from pyaas2puml.domain.umlclass import UmlAttribute, UmlClass
+from pyaas2puml.domain.umlitem import UmlItem
+from pyaas2puml.domain.umlrelation import RelType, UmlRelation
+from pyaas2puml.inspection.inspectmodule import inspect_module
 
 from tests.asserts.attribute import assert_attribute
 from tests.asserts.relation import assert_relation

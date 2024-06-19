@@ -1,8 +1,8 @@
 from enum import Enum
 from typing import Dict, Type
 
-from py2puml.domain.umlenum import Member, UmlEnum
-from py2puml.domain.umlitem import UmlItem
+from pyaas2puml.domain.umlenum import Member, UmlEnum
+from pyaas2puml.domain.umlitem import UmlItem
 
 
 def inspect_enum_type(enum_type: Type[Enum], enum_type_fqn: str, domain_items_by_fqn: Dict[str, UmlItem]):

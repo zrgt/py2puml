@@ -1,4 +1,4 @@
-from py2puml.parsing.moduleresolver import ModuleResolver, NamespacedType
+from pyaas2puml.parsing.moduleresolver import ModuleResolver, NamespacedType
 
 from tests.py2puml.parsing.mockedinstance import MockedInstance
 

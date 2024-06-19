@@ -3,9 +3,9 @@ from pkgutil import walk_packages
 from types import ModuleType
 from typing import Dict, List
 
-from py2puml.domain.umlitem import UmlItem
-from py2puml.domain.umlrelation import UmlRelation
-from py2puml.inspection.inspectmodule import inspect_module
+from pyaas2puml.domain.umlitem import UmlItem
+from pyaas2puml.domain.umlrelation import UmlRelation
+from pyaas2puml.inspection.inspectmodule import inspect_module
 
 
 def inspect_package(

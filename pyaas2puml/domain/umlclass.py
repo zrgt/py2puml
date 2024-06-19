@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List, Type, Optional
 
-from py2puml.domain.umlitem import UmlItem
+from pyaas2puml.domain.umlitem import UmlItem
 
 
 @dataclass

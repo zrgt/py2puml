@@ -1,9 +1,9 @@
 from typing import Dict, List
 
-from py2puml.domain.umlenum import Member, UmlEnum
-from py2puml.domain.umlitem import UmlItem
-from py2puml.domain.umlrelation import UmlRelation
-from py2puml.inspection.inspectmodule import inspect_domain_definition
+from pyaas2puml.domain.umlenum import Member, UmlEnum
+from pyaas2puml.domain.umlitem import UmlItem
+from pyaas2puml.domain.umlrelation import UmlRelation
+from pyaas2puml.inspection.inspectmodule import inspect_domain_definition
 
 from tests.modules.withenum import TimeUnit
 

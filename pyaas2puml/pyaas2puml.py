@@ -3,14 +3,14 @@ from inspect import getsource
 from typing import Iterable, Optional, Dict, List, Tuple
 
 from aas_core_meta.v3 import Referable, Key_types
-from py2puml.domain.umlclass import UmlClass
-from py2puml.domain.umlenum import UmlEnum
-from py2puml.domain.umlitem import UmlItem
-from py2puml.domain.umlrelation import UmlRelation, RelType
-from py2puml.export.puml import to_puml_content
-from py2puml.inspection.inspectmodule import filter_domain_relations
-from py2puml.inspection.inspectpackage import inspect_package
-from py2puml.utils import classname, has_decorator, snake_to_camel, plural_attribute_to_singular
+from pyaas2puml.domain.umlclass import UmlClass
+from pyaas2puml.domain.umlenum import UmlEnum
+from pyaas2puml.domain.umlitem import UmlItem
+from pyaas2puml.domain.umlrelation import UmlRelation, RelType
+from pyaas2puml.export.puml import to_puml_content
+from pyaas2puml.inspection.inspectmodule import filter_domain_relations
+from pyaas2puml.inspection.inspectpackage import inspect_package
+from pyaas2puml.utils import classname, has_decorator, snake_to_camel, plural_attribute_to_singular
 
 
 class AasPumlGenerator:
@@ -260,3 +260,8 @@ class AasPumlGenerator:
         for pattern, repl in self.regex_to_replace.items():
             text = re.sub(pattern, repl, text)
         return text
+
+
+def pyaas2puml(domain_path: str, domain_module: str) -> Iterable[str]:
+    generator = AasPumlGenerator(domain_path, domain_module)
+    return generator.generate_puml()

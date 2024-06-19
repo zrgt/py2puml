@@ -14,8 +14,8 @@ from typing import Dict, List
 
 from pytest import fixture
 
-from py2puml.domain.umlitem import UmlItem
-from py2puml.domain.umlrelation import UmlRelation
+from pyaas2puml.domain.umlitem import UmlItem
+from pyaas2puml.domain.umlrelation import UmlRelation
 
 
 @fixture(scope='function')

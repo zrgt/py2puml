@@ -4,11 +4,11 @@ from inspect import getmembers, isclass
 from types import ModuleType
 from typing import Dict, Iterable, List, Type
 
-from py2puml.domain.umlitem import UmlItem
-from py2puml.domain.umlrelation import UmlRelation
-from py2puml.inspection.inspectclass import inspect_class_type, inspect_dataclass_type
-from py2puml.inspection.inspectenum import inspect_enum_type
-from py2puml.inspection.inspectnamedtuple import inspect_namedtuple_type
+from pyaas2puml.domain.umlitem import UmlItem
+from pyaas2puml.domain.umlrelation import UmlRelation
+from pyaas2puml.inspection.inspectclass import inspect_class_type, inspect_dataclass_type
+from pyaas2puml.inspection.inspectenum import inspect_enum_type
+from pyaas2puml.inspection.inspectnamedtuple import inspect_namedtuple_type
 
 
 def filter_domain_relations(domain_items: Dict[str, UmlItem], domain_relations: List[UmlRelation]):

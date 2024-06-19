@@ -3,8 +3,8 @@ from typing import Callable, Dict
 
 from pytest import fixture
 
-from py2puml.domain.umlitem import UmlItem
-from py2puml.inspection.inspectmodule import inspect_module
+from pyaas2puml.domain.umlitem import UmlItem
+from pyaas2puml.inspection.inspectmodule import inspect_module
 
 from tests.asserts.attribute import assert_attribute
 

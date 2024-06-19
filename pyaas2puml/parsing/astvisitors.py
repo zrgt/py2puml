@@ -14,10 +14,10 @@ from ast import (
 from collections import namedtuple
 from typing import Dict, List, Tuple
 
-from py2puml.domain.umlclass import UmlAttribute
-from py2puml.domain.umlrelation import RelType, UmlRelation
-from py2puml.parsing.compoundtypesplitter import SPLITTING_CHARACTERS, CompoundTypeSplitter
-from py2puml.parsing.moduleresolver import ModuleResolver
+from pyaas2puml.domain.umlclass import UmlAttribute
+from pyaas2puml.domain.umlrelation import RelType, UmlRelation
+from pyaas2puml.parsing.compoundtypesplitter import SPLITTING_CHARACTERS, CompoundTypeSplitter
+from pyaas2puml.parsing.moduleresolver import ModuleResolver
 
 Variable = namedtuple('Variable', ['id', 'type_expr'])
 

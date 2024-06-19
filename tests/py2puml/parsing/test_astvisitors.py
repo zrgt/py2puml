@@ -5,12 +5,12 @@ from typing import Dict, List, Tuple, Union
 
 from pytest import mark
 
-from py2puml.parsing.astvisitors import (
+from pyaas2puml.parsing.astvisitors import (
     AssignedVariablesCollector,
     SignatureVariablesCollector,
     shorten_compound_type_annotation,
 )
-from py2puml.parsing.moduleresolver import ModuleResolver
+from pyaas2puml.parsing.moduleresolver import ModuleResolver
 
 from tests.asserts.variable import assert_Variable
 from tests.py2puml.parsing.mockedinstance import MockedInstance

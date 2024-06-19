@@ -2,7 +2,7 @@ from typing import Tuple
 
 from pytest import mark, raises
 
-from py2puml.parsing.compoundtypesplitter import (
+from pyaas2puml.parsing.compoundtypesplitter import (
     CompoundTypeSplitter,
     remove_forward_references,
     replace_nonetype_occurrences_in_union_types,
@@ -56,17 +56,17 @@ def test_CompoundTypeSplitter_from_invalid_types(type_annotation: str):
             ('Dict', '[', 'str', ',', 'Dict', '[', 'str', ',', 'builtins.float', ']', ']'),
         ),
         ('typing.List[Package]', ('typing.List', '[', 'Package', ']')),
-        ("typing.List[ForwardRef('Package')]", ('typing.List', '[', 'py2puml.domain.package.Package', ']')),
+        ("typing.List[ForwardRef('Package')]", ('typing.List', '[', 'pyaas2puml.domain.package.Package', ']')),
         (
-            'typing.List[py2puml.domain.umlclass.UmlAttribute]',
-            ('typing.List', '[', 'py2puml.domain.umlclass.UmlAttribute', ']'),
+            'typing.List[pyaas2puml.domain.umlclass.UmlAttribute]',
+            ('typing.List', '[', 'pyaas2puml.domain.umlclass.UmlAttribute', ']'),
         ),
         ('int|float', ('int', '|', 'float')),
         ('int | None', ('int', '|', 'None')),
     ],
 )
 def test_CompoundTypeSplitter_get_parts(type_annotation: str, expected_parts: Tuple[str]):
-    splitter = CompoundTypeSplitter(type_annotation, 'py2puml.domain.package')
+    splitter = CompoundTypeSplitter(type_annotation, 'pyaas2puml.domain.package')
     assert splitter.get_parts() == expected_parts
 
 
@@ -74,7 +74,7 @@ def test_CompoundTypeSplitter_get_parts(type_annotation: str, expected_parts: Tu
     ['type_annotation', 'type_module', 'without_forward_references'],
     [
         (None, None, None),
-        ("typing.List[ForwardRef('Package')]", 'py2puml.domain.package', 'typing.List[py2puml.domain.package.Package]'),
+        ("typing.List[ForwardRef('Package')]", 'pyaas2puml.domain.package', 'typing.List[pyaas2puml.domain.package.Package]'),
     ],
 )
 def test_remove_forward_references(type_annotation: str, type_module: str, without_forward_references: str):

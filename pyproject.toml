@@ -1,19 +1,19 @@
 [tool.poetry]
-name = "py2puml"
+name = "pyaas2puml"
 version = "0.9.1"
 description = "Generate PlantUML class diagrams to document your Python application."
 keywords = ["class diagram", "PlantUML", "documentation", "inspection", "AST"]
 readme = "README.md"
-repository = "https://github.com/lucsorel/py2puml"
-authors = ["Luc Sorel-Giffo"]
-maintainers = ["Luc Sorel-Giffo"]
+repository = "https://github.com/zrgt/pyaas2puml"
+authors = ["Luc Sorel-Giffo, Igor Garmaev"]
+maintainers = ["Luc Sorel-Giffo, Igor Garmaev"]
 license = "MIT"
 include = [
     "CONTRIBUTING.md"
 ]
 
 [tool.poetry.scripts]
-py2puml = 'py2puml.cli:run'
+pyaas2puml = 'pyaas2puml.cli:run'
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -63,7 +63,7 @@ fix = true
 # do not check unused imports in __init__.py files (they expose module features)
 "__init__.py" = ["E402"]
 # visiting function names include uppercase words (visit_FunctionDef)
-"py2puml/parsing/astvisitors.py" = ["N802"]
+"pyaas2puml/parsing/astvisitors.py" = ["N802"]
 "tests/asserts/variable.py" = ["N802"]
 "tests/py2puml/parsing/test_astvisitors.py" = ["N802", "N805"]
 "tests/py2puml/parsing/test_compoundtypesplitter.py" = ["N802"]

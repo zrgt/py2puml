@@ -4,14 +4,14 @@ from inspect import isabstract
 from re import compile as re_compile
 from typing import Dict, List, Type
 
-from py2puml.domain.umlclass import UmlAttribute, UmlClass
-from py2puml.domain.umlitem import UmlItem
-from py2puml.domain.umlrelation import RelType, UmlRelation
-from py2puml.parsing.astvisitors import shorten_compound_type_annotation
-from py2puml.parsing.moduleresolver import ModuleResolver
-from py2puml.parsing.parseclassconstructor import parse_class_constructor
+from pyaas2puml.domain.umlclass import UmlAttribute, UmlClass
+from pyaas2puml.domain.umlitem import UmlItem
+from pyaas2puml.domain.umlrelation import RelType, UmlRelation
+from pyaas2puml.parsing.astvisitors import shorten_compound_type_annotation
+from pyaas2puml.parsing.moduleresolver import ModuleResolver
+from pyaas2puml.parsing.parseclassconstructor import parse_class_constructor
 
-# from py2puml.utils import investigate_domain_definition
+# from pyaas2puml.utils import investigate_domain_definition
 
 CONCRETE_TYPE_PATTERN = re_compile("^<(?:class|enum) '([\\.|\\w]+)'>$")
 

@@ -36,4 +36,4 @@ jobs:
         run: poetry install --without lint
 
       - name: Run automated tests (with code coverage)
-        run: poetry run pytest -v --cov=py2puml --cov-branch --cov-report term-missing --cov-fail-under $MIN_CODE_COVERAGE_PERCENT
+        run: poetry run pytest -v --cov=pyaas2puml --cov-branch --cov-report term-missing --cov-fail-under $MIN_CODE_COVERAGE_PERCENT

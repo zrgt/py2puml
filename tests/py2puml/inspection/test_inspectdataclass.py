@@ -1,9 +1,9 @@
 from typing import Dict, List
 
-from py2puml.domain.umlclass import UmlClass
-from py2puml.domain.umlitem import UmlItem
-from py2puml.domain.umlrelation import RelType, UmlRelation
-from py2puml.inspection.inspectmodule import inspect_domain_definition
+from pyaas2puml.domain.umlclass import UmlClass
+from pyaas2puml.domain.umlitem import UmlItem
+from pyaas2puml.domain.umlrelation import RelType, UmlRelation
+from pyaas2puml.inspection.inspectmodule import inspect_domain_definition
 
 from tests.asserts.attribute import assert_attribute
 from tests.asserts.relation import assert_relation

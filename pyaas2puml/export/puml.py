@@ -1,9 +1,9 @@
 from typing import Iterable, List
 
-from py2puml.domain.umlclass import UmlClass
-from py2puml.domain.umlenum import UmlEnum
-from py2puml.domain.umlitem import UmlItem
-from py2puml.domain.umlrelation import UmlRelation
+from pyaas2puml.domain.umlclass import UmlClass
+from pyaas2puml.domain.umlenum import UmlEnum
+from pyaas2puml.domain.umlitem import UmlItem
+from pyaas2puml.domain.umlrelation import UmlRelation
 
 PUML_FILE_START = """@startuml
 skinparam classAttributeIconSize 0

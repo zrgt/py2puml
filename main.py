@@ -4,8 +4,8 @@ from pathlib import Path
 
 import aas_core_meta
 from aas_core_meta.v3 import *
-from py2puml.aaspy2puml import AasPumlGenerator
-from py2puml.utils import classname, write_file, snake_to_camel
+from pyaas2puml.pyaas2puml import AasPumlGenerator
+from pyaas2puml.utils import classname, write_file, snake_to_camel
 
 PUML_CLS_DIAGRAMS = (
     (

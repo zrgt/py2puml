@@ -1,9 +1,9 @@
 from typing import Dict, Iterable, List
 
-from py2puml.domain.umlitem import UmlItem
-from py2puml.domain.umlrelation import UmlRelation
-from py2puml.export.puml import to_puml_content
-from py2puml.inspection.inspectpackage import inspect_package
+from pyaas2puml.domain.umlitem import UmlItem
+from pyaas2puml.domain.umlrelation import UmlRelation
+from pyaas2puml.export.puml import to_puml_content
+from pyaas2puml.inspection.inspectpackage import inspect_package
 
 
 def py2puml(domain_path: str, domain_module: str) -> Iterable[str]:

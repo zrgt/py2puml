@@ -1,6 +1,6 @@
 from ast import get_source_segment
 
-from py2puml.parsing.astvisitors import Variable
+from pyaas2puml.parsing.astvisitors import Variable
 
 
 def assert_Variable(variable: Variable, id: str, type_str: str, source_code: str):

@@ -1,4 +1,4 @@
-from py2puml.domain.umlrelation import RelType, UmlRelation
+from pyaas2puml.domain.umlrelation import RelType, UmlRelation
 
 
 def assert_relation(uml_relation: UmlRelation, source_fqn: str, target_fqn: str, rel_type: RelType):

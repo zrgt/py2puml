@@ -1,5 +1,5 @@
 
-You would like to contribute to `py2puml`, thank you very much!
+You would like to contribute to `pyaas2puml`, thank you very much!
 
 Here are a few tips and guidelines to help you in the process.
 
@@ -51,12 +51,12 @@ Some manual changes thus need to be made to update it in the CLI; please, update
 
 ```toml
 [tool.poetry]
-name = "py2puml"
+name = "pyaas2puml"
 version = "major.minor.patch"
 ```
 
-- in the [cli.py module](py2puml/cli.py#L12) (the string value associated to the `version` parameter)
-- in the [test__init__.py](tests/py2puml/test__init__.py#L5) file
+- in the [cli.py module](pyaas2puml/cli.py#L12) (the string value associated to the `version` parameter)
+- in the [test__init__.py](tests/pyaas2puml/test__init__.py#L5) file
 
 
 # Code practices
@@ -86,7 +86,7 @@ poetry run pre-commit run --all-files
 Pull requests must come with unit tests, either new ones (for feature addtitions), changed ones (for feature changes) or non-regression ones (for bug fixes).
 Have a look at the [tests](tests/) folder and the existing automated tests scripts to see how they are organized:
 
-* within the `tests` folder, the subfolders' structure follows the one of the `py2puml` production code
+* within the `tests` folder, the subfolders' structure follows the one of the `pyaas2puml` production code
 * it helps finding the best location to write the unit tests, and where to find the ones corresponding to a feature you want to understand better
 
 This project uses the [pytest](https://docs.pytest.org) framework to run the whole tests suit.
@@ -106,5 +106,5 @@ When manipulating **literal strings**:
 '''use triple quote delimiters if the text contains both "double" and 'single' quote delimiters'''
 
 python_version = '3.8+'
-f'use f-strings to format strings, py2puml use Python {python_version}'
+f'use f-strings to format strings, pyaas2puml use Python {python_version}'
 ```

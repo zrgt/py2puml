@@ -2,7 +2,7 @@ from io import StringIO
 from pathlib import Path
 from typing import Iterable, List, Union
 
-from py2puml.py2puml import py2puml
+from pyaas2puml.py2puml import py2puml
 
 
 def assert_py2puml_is_file_content(domain_path: str, domain_module: str, diagram_filepath: Union[str, Path]):
@@ -14,7 +14,7 @@ def assert_py2puml_is_file_content(domain_path: str, domain_module: str, diagram
 def normalize_lines_with_returns(lines_with_returns: Iterable[str]) -> List[str]:
     """
     When comparing contents, each piece of contents can either be:
-    - a formatted string block output by the py2puml command containg line returns
+    - a formatted string block output by the pyaas2puml command containg line returns
     - a single line of contents read from a file, each line ending with a line return
 
     This function normalizes each sequence of contents as a list of string lines,

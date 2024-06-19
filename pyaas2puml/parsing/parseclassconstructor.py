@@ -4,10 +4,10 @@ from inspect import getsource, unwrap
 from textwrap import dedent
 from typing import Dict, List, Tuple, Type
 
-from py2puml.domain.umlclass import UmlAttribute
-from py2puml.domain.umlrelation import UmlRelation
-from py2puml.parsing.astvisitors import ConstructorVisitor
-from py2puml.parsing.moduleresolver import ModuleResolver
+from pyaas2puml.domain.umlclass import UmlAttribute
+from pyaas2puml.domain.umlrelation import UmlRelation
+from pyaas2puml.parsing.astvisitors import ConstructorVisitor
+from pyaas2puml.parsing.moduleresolver import ModuleResolver
 
 
 def parse_class_constructor(

@@ -1,0 +1,28 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide methods
+
+class umlclass.UmlAttribute {
+}
+class umlclass.UmlClass {
+}
+class umlitem.UmlItem {
+}
+class umlenum.Member {
+}
+class umlenum.UmlEnum {
+}
+enum umlrelation.RelType <<enumeration>> {
+  *--
+  -->
+  ..>
+  <|--
+}
+class umlrelation.UmlRelation {
+}
+umlclass.UmlClass ..> umlclass.UmlAttribute
+umlitem.UmlItem <|-- umlclass.UmlClass
+umlenum.UmlEnum ..> umlenum.Member
+umlitem.UmlItem <|-- umlenum.UmlEnum
+umlrelation.UmlRelation ..> umlrelation.RelType
+@enduml
