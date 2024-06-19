@@ -22,7 +22,7 @@ enum AasSubmodelElements <<enumeration>> {
   SubmodelElementCollection
 }
 abstract class AbstractLangString <<abstract>> {
-  +language: BcP_47LanguageTag 
+  +language: Bcp47LanguageTag 
   +text: NonEmptyXmlSerializableString 
 }
 class AdministrativeInformation {
@@ -51,7 +51,7 @@ enum AssetKind <<enumeration>> {
   Instance
   NotApplicable
 }
-class BcP_47LanguageTag {
+class Bcp47LanguageTag {
 }
 class BasicEventElement {
   +observed: Reference 
@@ -78,23 +78,23 @@ class ContentType {
 }
 abstract class DataElement <<abstract>> {
 }
-class DataSpecificationIec_61360 {
-  +preferredName: LangStringPreferredNameTypeIec_61360[1..*] 
-  +shortName: LangStringShortNameTypeIec_61360[0..*] 
+class DataSpecificationIec61360 {
+  +preferredName: LangStringPreferredNameTypeIec61360[1..*] 
+  +shortName: LangStringShortNameTypeIec61360[0..*] 
   +unit: NonEmptyXmlSerializableString[0..1] 
   +unitId: Reference[0..1] 
   +sourceOfDefinition: NonEmptyXmlSerializableString[0..1] 
   +symbol: NonEmptyXmlSerializableString[0..1] 
-  +dataType: DataTypeIec_61360[0..1] 
-  +definition: LangStringDefinitionTypeIec_61360[0..*] 
+  +dataType: DataTypeIec61360[0..1] 
+  +definition: LangStringDefinitionTypeIec61360[0..*] 
   +valueFormat: NonEmptyXmlSerializableString[0..1] 
   +valueList: ValueList[0..1] 
-  +value: ValueTypeIec_61360[0..1] 
+  +value: ValueTypeIec61360[0..1] 
   +levelType: LevelType[0..1] 
 }
 abstract class DataSpecificationContent <<abstract>> {
 }
-enum DataTypeIec_61360 <<enumeration>> {
+enum DataTypeIec61360 <<enumeration>> {
   DATE
   STRING
   STRING_TRANSLATABLE
@@ -249,13 +249,13 @@ enum KeyTypes <<enumeration>> {
 }
 class LabelType {
 }
-class LangStringDefinitionTypeIec_61360 {
+class LangStringDefinitionTypeIec61360 {
 }
 class LangStringNameType {
 }
-class LangStringPreferredNameTypeIec_61360 {
+class LangStringPreferredNameTypeIec61360 {
 }
-class LangStringShortNameTypeIec_61360 {
+class LangStringShortNameTypeIec61360 {
 }
 class LangStringTextType {
 }
@@ -374,14 +374,14 @@ class ValueList {
   +valueReferencePair: ValueReferencePair[1..*] 
 }
 class ValueReferencePair {
-  +value: ValueTypeIec_61360 
+  +value: ValueTypeIec61360 
   +valueId: Reference 
 }
-class ValueTypeIec_61360 {
+class ValueTypeIec61360 {
 }
 class VersionType {
 }
-AbstractLangString ..> BcP_47LanguageTag
+AbstractLangString ..> Bcp47LanguageTag
 AbstractLangString ..> NonEmptyXmlSerializableString
 AdministrativeInformation ..> VersionType
 AdministrativeInformation ..> RevisionType
@@ -414,16 +414,16 @@ Identifiable <|-- ConceptDescription
 HasDataSpecification <|-- ConceptDescription
 NonEmptyXmlSerializableString <|-- ContentType
 SubmodelElement <|-- DataElement
-DataSpecificationIec_61360 ..> LangStringPreferredNameTypeIec_61360
-DataSpecificationIec_61360 ..> LangStringShortNameTypeIec_61360
-DataSpecificationIec_61360 ..> NonEmptyXmlSerializableString
-DataSpecificationIec_61360 ..> Reference
-DataSpecificationIec_61360 ..> DataTypeIec_61360
-DataSpecificationIec_61360 ..> LangStringDefinitionTypeIec_61360
-DataSpecificationIec_61360 ..> ValueList
-DataSpecificationIec_61360 ..> ValueTypeIec_61360
-DataSpecificationIec_61360 ..> LevelType
-DataSpecificationContent <|-- DataSpecificationIec_61360
+DataSpecificationIec61360 ..> LangStringPreferredNameTypeIec61360
+DataSpecificationIec61360 ..> LangStringShortNameTypeIec61360
+DataSpecificationIec61360 ..> NonEmptyXmlSerializableString
+DataSpecificationIec61360 ..> Reference
+DataSpecificationIec61360 ..> DataTypeIec61360
+DataSpecificationIec61360 ..> LangStringDefinitionTypeIec61360
+DataSpecificationIec61360 ..> ValueList
+DataSpecificationIec61360 ..> ValueTypeIec61360
+DataSpecificationIec61360 ..> LevelType
+DataSpecificationContent <|-- DataSpecificationIec61360
 EmbeddedDataSpecification ..> DataSpecificationContent
 EmbeddedDataSpecification ..> Reference
 Entity ..> SubmodelElement
@@ -459,10 +459,10 @@ NonEmptyXmlSerializableString <|-- Identifier
 Key ..> KeyTypes
 Key ..> Identifier
 NonEmptyXmlSerializableString <|-- LabelType
-AbstractLangString <|-- LangStringDefinitionTypeIec_61360
+AbstractLangString <|-- LangStringDefinitionTypeIec61360
 AbstractLangString <|-- LangStringNameType
-AbstractLangString <|-- LangStringPreferredNameTypeIec_61360
-AbstractLangString <|-- LangStringShortNameTypeIec_61360
+AbstractLangString <|-- LangStringPreferredNameTypeIec61360
+AbstractLangString <|-- LangStringShortNameTypeIec61360
 AbstractLangString <|-- LangStringTextType
 NonEmptyXmlSerializableString <|-- MessageTopicType
 MultiLanguageProperty ..> LangStringTextType
@@ -525,9 +525,9 @@ SubmodelElementList ..> DataTypeDefXsd
 SubmodelElementList ..> SubmodelElement
 SubmodelElement <|-- SubmodelElementList
 ValueList ..> ValueReferencePair
-ValueReferencePair ..> ValueTypeIec_61360
+ValueReferencePair ..> ValueTypeIec61360
 ValueReferencePair ..> Reference
-NonEmptyXmlSerializableString <|-- ValueTypeIec_61360
+NonEmptyXmlSerializableString <|-- ValueTypeIec61360
 NonEmptyXmlSerializableString <|-- VersionType
 AssetAdministrationShell --> Submodel : submodel:ref
 AssetAdministrationShell --> AssetAdministrationShell : derivedFrom:ref

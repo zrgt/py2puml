@@ -2,7 +2,7 @@
 skinparam classAttributeIconSize 0
 hide methods
 
-enum DataTypeIec_61360 <<enumeration>> {
+enum DataTypeIec61360 <<enumeration>> {
   DATE
   STRING
   STRING_TRANSLATABLE

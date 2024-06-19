@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 hide methods
 
 abstract class AbstractLangString <<abstract>> {
-  +language: BcP_47LanguageTag 
+  +language: Bcp47LanguageTag 
   +text: NonEmptyXmlSerializableString 
 }
 @enduml

@@ -63,9 +63,11 @@ def has_decorator(class_type, decorator_name: Optional[str] = None):
 
 def snake_to_camel(snake_str):
     new_str = snake_str
-    if re.search(r'_([a-zA-Z])([a-zA-Z]+)', new_str):
-        new_str = re.sub(r'_([a-zA-Z])([a-zA-Z]+)', lambda match: match.group(1).upper() + match.group(2).lower(),
+    if re.search(r'_([a-zA-Z0-9])([a-zA-Z0-9]+)', new_str):
+        new_str = re.sub(r'_([a-zA-Z0-9])([a-zA-Z0-9]+)', lambda match: match.group(1).upper() + match.group(2).lower(),
                          new_str)
+        new_str = re.sub(r'([A-Z])([A-Z]+)([0-9])',
+                         lambda match: match.group(1) + match.group(2).lower() + match.group(3), new_str)
         new_str = re.sub(r'([A-Z])([A-Z]+)([A-Z])',
                          lambda match: match.group(1) + match.group(2).lower() + match.group(3), new_str)
     return new_str
