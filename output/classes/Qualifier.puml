@@ -4,11 +4,11 @@ hide methods
 
 class Qualifier<HasSemantics> {
   +kind: QualifierKind[0..1] 
-  +semanticId: Reference[0..1] 
-  +supplementalSemanticId: Reference[0..*] 
   +type: QualifierType 
+  +valueType: DataTypeDefXsd 
   +value: ValueDataType[0..1] 
   +valueId: Reference[0..1] 
-  +valueType: DataTypeDefXsd 
+  +semanticId: Reference[0..1] 
+  +supplementalSemanticId: Reference[0..*] 
 }
 @enduml

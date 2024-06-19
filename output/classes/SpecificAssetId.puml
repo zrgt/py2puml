@@ -3,10 +3,10 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class SpecificAssetId<HasSemantics> {
-  +externalSubjectId: Reference[0..1] 
   +name: LabelType 
+  +value: Identifier 
+  +externalSubjectId: Reference[0..1] 
   +semanticId: Reference[0..1] 
   +supplementalSemanticId: Reference[0..*] 
-  +value: Identifier 
 }
 @enduml

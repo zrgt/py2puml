@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class Blob<DataElement> {
-  +contentType: ContentType 
   +value: BlobType[0..1] 
+  +contentType: ContentType 
 }
 @enduml

@@ -18,54 +18,54 @@ enum AasSubmodelElements <<enumeration>> {
   ReferenceElement
   RelationshipElement
   SubmodelElement
-  SubmodelElementCollection
   SubmodelElementList
+  SubmodelElementCollection
 }
 abstract class AbstractLangString <<abstract>> {
   +language: BcP_47LanguageTag 
   +text: NonEmptyXmlSerializableString 
 }
 class AdministrativeInformation {
-  +creator: Reference[0..1] 
-  +revision: RevisionType[0..1] 
-  +templateId: Identifier[0..1] 
   +version: VersionType[0..1] 
+  +revision: RevisionType[0..1] 
+  +creator: Reference[0..1] 
+  +templateId: Identifier[0..1] 
 }
 class AnnotatedRelationshipElement {
   +annotation: DataElement[0..*] 
 }
 class AssetAdministrationShell {
-  +assetInformation: AssetInformation 
   +derivedFrom: Reference[0..1] 
+  +assetInformation: AssetInformation 
   +submodel: Reference[0..*] 
 }
 class AssetInformation {
   +assetKind: AssetKind 
-  +assetType: Identifier[0..1] 
-  +defaultThumbnail: Resource[0..1] 
   +globalAssetId: Identifier[0..1] 
   +specificAssetId: SpecificAssetId[0..*] 
+  +assetType: Identifier[0..1] 
+  +defaultThumbnail: Resource[0..1] 
 }
 enum AssetKind <<enumeration>> {
+  Type
   Instance
   NotApplicable
-  Type
 }
 class BcP_47LanguageTag {
 }
 class BasicEventElement {
-  +direction: Direction 
-  +lastUpdate: DateTimeUtc[0..1] 
-  +maxInterval: Duration[0..1] 
-  +messageBroker: Reference[0..1] 
-  +messageTopic: MessageTopicType[0..1] 
-  +minInterval: Duration[0..1] 
   +observed: Reference 
+  +direction: Direction 
   +state: StateOfEvent 
+  +messageTopic: MessageTopicType[0..1] 
+  +messageBroker: Reference[0..1] 
+  +lastUpdate: DateTimeUtc[0..1] 
+  +minInterval: Duration[0..1] 
+  +maxInterval: Duration[0..1] 
 }
 class Blob {
-  +contentType: ContentType 
   +value: BlobType[0..1] 
+  +contentType: ContentType 
 }
 class BlobType {
 }
@@ -79,41 +79,41 @@ class ContentType {
 abstract class DataElement <<abstract>> {
 }
 class DataSpecificationIec_61360 {
-  +dataType: DataTypeIec_61360[0..1] 
-  +definition: LangStringDefinitionTypeIec_61360[0..*] 
-  +levelType: LevelType[0..1] 
   +preferredName: LangStringPreferredNameTypeIec_61360[1..*] 
   +shortName: LangStringShortNameTypeIec_61360[0..*] 
-  +sourceOfDefinition: NonEmptyXmlSerializableString[0..1] 
-  +symbol: NonEmptyXmlSerializableString[0..1] 
   +unit: NonEmptyXmlSerializableString[0..1] 
   +unitId: Reference[0..1] 
-  +value: ValueTypeIec_61360[0..1] 
+  +sourceOfDefinition: NonEmptyXmlSerializableString[0..1] 
+  +symbol: NonEmptyXmlSerializableString[0..1] 
+  +dataType: DataTypeIec_61360[0..1] 
+  +definition: LangStringDefinitionTypeIec_61360[0..*] 
   +valueFormat: NonEmptyXmlSerializableString[0..1] 
   +valueList: ValueList[0..1] 
+  +value: ValueTypeIec_61360[0..1] 
+  +levelType: LevelType[0..1] 
 }
 abstract class DataSpecificationContent <<abstract>> {
 }
 enum DataTypeIec_61360 <<enumeration>> {
-  BLOB
-  BOOLEAN
   DATE
-  FILE
-  HTML
-  INTEGER_COUNT
-  INTEGER_CURRENCY
-  INTEGER_MEASURE
-  IRDI
-  IRI
-  RATIONAL
-  RATIONAL_MEASURE
-  REAL_COUNT
-  REAL_CURRENCY
-  REAL_MEASURE
   STRING
   STRING_TRANSLATABLE
+  INTEGER_MEASURE
+  INTEGER_COUNT
+  INTEGER_CURRENCY
+  REAL_MEASURE
+  REAL_COUNT
+  REAL_CURRENCY
+  BOOLEAN
+  IRI
+  IRDI
+  RATIONAL
+  RATIONAL_MEASURE
   TIME
   TIMESTAMP
+  FILE
+  HTML
+  BLOB
 }
 enum DataTypeDefXsd <<enumeration>> {
   xs:anyURI
@@ -156,14 +156,14 @@ enum Direction <<enumeration>> {
 class Duration {
 }
 class EmbeddedDataSpecification {
-  +dataSpecification: Reference[0..1] 
   +dataSpecificationContent: DataSpecificationContent 
+  +dataSpecification: Reference[0..1] 
 }
 class Entity {
+  +statement: SubmodelElement[0..*] 
   +entityType: EntityType 
   +globalAssetId: Identifier[0..1] 
   +specificAssetId: SpecificAssetId[0..*] 
-  +statement: SubmodelElement[0..*] 
 }
 enum EntityType <<enumeration>> {
   CoManagedEntity
@@ -171,30 +171,30 @@ enum EntityType <<enumeration>> {
 }
 class Environment {
   +assetAdministrationShell: AssetAdministrationShell[0..*] 
-  +conceptDescription: ConceptDescription[0..*] 
   +submodel: Submodel[0..*] 
+  +conceptDescription: ConceptDescription[0..*] 
 }
 abstract class EventElement <<abstract>> {
 }
 class EventPayload {
-  +observableReference: Reference 
-  +observableSemanticId: Reference[0..1] 
-  +payload: BlobType[0..1] 
   +source: Reference 
   +sourceSemanticId: Reference[0..1] 
+  +observableReference: Reference 
+  +observableSemanticId: Reference[0..1] 
+  +topic: MessageTopicType[0..1] 
   +subjectId: Reference[0..1] 
   +timeStamp: DateTimeUtc 
-  +topic: MessageTopicType[0..1] 
+  +payload: BlobType[0..1] 
 }
 class Extension {
   +name: NameType 
-  +refersTo: Reference[0..*] 
-  +value: ValueDataType[0..1] 
   +valueType: DataTypeDefXsd[0..1] 
+  +value: ValueDataType[0..1] 
+  +refersTo: Reference[0..*] 
 }
 class File {
-  +contentType: ContentType 
   +value: PathType[0..1] 
+  +contentType: ContentType 
 }
 abstract class HasDataSpecification <<abstract>> {
   +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
@@ -260,16 +260,16 @@ class LangStringShortNameTypeIec_61360 {
 class LangStringTextType {
 }
 class LevelType {
-  +max: bool 
   +min: bool 
   +nom: bool 
   +typ: bool 
+  +max: bool 
 }
 class MessageTopicType {
 }
 enum ModellingKind <<enumeration>> {
-  Instance
   Template
+  Instance
 }
 class MultiLanguageProperty {
   +value: LangStringTextType[0..*] 
@@ -280,9 +280,9 @@ class NameType {
 class NonEmptyXmlSerializableString {
 }
 class Operation {
-  +inoutputVariable: OperationVariable[0..*] 
   +inputVariable: OperationVariable[0..*] 
   +outputVariable: OperationVariable[0..*] 
+  +inoutputVariable: OperationVariable[0..*] 
 }
 class OperationVariable {
   +value: SubmodelElement 
@@ -290,9 +290,9 @@ class OperationVariable {
 class PathType {
 }
 class Property {
+  +valueType: DataTypeDefXsd 
   +value: ValueDataType[0..1] 
   +valueId: Reference[0..1] 
-  +valueType: DataTypeDefXsd 
 }
 abstract class Qualifiable <<abstract>> {
   +qualifier: Qualifier[0..*] 
@@ -300,32 +300,32 @@ abstract class Qualifiable <<abstract>> {
 class Qualifier {
   +kind: QualifierKind[0..1] 
   +type: QualifierType 
+  +valueType: DataTypeDefXsd 
   +value: ValueDataType[0..1] 
   +valueId: Reference[0..1] 
-  +valueType: DataTypeDefXsd 
 }
 enum QualifierKind <<enumeration>> {
+  ValueQualifier
   ConceptQualifier
   TemplateQualifier
-  ValueQualifier
 }
 class QualifierType {
 }
 class Range {
-  +max: ValueDataType[0..1] 
-  +min: ValueDataType[0..1] 
   +valueType: DataTypeDefXsd 
+  +min: ValueDataType[0..1] 
+  +max: ValueDataType[0..1] 
 }
 abstract class Referable <<abstract>> {
   +category: NameType[0..1] 
-  +description: LangStringTextType[0..*] 
-  +displayName: LangStringNameType[0..*] 
   +idShort: IdShortType[0..1] 
+  +displayName: LangStringNameType[0..*] 
+  +description: LangStringTextType[0..*] 
 }
 class Reference {
-  +key: Key[1..*] 
-  +referredSemanticId: Reference[0..1] 
   +type: ReferenceTypes 
+  +referredSemanticId: Reference[0..1] 
+  +key: Key[1..*] 
 }
 class ReferenceElement {
   +value: Reference[0..1] 
@@ -339,19 +339,19 @@ class RelationshipElement {
   +second: Reference 
 }
 class Resource {
-  +contentType: ContentType[0..1] 
   +path: PathType 
+  +contentType: ContentType[0..1] 
 }
 class RevisionType {
 }
 class SpecificAssetId {
-  +externalSubjectId: Reference[0..1] 
   +name: LabelType 
   +value: Identifier 
+  +externalSubjectId: Reference[0..1] 
 }
 enum StateOfEvent <<enumeration>> {
-  off
   on
+  off
 }
 class Submodel {
   +submodelElement: SubmodelElement[0..*] 
@@ -365,8 +365,8 @@ class SubmodelElementList {
   +orderRelevant: bool[0..1] 
   +semanticIdListElement: Reference[0..1] 
   +typeValueListElement: AasSubmodelElements 
-  +value: SubmodelElement[0..*] 
   +valueTypeListElement: DataTypeDefXsd[0..1] 
+  +value: SubmodelElement[0..*] 
 }
 class ValueDataType {
 }

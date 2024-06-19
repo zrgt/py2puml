@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class File<DataElement> {
-  +contentType: ContentType 
   +value: PathType[0..1] 
+  +contentType: ContentType 
 }
 @enduml

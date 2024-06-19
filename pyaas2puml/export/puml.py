@@ -27,7 +27,7 @@ FEATURE_INSTANCE = ''
 
 
 def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: List[UmlRelation],
-                    sort_members: bool = True) -> Iterable[str]:
+                    sort_members: bool = False) -> Iterable[str]:
     yield PUML_FILE_START.format(diagram_name=diagram_name)
 
     # exports the domain classes and enums
@@ -49,7 +49,7 @@ def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: 
     yield PUML_FILE_END
 
 
-def yeld_puml_enum(uml_enum: UmlEnum, sort_members: bool = True) -> Iterable[str]:
+def yeld_puml_enum(uml_enum: UmlEnum, sort_members: bool = False) -> Iterable[str]:
     yield PUML_ITEM_START_TPL.format(item_type='enum', item_fqn=uml_enum.fqn,
                                      generics=f'<{uml_enum.generics}>' if uml_enum.generics else '')
     if sort_members:
@@ -60,7 +60,7 @@ def yeld_puml_enum(uml_enum: UmlEnum, sort_members: bool = True) -> Iterable[str
     yield PUML_ITEM_END
 
 
-def yeld_puml_class(uml_class: UmlClass, sort_members: bool = True) -> Iterable[str]:
+def yeld_puml_class(uml_class: UmlClass, sort_members: bool = False) -> Iterable[str]:
     yield PUML_ITEM_START_TPL.format(
         item_type='abstract class' if uml_class.is_abstract else 'class', item_fqn=uml_class.fqn,
         generics=f'<{uml_class.generics}>' if uml_class.generics else ''
@@ -80,7 +80,7 @@ def yeld_puml_class(uml_class: UmlClass, sort_members: bool = True) -> Iterable[
     yield PUML_ITEM_END
 
 
-def remove_duplicated_attrs(uml_class: UmlClass) -> UmlClass:
+def remove_duplicated_attrs(uml_class: UmlClass):
     static_attrs = [attr.name for attr in uml_class.attributes if attr.static]
     for attr in copy(uml_class.attributes):
         if not attr.static and attr.name in static_attrs:

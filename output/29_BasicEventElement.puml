@@ -3,22 +3,22 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class BasicEventElement<EventElement> {
-  +direction: Direction 
-  +lastUpdate: DateTimeUtc[0..1] 
-  +maxInterval: Duration[0..1] 
-  +messageBroker: Reference[0..1] 
-  +messageTopic: MessageTopicType[0..1] 
-  +minInterval: Duration[0..1] 
   +observed: Reference 
+  +direction: Direction 
   +state: StateOfEvent 
+  +messageTopic: MessageTopicType[0..1] 
+  +messageBroker: Reference[0..1] 
+  +lastUpdate: DateTimeUtc[0..1] 
+  +minInterval: Duration[0..1] 
+  +maxInterval: Duration[0..1] 
 }
 enum Direction <<enumeration>> {
   input
   output
 }
 enum StateOfEvent <<enumeration>> {
-  off
   on
+  off
 }
 BasicEventElement ..> Direction
 BasicEventElement ..> StateOfEvent

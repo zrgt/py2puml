@@ -184,7 +184,7 @@ class AasPumlGenerator:
 
     def generate_puml(self, domain_items_to_keep: Optional[List[str]] = None,
                       to_include_members_from_parents: bool = False,
-                      sort_members=True) -> str:
+                      sort_members=False) -> str:
         """Create a PlantUML file from the classes in the domain module.
         :param domain_items_to_keep: the items to include in the PlantUML file. If None, all items are included.
         :param to_include_members_from_parents: include the members from the parent classes in the child classes.

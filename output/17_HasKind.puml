@@ -6,8 +6,8 @@ abstract class HasKind <<abstract>> {
   +kind: ModellingKind[0..1] 
 }
 enum ModellingKind <<enumeration>> {
-  Instance
   Template
+  Instance
 }
 HasKind ..> ModellingKind
 @enduml

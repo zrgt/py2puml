@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 hide methods
 
 enum ModellingKind <<enumeration>> {
-  Instance
   Template
+  Instance
 }
 @enduml
