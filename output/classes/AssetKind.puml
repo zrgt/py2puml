@@ -5,6 +5,7 @@ hide methods
 enum AssetKind <<enumeration>> {
   Type
   Instance
+  Role
   NotApplicable
 }
 @enduml

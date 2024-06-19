@@ -2,7 +2,6 @@ import re
 from inspect import getsource
 from typing import Iterable, Optional, Dict, List, Tuple
 
-from aas_core_meta.v3 import Referable, Key_types
 from pyaas2puml.domain.umlclass import UmlClass
 from pyaas2puml.domain.umlenum import UmlEnum
 from pyaas2puml.domain.umlitem import UmlItem
@@ -61,7 +60,7 @@ class AasPumlGenerator:
         if self.domain_submodules:
             self._filter_domain_items_from_submodules()
         self._remove_duplicated_relations()
-        self._add_reference_relations()
+        self._inspect_reference_relations()
         self._replace_compositions_with_dependencies()
         self._set_aas_core_meta_abstract_classes_as_abstract()
         self._use_values_in_enumerations_as_names()
@@ -116,7 +115,7 @@ class AasPumlGenerator:
                 attr_name = plural_attribute_to_singular(rel.label_.removesuffix(self.REF_RELATION_SUFFIX))
                 rel.label_ = f"{attr_name}{self.REF_RELATION_SUFFIX}"
 
-    def _add_reference_relations(self):
+    def _inspect_reference_relations(self):
         domain_classes_with_invariant_decorator = [i for i in self.domain_items.values() if
                                                    isinstance(i, UmlClass) and has_decorator(i.class_type, "invariant")]
         for item in domain_classes_with_invariant_decorator:
@@ -136,13 +135,13 @@ class AasPumlGenerator:
                     is_model_ref_to_regex = r"is_model_reference_to_referable\(\s*(\S+)\s*\)"
                     is_model_ref_to_search = re.search(is_model_ref_to_regex, invariant_src)
                     ref_attr = is_model_ref_to_search.group(1)
-                    target_cls = classname(Referable)
+                    target_cls = ".".join(classname(item.class_type).split(".")[:-1]) + ".Referable"
                 elif "is_model_reference_to" in invariant_src:
                     is_model_ref_to_regex = r"is_model_reference_to\(\s*(\S+)\s*,\s*(\S+)?\s*\)"
                     is_model_ref_to_search = re.search(is_model_ref_to_regex, invariant_src)
                     ref_attr = is_model_ref_to_search.group(1)
                     key_type_attr = is_model_ref_to_search.group(2)
-                    target_cls = classname(Key_types).removesuffix(".Key_types") + "." + key_type_attr.split(".")[-1]
+                    target_cls = ".".join(classname(item.class_type).split(".")[:-1]) + "." + key_type_attr.split(".")[-1]
 
                 if not ref_attr.startswith("self."):
                     # Search for list comprehension

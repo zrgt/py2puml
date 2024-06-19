@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class LangStringPreferredNameTypeIec61360<AbstractLangString> {
-  +language: Bcp47LanguageTag
+  +language: Bcp47LanguageTag 
   +text: NonEmptyXmlSerializableString 
 }
 @enduml

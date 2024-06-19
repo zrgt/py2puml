@@ -3,7 +3,7 @@ from copy import deepcopy
 from pathlib import Path
 
 import aas_core_meta
-from aas_core_meta.v3 import *
+from aas_core_meta.v3_1 import *
 from pyaas2puml.pyaas2puml import AasPumlGenerator
 from pyaas2puml.utils import classname, write_file, snake_to_camel
 
@@ -68,7 +68,7 @@ PUML_CLS_DIAGRAMS = [[snake_to_camel(classname(cls)) for cls in classes] for cla
 
 DOMAIN_PATH = os.path.dirname(aas_core_meta.__file__)
 DOMAIN_MODULE = "aas_core_meta"
-DOMAIN_SUBMODULES = ["v3"]
+DOMAIN_SUBMODULES = ["v3_1"]
 
 if __name__ == '__main__':
     output_path = Path('output')

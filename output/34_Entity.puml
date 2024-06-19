@@ -4,7 +4,7 @@ hide methods
 
 class Entity<SubmodelElement> {
   +statement: SubmodelElement[0..*] 
-  +entityType: EntityType 
+  +entityType: EntityType[0..1] 
   +globalAssetId: Identifier[0..1] 
   +specificAssetId: SpecificAssetId[0..*] 
 }

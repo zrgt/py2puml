@@ -21,6 +21,7 @@ class Resource {
 enum AssetKind <<enumeration>> {
   Type
   Instance
+  Role
   NotApplicable
 }
 AssetInformation ..> AssetKind
