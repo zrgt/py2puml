@@ -60,7 +60,7 @@ class BasicEventElement {
   +state: StateOfEvent 
   +messageTopic: MessageTopicType[0..1] 
   +messageBroker: Reference[0..1] 
-  +lastUpdate: DateTimeUtc[0..1] 
+  +lastUpdate: DateTime[0..1] 
   +minInterval: Duration[0..1] 
   +maxInterval: Duration[0..1] 
 }
@@ -148,7 +148,7 @@ enum DataTypeDefXsd <<enumeration>> {
   xs:unsignedLong
   xs:unsignedShort
 }
-class DateTimeUtc {
+class DateTime {
 }
 enum Direction <<enumeration>> {
   input
@@ -184,7 +184,7 @@ class EventPayload {
   +observableSemanticId: Reference[0..1] 
   +topic: MessageTopicType[0..1] 
   +subjectId: Reference[0..1] 
-  +timeStamp: DateTimeUtc 
+  +timeStamp: DateTime 
   +payload: BlobType[0..1] 
 }
 class Extension {
@@ -403,7 +403,7 @@ BasicEventElement ..> Reference
 BasicEventElement ..> Direction
 BasicEventElement ..> StateOfEvent
 BasicEventElement ..> MessageTopicType
-BasicEventElement ..> DateTimeUtc
+BasicEventElement ..> DateTime
 BasicEventElement ..> Duration
 EventElement <|-- BasicEventElement
 Blob ..> BlobType
@@ -438,7 +438,7 @@ Environment ..> ConceptDescription
 SubmodelElement <|-- EventElement
 EventPayload ..> Reference
 EventPayload ..> MessageTopicType
-EventPayload ..> DateTimeUtc
+EventPayload ..> DateTime
 EventPayload ..> BlobType
 Extension ..> NameType
 Extension ..> DataTypeDefXsd

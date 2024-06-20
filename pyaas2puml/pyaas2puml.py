@@ -42,14 +42,16 @@ class AasPumlGenerator:
             r"\{static\}": "",
             ":  \n": "\n",
             # Replace the following strings from the PlantUML file
-            fr"{snake_to_camel(domain_module)}\.": "",
-            r"\+ID:": "+id:",
+            fr"{snake_to_camel(domain_module)}\.": "",  # Remove the domain module name from the PlantUML items
+            r"\+ID:": "+id:",  # Exception for ID attribute, which cannot be handled with the snake_to_camel function
             r"Optional\[List\[(.+?)\]\]": "\\1[0..*]",  # Optional[List[...]] -> ...[0..*]
             r"List\[(.+?)\]": "\\1[1..*]",  # List[...] -> ...[1..*]
             r"Optional\[(.+?)\]": "\\1[0..1]",  # Optional[...] -> ...[0..1]
             r"abstract class (.+?) \{":
                 r"abstract class \1 <<abstract>> {",  # abstract class ... { -> abstract class ... <<abstract>> {
             r"enum (.+?) \{": r"enum \1 <<enumeration>> {",  # enum ... { -> enum ... <<enumeration>> {
+            # Rename classes
+            r"DateTimeUtc": "DateTime",  # DateTimeUtc -> DateTime
         }
         if domain_submodules:
             for submodule in domain_submodules:
@@ -196,7 +198,7 @@ class AasPumlGenerator:
         puml_content = ''.join(to_puml_content(self.domain_module, self.domain_items.values(), self.domain_relations,
                                                sort_members)).removesuffix("\n")
         # Apply IDTA specific changes to the PlantUML content and write it to the output file
-        idta_puml_content = self._apply_changes(puml_content)
+        idta_puml_content = self._apply_changes_to_puml_content(puml_content)
         return idta_puml_content
 
     def _include_members_from_parents(self):
@@ -255,7 +257,7 @@ class AasPumlGenerator:
         sorted_domain_items = {fqn: self.domain_items[fqn] for fqn in items_order if fqn in self.domain_items}
         self.domain_items = sorted_domain_items
 
-    def _apply_changes(self, text: str) -> str:
+    def _apply_changes_to_puml_content(self, text: str) -> str:
         for pattern, repl in self.regex_to_replace.items():
             text = re.sub(pattern, repl, text)
         return text

@@ -2,6 +2,6 @@
 skinparam classAttributeIconSize 0
 hide methods
 
-class DateTimeUtc {
+class DateTime {
 }
 @enduml
