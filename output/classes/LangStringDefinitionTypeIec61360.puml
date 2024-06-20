@@ -2,7 +2,7 @@
 skinparam classAttributeIconSize 0
 hide methods
 
-class LangStringDefinitionTypeIec61360<AbstractLangString> {
+class MultiLanguageDefinitionTypeIec61360<AbstractLangString> {
   +language: Bcp47LanguageTag 
   +text: NonEmptyXmlSerializableString 
 }

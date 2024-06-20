@@ -10,8 +10,8 @@ class AssetAdministrationShell<Identifiable\nHasDataSpecification> {
   +id: Identifier 
   +category: NameType[0..1] 
   +idShort: IdShortType[0..1] 
-  +displayName: LangStringNameType[0..*] 
-  +description: LangStringTextType[0..*] 
+  +displayName: MultiLanguageNameType[0..1] 
+  +description: MultiLanguageTextType[0..1] 
   +extension: Extension[0..*] 
   +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
 }

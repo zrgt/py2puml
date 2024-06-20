@@ -41,6 +41,13 @@ class AasPumlGenerator:
             # Remove the following strings from the PlantUML file
             r"\{static\}": "",
             ":  \n": "\n",
+
+            # Rename classes
+            r"DateTimeUtc": "DateTime",  # DateTimeUtc -> DateTime
+            r"Optional\[List\[LangString([a-zA-Z0-9]+)\]\]": "MultiLanguage\\1[0..1]", # Optional[List[LangString...]] -> MultiLanguage...[0..1]
+            r"List\[LangString([a-zA-Z0-9]+)\]": "MultiLanguage\\1",  # List[LangString...] -> MultiLanguage...
+            r"LangString([a-zA-Z0-9]+)": "MultiLanguage\\1",  # LangString... -> MultiLanguage...
+
             # Replace the following strings from the PlantUML file
             fr"{snake_to_camel(domain_module)}\.": "",  # Remove the domain module name from the PlantUML items
             r"\+ID:": "+id:",  # Exception for ID attribute, which cannot be handled with the snake_to_camel function
@@ -50,8 +57,6 @@ class AasPumlGenerator:
             r"abstract class (.+?) \{":
                 r"abstract class \1 <<abstract>> {",  # abstract class ... { -> abstract class ... <<abstract>> {
             r"enum (.+?) \{": r"enum \1 <<enumeration>> {",  # enum ... { -> enum ... <<enumeration>> {
-            # Rename classes
-            r"DateTimeUtc": "DateTime",  # DateTimeUtc -> DateTime
         }
         if domain_submodules:
             for submodule in domain_submodules:

@@ -19,7 +19,7 @@ class Property {
   +valueId: Reference[0..1] 
 }
 class MultiLanguageProperty {
-  +value: LangStringTextType[0..*] 
+  +value: MultiLanguageTextType[0..1] 
   +valueId: Reference[0..1] 
 }
 class Range {

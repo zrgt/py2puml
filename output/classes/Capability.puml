@@ -5,8 +5,8 @@ hide methods
 class Capability<SubmodelElement> {
   +category: NameType[0..1] 
   +idShort: IdShortType[0..1] 
-  +displayName: LangStringNameType[0..*] 
-  +description: LangStringTextType[0..*] 
+  +displayName: MultiLanguageNameType[0..1] 
+  +description: MultiLanguageTextType[0..1] 
   +extension: Extension[0..*] 
   +semanticId: Reference[0..1] 
   +supplementalSemanticId: Reference[0..*] 

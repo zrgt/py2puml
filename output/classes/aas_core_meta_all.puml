@@ -80,14 +80,14 @@ class ContentType {
 abstract class DataElement <<abstract>> {
 }
 class DataSpecificationIec61360 {
-  +preferredName: LangStringPreferredNameTypeIec61360[1..*] 
-  +shortName: LangStringShortNameTypeIec61360[0..*] 
+  +preferredName: MultiLanguagePreferredNameTypeIec61360 
+  +shortName: MultiLanguageShortNameTypeIec61360[0..1] 
   +unit: NonEmptyXmlSerializableString[0..1] 
   +unitId: Reference[0..1] 
   +sourceOfDefinition: NonEmptyXmlSerializableString[0..1] 
   +symbol: NonEmptyXmlSerializableString[0..1] 
   +dataType: DataTypeIec61360[0..1] 
-  +definition: LangStringDefinitionTypeIec61360[0..*] 
+  +definition: MultiLanguageDefinitionTypeIec61360[0..1] 
   +valueFormat: NonEmptyXmlSerializableString[0..1] 
   +valueList: ValueList[0..1] 
   +value: ValueTypeIec61360[0..1] 
@@ -250,15 +250,15 @@ enum KeyTypes <<enumeration>> {
 }
 class LabelType {
 }
-class LangStringDefinitionTypeIec61360 {
+class MultiLanguageDefinitionTypeIec61360 {
 }
-class LangStringNameType {
+class MultiLanguageNameType {
 }
-class LangStringPreferredNameTypeIec61360 {
+class MultiLanguagePreferredNameTypeIec61360 {
 }
-class LangStringShortNameTypeIec61360 {
+class MultiLanguageShortNameTypeIec61360 {
 }
-class LangStringTextType {
+class MultiLanguageTextType {
 }
 class LevelType {
   +min: bool 
@@ -273,7 +273,7 @@ enum ModellingKind <<enumeration>> {
   Instance
 }
 class MultiLanguageProperty {
-  +value: LangStringTextType[0..*] 
+  +value: MultiLanguageTextType[0..1] 
   +valueId: Reference[0..1] 
 }
 class NameType {
@@ -320,8 +320,8 @@ class Range {
 abstract class Referable <<abstract>> {
   +category: NameType[0..1] 
   +idShort: IdShortType[0..1] 
-  +displayName: LangStringNameType[0..*] 
-  +description: LangStringTextType[0..*] 
+  +displayName: MultiLanguageNameType[0..1] 
+  +description: MultiLanguageTextType[0..1] 
 }
 class Reference {
   +type: ReferenceTypes 
@@ -415,12 +415,12 @@ Identifiable <|-- ConceptDescription
 HasDataSpecification <|-- ConceptDescription
 NonEmptyXmlSerializableString <|-- ContentType
 SubmodelElement <|-- DataElement
-DataSpecificationIec61360 ..> LangStringPreferredNameTypeIec61360
-DataSpecificationIec61360 ..> LangStringShortNameTypeIec61360
+DataSpecificationIec61360 ..> MultiLanguagePreferredNameTypeIec61360
+DataSpecificationIec61360 ..> MultiLanguageShortNameTypeIec61360
 DataSpecificationIec61360 ..> NonEmptyXmlSerializableString
 DataSpecificationIec61360 ..> Reference
 DataSpecificationIec61360 ..> DataTypeIec61360
-DataSpecificationIec61360 ..> LangStringDefinitionTypeIec61360
+DataSpecificationIec61360 ..> MultiLanguageDefinitionTypeIec61360
 DataSpecificationIec61360 ..> ValueList
 DataSpecificationIec61360 ..> ValueTypeIec61360
 DataSpecificationIec61360 ..> LevelType
@@ -460,13 +460,13 @@ NonEmptyXmlSerializableString <|-- Identifier
 Key ..> KeyTypes
 Key ..> Identifier
 NonEmptyXmlSerializableString <|-- LabelType
-AbstractLangString <|-- LangStringDefinitionTypeIec61360
-AbstractLangString <|-- LangStringNameType
-AbstractLangString <|-- LangStringPreferredNameTypeIec61360
-AbstractLangString <|-- LangStringShortNameTypeIec61360
-AbstractLangString <|-- LangStringTextType
+AbstractLangString <|-- MultiLanguageDefinitionTypeIec61360
+AbstractLangString <|-- MultiLanguageNameType
+AbstractLangString <|-- MultiLanguagePreferredNameTypeIec61360
+AbstractLangString <|-- MultiLanguageShortNameTypeIec61360
+AbstractLangString <|-- MultiLanguageTextType
 NonEmptyXmlSerializableString <|-- MessageTopicType
-MultiLanguageProperty ..> LangStringTextType
+MultiLanguageProperty ..> MultiLanguageTextType
 MultiLanguageProperty ..> Reference
 DataElement <|-- MultiLanguageProperty
 NonEmptyXmlSerializableString <|-- NameType
@@ -491,8 +491,8 @@ Range ..> ValueDataType
 DataElement <|-- Range
 Referable ..> NameType
 Referable ..> IdShortType
-Referable ..> LangStringNameType
-Referable ..> LangStringTextType
+Referable ..> MultiLanguageNameType
+Referable ..> MultiLanguageTextType
 HasExtensions <|-- Referable
 Reference ..> ReferenceTypes
 Reference ..> Reference
