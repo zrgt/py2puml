@@ -15,10 +15,9 @@ class UmlRelation:
     source_fqn: str
     target_fqn: str
     type: RelType
-    label_: str = ''
+    label: str = ''
+    source_cardinality: str = ''
+    target_cardinality: str = ''
 
-    @property
-    def label(self) -> str:
-        return f' : {self.label_}' if self.label_ else ''
 
 

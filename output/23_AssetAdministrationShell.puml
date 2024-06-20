@@ -18,6 +18,6 @@ class Submodel<Identifiable\nHasKind\nHasSemantics\nQualifiable\nHasDataSpecific
   +submodelElement: SubmodelElement[0..*] 
 }
 AssetAdministrationShell ..> AssetInformation
-AssetAdministrationShell --> Submodel : submodel:ref
-AssetAdministrationShell --> AssetAdministrationShell : derivedFrom:ref
+AssetAdministrationShell -->"0..*" Submodel : submodel:ref
+AssetAdministrationShell -->"0..1" AssetAdministrationShell : derivedFrom:ref
 @enduml

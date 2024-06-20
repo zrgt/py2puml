@@ -15,5 +15,5 @@ class AssetAdministrationShell<Identifiable\nHasDataSpecification> {
   +extension: Extension[0..*] 
   +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
 }
-AssetAdministrationShell --> AssetAdministrationShell : derivedFrom:ref
+AssetAdministrationShell -->"0..1" AssetAdministrationShell : derivedFrom:ref
 @enduml

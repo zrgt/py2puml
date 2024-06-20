@@ -110,7 +110,7 @@ class AasPumlGenerator:
         for rel in self.domain_relations:
             rel.source_fqn = snake_to_camel(rel.source_fqn)
             rel.target_fqn = snake_to_camel(rel.target_fqn)
-            rel.label_ = snake_to_camel(rel.label_) if rel.label_ else rel.label_
+            rel.label = snake_to_camel(rel.label)
 
     def _rename_plural_attrs_labels_to_singular(self):
         for item in self.domain_items.values():
@@ -118,9 +118,9 @@ class AasPumlGenerator:
                 for attr in item.attributes:
                     attr.name = plural_attribute_to_singular(attr.name)
         for rel in self.domain_relations:
-            if rel.label_ and rel.label_.endswith(self.REF_RELATION_SUFFIX):
-                attr_name = plural_attribute_to_singular(rel.label_.removesuffix(self.REF_RELATION_SUFFIX))
-                rel.label_ = f"{attr_name}{self.REF_RELATION_SUFFIX}"
+            if rel.label and rel.label.endswith(self.REF_RELATION_SUFFIX):
+                attr_name = plural_attribute_to_singular(rel.label.removesuffix(self.REF_RELATION_SUFFIX))
+                rel.label = f"{attr_name}{self.REF_RELATION_SUFFIX}"
 
     def _inspect_reference_relations(self):
         domain_classes_with_invariant_decorator = [i for i in self.domain_items.values() if
@@ -158,11 +158,34 @@ class AasPumlGenerator:
                 # Create a relation between the current class and found class argument
                 self._create_ref_relation(item.fqn, ref_attr.removeprefix("self."), target_cls)
 
-    def _create_ref_relation(self, source_cls, attr, target_cls):
-        assert self.domain_items.get(source_cls) is not None, f"Class {source_cls} not found in the domain items"
-        assert self.domain_items.get(target_cls) is not None, f"Class {target_cls} not found in the domain items"
+    def _create_ref_relation(self, source_cls: str, attr: str, target_cls: str):
+        ref_cardinality = self._identify_ref_target_cardinality(source_cls, attr)
         self.domain_relations.append(UmlRelation(source_fqn=source_cls, target_fqn=target_cls, type=RelType.REFERENCE,
-                                                 label_=f"{attr}{self.REF_RELATION_SUFFIX}"))
+                                                 label=f"{attr}{self.REF_RELATION_SUFFIX}",
+                                                 target_cardinality=ref_cardinality))
+
+    def _identify_ref_target_cardinality(self, source_cls, attr):
+        for i in self.domain_items.values():
+            if isinstance(i, UmlClass) and i.name == "Reference":
+                reference_cls = i
+                break
+        else:
+            raise ValueError("Reference class not found in the domain items")
+
+        source_class: UmlClass = self.domain_items.get(source_cls)
+        if source_class is None or reference_cls is None:
+            return None
+        for attribute in source_class.attributes:
+            if attribute.name == attr:
+                if attribute.type == f"Optional[List[{reference_cls.name}]]":
+                    return "0..*"
+                elif attribute.type == f"List[{reference_cls.name}]":
+                    return "1..*"
+                elif attribute.type == f"Optional[{reference_cls.name}]":
+                    return "0..1"
+                elif attribute.type == reference_cls.name:
+                    return "1"
+        return None
 
     def _replace_compositions_with_dependencies(self):
         """Replace compositions with dependencies in the domain relations."""
