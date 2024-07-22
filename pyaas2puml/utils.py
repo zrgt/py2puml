@@ -73,5 +73,11 @@ def snake_to_camel(snake_str):
     return new_str
 
 
+def snake_to_kebab(snake_str):
+    return re.sub(r'_', '-', snake_str.lower())
+
+def camel_to_kebab(camel_str):
+    return re.sub(r'([a-z0-9])([A-Z])', r'\1-\2', camel_str).lower()
+
 def plural_attribute_to_singular(text):
     return re.sub(r'([a-zA-Z]{2,})s$', r'\1', text)
