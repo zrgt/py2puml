@@ -11,7 +11,7 @@ PUML_CLS_DIAGRAMS = (
     (
         Asset_administration_shell, Asset_information, Asset_kind, Specific_asset_ID, Submodel, Qualifier,
         Submodel_element,
-        Property),
+        Property), # 12
     (Environment, Asset_administration_shell, Submodel, Concept_description),
     (Administrative_information,),
     (Has_data_specification,),
@@ -70,6 +70,9 @@ DOMAIN_PATH = os.path.dirname(aas_core_meta.__file__)
 DOMAIN_MODULE = "aas_core_meta"
 DOMAIN_SUBMODULES = ["v3_1"]
 
+START_NUM = 11
+SKIP_NUMS = [13, 22, 50, 53, 55, 56, 57, 59]
+
 if __name__ == '__main__':
     output_path = Path('output')
     output_path.mkdir(exist_ok=True)
@@ -78,10 +81,13 @@ if __name__ == '__main__':
     all_relations = basic_generator.domain_relations
 
     print("Creating PlantUML files for each set of classes defined in PUML_CLS_DIAGRAMS")
-    for i, classes_in_diagram in enumerate(PUML_CLS_DIAGRAMS, 12):
+    offset = START_NUM
+    for i, classes_in_diagram in enumerate(PUML_CLS_DIAGRAMS):
+        if i in SKIP_NUMS:
+            offset += 1
         generator = AasPumlGenerator(DOMAIN_PATH, DOMAIN_MODULE, DOMAIN_SUBMODULES,
                                      deepcopy(all_domain_items), deepcopy(all_relations))
-        cls_diagr_file = f'{i}-{camel_to_kebab(classes_in_diagram[0].split(".")[-1])}.puml'
+        cls_diagr_file = f'{i+offset}-{camel_to_kebab(classes_in_diagram[0].split(".")[-1])}.puml'
         cls_diagr_file = output_path / cls_diagr_file
         print(f"Creating PlantUML file for classes: {classes_in_diagram}")
         puml_content: str = generator.generate_puml(classes_in_diagram)
