@@ -2,4 +2,7 @@
 skinparam classAttributeIconSize 0
 hide methods
 
+class ReferenceElement<DataElement> {
+  +value: Reference[0..1] 
+}
 @enduml

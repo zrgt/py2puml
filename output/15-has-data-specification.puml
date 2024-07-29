@@ -2,4 +2,7 @@
 skinparam classAttributeIconSize 0
 hide methods
 
+abstract class HasDataSpecification <<abstract>> {
+  +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
+}
 @enduml

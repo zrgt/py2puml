@@ -2,4 +2,9 @@
 skinparam classAttributeIconSize 0
 hide methods
 
+class Range<DataElement> {
+  +valueType: DataTypeDefXsd 
+  +min: ValueDataType[0..1] 
+  +max: ValueDataType[0..1] 
+}
 @enduml

@@ -2,4 +2,15 @@
 skinparam classAttributeIconSize 0
 hide methods
 
+abstract class Qualifiable <<abstract>> {
+  +qualifier: Qualifier[0..*] 
+}
+class Qualifier<HasSemantics> {
+  +kind: QualifierKind[0..1] 
+  +type: QualifierType 
+  +valueType: DataTypeDefXsd 
+  +value: ValueDataType[0..1] 
+  +valueId: Reference[0..1] 
+}
+Qualifiable ..> Qualifier
 @enduml
