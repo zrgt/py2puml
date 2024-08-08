@@ -81,13 +81,13 @@ if __name__ == '__main__':
     all_relations = basic_generator.domain_relations
 
     print("Creating PlantUML files for each set of classes defined in PUML_CLS_DIAGRAMS")
-    offset = START_NUM
-    for i, classes_in_diagram in enumerate(PUML_CLS_DIAGRAMS):
-        if i in SKIP_NUMS:
-            offset += 1
+    offset = 0
+    for i, classes_in_diagram in enumerate(PUML_CLS_DIAGRAMS, START_NUM):
+        offset += 1 if i + offset in SKIP_NUMS else 0
+        i = i + offset
         generator = AasPumlGenerator(DOMAIN_PATH, DOMAIN_MODULE, DOMAIN_SUBMODULES,
                                      deepcopy(all_domain_items), deepcopy(all_relations))
-        cls_diagr_file = f'{i+offset}-{camel_to_kebab(classes_in_diagram[0].split(".")[-1])}.puml'
+        cls_diagr_file = f'{i}-{camel_to_kebab(classes_in_diagram[0].split(".")[-1])}.puml'
         cls_diagr_file = output_path / cls_diagr_file
         print(f"Creating PlantUML file for classes: {classes_in_diagram}")
         puml_content: str = generator.generate_puml(classes_in_diagram)
