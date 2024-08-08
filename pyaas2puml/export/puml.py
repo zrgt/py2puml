@@ -27,7 +27,7 @@ FEATURE_INSTANCE = ''
 
 
 def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: List[UmlRelation],
-                    sort_members: bool = False) -> Iterable[str]:
+                    sort_members: bool = False, sort_relations: bool = True) -> Iterable[str]:
     yield PUML_FILE_START.format(diagram_name=diagram_name)
 
     # exports the domain classes and enums
@@ -40,6 +40,7 @@ def to_puml_content(diagram_name: str, uml_items: List[UmlItem], uml_relations: 
             raise TypeError(f'cannot process uml_item of type {uml_item.__class__}')
 
     # exports the domain relationships between classes and enums
+    uml_relations = sorted(uml_relations, key=lambda rel: rel.source_fqn.lower()) if sort_relations else uml_relations
     for uml_relation in uml_relations:
         yield PUML_RELATION_TPL.format(
             source_fqn=uml_relation.source_fqn, rel_type=uml_relation.type.value, target_fqn=uml_relation.target_fqn,
