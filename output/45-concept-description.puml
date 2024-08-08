@@ -3,6 +3,6 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class ConceptDescription<Identifiable\nHasDataSpecification> {
-  +isCaseOf: Reference[0..*] 
+  +isCaseOf: Reference[0..*]
 }
 @enduml

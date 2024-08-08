@@ -3,9 +3,9 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class LevelType {
-  +min: bool 
-  +nom: bool 
-  +typ: bool 
-  +max: bool 
+  +min: bool
+  +nom: bool
+  +typ: bool
+  +max: bool
 }
 @enduml

@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class EmbeddedDataSpecification {
-  +dataSpecificationContent: DataSpecificationContent 
-  +dataSpecification: Reference[0..1] 
+  +dataSpecificationContent: DataSpecificationContent
+  +dataSpecification: Reference[0..1]
 }
 @enduml

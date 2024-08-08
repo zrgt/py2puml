@@ -3,6 +3,6 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class ValueList {
-  +valueReferencePair: ValueReferencePair[1..*] 
+  +valueReferencePair: ValueReferencePair[1..*]
 }
 @enduml

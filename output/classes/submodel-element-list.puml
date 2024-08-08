@@ -3,19 +3,19 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class SubmodelElementList<SubmodelElement> {
-  +orderRelevant: bool[0..1] 
-  +semanticIdListElement: Reference[0..1] 
-  +typeValueListElement: AasSubmodelElements 
-  +valueTypeListElement: DataTypeDefXsd[0..1] 
-  +value: SubmodelElement[0..*] 
-  +category: NameType[0..1] 
-  +idShort: IdShortType[0..1] 
-  +displayName: MultiLanguageNameType[0..1] 
-  +description: MultiLanguageTextType[0..1] 
-  +extension: Extension[0..*] 
-  +semanticId: Reference[0..1] 
-  +supplementalSemanticId: Reference[0..*] 
-  +qualifier: Qualifier[0..*] 
-  +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
+  +orderRelevant: bool[0..1]
+  +semanticIdListElement: Reference[0..1]
+  +typeValueListElement: AasSubmodelElements
+  +valueTypeListElement: DataTypeDefXsd[0..1]
+  +value: SubmodelElement[0..*]
+  +category: NameType[0..1]
+  +idShort: IdShortType[0..1]
+  +displayName: MultiLanguageNameType[0..1]
+  +description: MultiLanguageTextType[0..1]
+  +extension: Extension[0..*]
+  +semanticId: Reference[0..1]
+  +supplementalSemanticId: Reference[0..*]
+  +qualifier: Qualifier[0..*]
+  +embeddedDataSpecification: EmbeddedDataSpecification[0..*]
 }
 @enduml

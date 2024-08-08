@@ -3,10 +3,10 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class AssetInformation {
-  +assetKind: AssetKind 
-  +globalAssetId: Identifier[0..1] 
-  +specificAssetId: SpecificAssetId[0..*] 
-  +assetType: Identifier[0..1] 
-  +defaultThumbnail: Resource[0..1] 
+  +assetKind: AssetKind
+  +globalAssetId: Identifier[0..1]
+  +specificAssetId: SpecificAssetId[0..*]
+  +assetType: Identifier[0..1]
+  +defaultThumbnail: Resource[0..1]
 }
 @enduml

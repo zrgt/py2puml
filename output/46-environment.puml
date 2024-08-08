@@ -3,20 +3,20 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class Environment {
-  +assetAdministrationShell: AssetAdministrationShell[0..*] 
-  +submodel: Submodel[0..*] 
-  +conceptDescription: ConceptDescription[0..*] 
+  +assetAdministrationShell: AssetAdministrationShell[0..*]
+  +submodel: Submodel[0..*]
+  +conceptDescription: ConceptDescription[0..*]
 }
 class AssetAdministrationShell<Identifiable\nHasDataSpecification> {
-  +derivedFrom: Reference[0..1] 
-  +assetInformation: AssetInformation 
-  +submodel: Reference[0..*] 
+  +derivedFrom: Reference[0..1]
+  +assetInformation: AssetInformation
+  +submodel: Reference[0..*]
 }
 class Submodel<Identifiable\nHasKind\nHasSemantics\nQualifiable\nHasDataSpecification> {
-  +submodelElement: SubmodelElement[0..*] 
+  +submodelElement: SubmodelElement[0..*]
 }
 class ConceptDescription<Identifiable\nHasDataSpecification> {
-  +isCaseOf: Reference[0..*] 
+  +isCaseOf: Reference[0..*]
 }
 AssetAdministrationShell -->"0..*" Submodel : submodel:ref
 AssetAdministrationShell -->"0..1" AssetAdministrationShell : derivedFrom:ref

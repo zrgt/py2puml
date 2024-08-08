@@ -5,29 +5,29 @@ hide methods
 abstract class DataElement<SubmodelElement> <<abstract>> {
 }
 class Property {
-  +valueType: DataTypeDefXsd 
-  +value: ValueDataType[0..1] 
-  +valueId: Reference[0..1] 
+  +valueType: DataTypeDefXsd
+  +value: ValueDataType[0..1]
+  +valueId: Reference[0..1]
 }
 class MultiLanguageProperty {
-  +value: MultiLanguageTextType[0..1] 
-  +valueId: Reference[0..1] 
+  +value: MultiLanguageTextType[0..1]
+  +valueId: Reference[0..1]
 }
 class Range {
-  +valueType: DataTypeDefXsd 
-  +min: ValueDataType[0..1] 
-  +max: ValueDataType[0..1] 
+  +valueType: DataTypeDefXsd
+  +min: ValueDataType[0..1]
+  +max: ValueDataType[0..1]
 }
 class Blob {
-  +value: BlobType[0..1] 
-  +contentType: ContentType 
+  +value: BlobType[0..1]
+  +contentType: ContentType
 }
 class File {
-  +value: PathType[0..1] 
-  +contentType: ContentType 
+  +value: PathType[0..1]
+  +contentType: ContentType
 }
 class ReferenceElement {
-  +value: Reference[0..1] 
+  +value: Reference[0..1]
 }
 DataElement <|-- Blob
 DataElement <|-- File

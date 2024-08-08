@@ -3,11 +3,11 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class RelationshipElement<SubmodelElement> {
-  +first: Reference 
-  +second: Reference 
+  +first: Reference
+  +second: Reference
 }
 class AnnotatedRelationshipElement {
-  +annotation: DataElement[0..*] 
+  +annotation: DataElement[0..*]
 }
 RelationshipElement <|-- AnnotatedRelationshipElement
 @enduml

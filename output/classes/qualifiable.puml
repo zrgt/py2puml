@@ -3,6 +3,6 @@ skinparam classAttributeIconSize 0
 hide methods
 
 abstract class Qualifiable <<abstract>> {
-  +qualifier: Qualifier[0..*] 
+  +qualifier: Qualifier[0..*]
 }
 @enduml

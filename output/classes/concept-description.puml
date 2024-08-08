@@ -3,14 +3,14 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class ConceptDescription<Identifiable\nHasDataSpecification> {
-  +isCaseOf: Reference[0..*] 
-  +administration: AdministrativeInformation[0..1] 
-  +id: Identifier 
-  +category: NameType[0..1] 
-  +idShort: IdShortType[0..1] 
-  +displayName: MultiLanguageNameType[0..1] 
-  +description: MultiLanguageTextType[0..1] 
-  +extension: Extension[0..*] 
-  +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
+  +isCaseOf: Reference[0..*]
+  +administration: AdministrativeInformation[0..1]
+  +id: Identifier
+  +category: NameType[0..1]
+  +idShort: IdShortType[0..1]
+  +displayName: MultiLanguageNameType[0..1]
+  +description: MultiLanguageTextType[0..1]
+  +extension: Extension[0..*]
+  +embeddedDataSpecification: EmbeddedDataSpecification[0..*]
 }
 @enduml

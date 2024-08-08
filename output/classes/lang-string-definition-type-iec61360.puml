@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class MultiLanguageDefinitionTypeIec61360<AbstractLangString> {
-  +language: Bcp47LanguageTag 
-  +text: NonEmptyXmlSerializableString 
+  +language: Bcp47LanguageTag
+  +text: NonEmptyXmlSerializableString
 }
 @enduml

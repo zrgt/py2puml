@@ -22,29 +22,29 @@ enum AasSubmodelElements <<enumeration>> {
   SubmodelElementCollection
 }
 abstract class AbstractLangString <<abstract>> {
-  +language: Bcp47LanguageTag 
-  +text: NonEmptyXmlSerializableString 
+  +language: Bcp47LanguageTag
+  +text: NonEmptyXmlSerializableString
 }
 class AdministrativeInformation {
-  +version: VersionType[0..1] 
-  +revision: RevisionType[0..1] 
-  +creator: Reference[0..1] 
-  +templateId: Identifier[0..1] 
+  +version: VersionType[0..1]
+  +revision: RevisionType[0..1]
+  +creator: Reference[0..1]
+  +templateId: Identifier[0..1]
 }
 class AnnotatedRelationshipElement {
-  +annotation: DataElement[0..*] 
+  +annotation: DataElement[0..*]
 }
 class AssetAdministrationShell {
-  +derivedFrom: Reference[0..1] 
-  +assetInformation: AssetInformation 
-  +submodel: Reference[0..*] 
+  +derivedFrom: Reference[0..1]
+  +assetInformation: AssetInformation
+  +submodel: Reference[0..*]
 }
 class AssetInformation {
-  +assetKind: AssetKind 
-  +globalAssetId: Identifier[0..1] 
-  +specificAssetId: SpecificAssetId[0..*] 
-  +assetType: Identifier[0..1] 
-  +defaultThumbnail: Resource[0..1] 
+  +assetKind: AssetKind
+  +globalAssetId: Identifier[0..1]
+  +specificAssetId: SpecificAssetId[0..*]
+  +assetType: Identifier[0..1]
+  +defaultThumbnail: Resource[0..1]
 }
 enum AssetKind <<enumeration>> {
   Type
@@ -55,43 +55,43 @@ enum AssetKind <<enumeration>> {
 class Bcp47LanguageTag {
 }
 class BasicEventElement {
-  +observed: Reference 
-  +direction: Direction 
-  +state: StateOfEvent 
-  +messageTopic: MessageTopicType[0..1] 
-  +messageBroker: Reference[0..1] 
-  +lastUpdate: DateTime[0..1] 
-  +minInterval: Duration[0..1] 
-  +maxInterval: Duration[0..1] 
+  +observed: Reference
+  +direction: Direction
+  +state: StateOfEvent
+  +messageTopic: MessageTopicType[0..1]
+  +messageBroker: Reference[0..1]
+  +lastUpdate: DateTime[0..1]
+  +minInterval: Duration[0..1]
+  +maxInterval: Duration[0..1]
 }
 class Blob {
-  +value: BlobType[0..1] 
-  +contentType: ContentType 
+  +value: BlobType[0..1]
+  +contentType: ContentType
 }
 class BlobType {
 }
 class Capability {
 }
 class ConceptDescription {
-  +isCaseOf: Reference[0..*] 
+  +isCaseOf: Reference[0..*]
 }
 class ContentType {
 }
 abstract class DataElement <<abstract>> {
 }
 class DataSpecificationIec61360 {
-  +preferredName: MultiLanguagePreferredNameTypeIec61360 
-  +shortName: MultiLanguageShortNameTypeIec61360[0..1] 
-  +unit: NonEmptyXmlSerializableString[0..1] 
-  +unitId: Reference[0..1] 
-  +sourceOfDefinition: NonEmptyXmlSerializableString[0..1] 
-  +symbol: NonEmptyXmlSerializableString[0..1] 
-  +dataType: DataTypeIec61360[0..1] 
-  +definition: MultiLanguageDefinitionTypeIec61360[0..1] 
-  +valueFormat: NonEmptyXmlSerializableString[0..1] 
-  +valueList: ValueList[0..1] 
-  +value: ValueTypeIec61360[0..1] 
-  +levelType: LevelType[0..1] 
+  +preferredName: MultiLanguagePreferredNameTypeIec61360
+  +shortName: MultiLanguageShortNameTypeIec61360[0..1]
+  +unit: NonEmptyXmlSerializableString[0..1]
+  +unitId: Reference[0..1]
+  +sourceOfDefinition: NonEmptyXmlSerializableString[0..1]
+  +symbol: NonEmptyXmlSerializableString[0..1]
+  +dataType: DataTypeIec61360[0..1]
+  +definition: MultiLanguageDefinitionTypeIec61360[0..1]
+  +valueFormat: NonEmptyXmlSerializableString[0..1]
+  +valueList: ValueList[0..1]
+  +value: ValueTypeIec61360[0..1]
+  +levelType: LevelType[0..1]
 }
 abstract class DataSpecificationContent <<abstract>> {
 }
@@ -157,70 +157,70 @@ enum Direction <<enumeration>> {
 class Duration {
 }
 class EmbeddedDataSpecification {
-  +dataSpecificationContent: DataSpecificationContent 
-  +dataSpecification: Reference[0..1] 
+  +dataSpecificationContent: DataSpecificationContent
+  +dataSpecification: Reference[0..1]
 }
 class Entity {
-  +statement: SubmodelElement[0..*] 
-  +entityType: EntityType[0..1] 
-  +globalAssetId: Identifier[0..1] 
-  +specificAssetId: SpecificAssetId[0..*] 
+  +statement: SubmodelElement[0..*]
+  +entityType: EntityType[0..1]
+  +globalAssetId: Identifier[0..1]
+  +specificAssetId: SpecificAssetId[0..*]
 }
 enum EntityType <<enumeration>> {
   CoManagedEntity
   SelfManagedEntity
 }
 class Environment {
-  +assetAdministrationShell: AssetAdministrationShell[0..*] 
-  +submodel: Submodel[0..*] 
-  +conceptDescription: ConceptDescription[0..*] 
+  +assetAdministrationShell: AssetAdministrationShell[0..*]
+  +submodel: Submodel[0..*]
+  +conceptDescription: ConceptDescription[0..*]
 }
 abstract class EventElement <<abstract>> {
 }
 class EventPayload {
-  +source: Reference 
-  +sourceSemanticId: Reference[0..1] 
-  +observableReference: Reference 
-  +observableSemanticId: Reference[0..1] 
-  +topic: MessageTopicType[0..1] 
-  +subjectId: Reference[0..1] 
-  +timeStamp: DateTime 
-  +payload: BlobType[0..1] 
+  +source: Reference
+  +sourceSemanticId: Reference[0..1]
+  +observableReference: Reference
+  +observableSemanticId: Reference[0..1]
+  +topic: MessageTopicType[0..1]
+  +subjectId: Reference[0..1]
+  +timeStamp: DateTime
+  +payload: BlobType[0..1]
 }
 class Extension {
-  +name: NameType 
-  +valueType: DataTypeDefXsd[0..1] 
-  +value: ValueDataType[0..1] 
-  +refersTo: Reference[0..*] 
+  +name: NameType
+  +valueType: DataTypeDefXsd[0..1]
+  +value: ValueDataType[0..1]
+  +refersTo: Reference[0..*]
 }
 class File {
-  +value: PathType[0..1] 
-  +contentType: ContentType 
+  +value: PathType[0..1]
+  +contentType: ContentType
 }
 abstract class HasDataSpecification <<abstract>> {
-  +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
+  +embeddedDataSpecification: EmbeddedDataSpecification[0..*]
 }
 abstract class HasExtensions <<abstract>> {
-  +extension: Extension[0..*] 
+  +extension: Extension[0..*]
 }
 abstract class HasKind <<abstract>> {
-  +kind: ModellingKind[0..1] 
+  +kind: ModellingKind[0..1]
 }
 abstract class HasSemantics <<abstract>> {
-  +semanticId: Reference[0..1] 
-  +supplementalSemanticId: Reference[0..*] 
+  +semanticId: Reference[0..1]
+  +supplementalSemanticId: Reference[0..*]
 }
 class IdShortType {
 }
 abstract class Identifiable <<abstract>> {
-  +administration: AdministrativeInformation[0..1] 
-  +id: Identifier 
+  +administration: AdministrativeInformation[0..1]
+  +id: Identifier
 }
 class Identifier {
 }
 class Key {
-  +type: KeyTypes 
-  +value: Identifier 
+  +type: KeyTypes
+  +value: Identifier
 }
 enum KeyTypes <<enumeration>> {
   AnnotatedRelationshipElement
@@ -261,10 +261,10 @@ class MultiLanguageShortNameTypeIec61360 {
 class MultiLanguageTextType {
 }
 class LevelType {
-  +min: bool 
-  +nom: bool 
-  +typ: bool 
-  +max: bool 
+  +min: bool
+  +nom: bool
+  +typ: bool
+  +max: bool
 }
 class MessageTopicType {
 }
@@ -273,37 +273,37 @@ enum ModellingKind <<enumeration>> {
   Instance
 }
 class MultiLanguageProperty {
-  +value: MultiLanguageTextType[0..1] 
-  +valueId: Reference[0..1] 
+  +value: MultiLanguageTextType[0..1]
+  +valueId: Reference[0..1]
 }
 class NameType {
 }
 class NonEmptyXmlSerializableString {
 }
 class Operation {
-  +inputVariable: OperationVariable[0..*] 
-  +outputVariable: OperationVariable[0..*] 
-  +inoutputVariable: OperationVariable[0..*] 
+  +inputVariable: OperationVariable[0..*]
+  +outputVariable: OperationVariable[0..*]
+  +inoutputVariable: OperationVariable[0..*]
 }
 class OperationVariable {
-  +value: SubmodelElement 
+  +value: SubmodelElement
 }
 class PathType {
 }
 class Property {
-  +valueType: DataTypeDefXsd 
-  +value: ValueDataType[0..1] 
-  +valueId: Reference[0..1] 
+  +valueType: DataTypeDefXsd
+  +value: ValueDataType[0..1]
+  +valueId: Reference[0..1]
 }
 abstract class Qualifiable <<abstract>> {
-  +qualifier: Qualifier[0..*] 
+  +qualifier: Qualifier[0..*]
 }
 class Qualifier {
-  +kind: QualifierKind[0..1] 
-  +type: QualifierType 
-  +valueType: DataTypeDefXsd 
-  +value: ValueDataType[0..1] 
-  +valueId: Reference[0..1] 
+  +kind: QualifierKind[0..1]
+  +type: QualifierType
+  +valueType: DataTypeDefXsd
+  +value: ValueDataType[0..1]
+  +valueId: Reference[0..1]
 }
 enum QualifierKind <<enumeration>> {
   ValueQualifier
@@ -313,70 +313,70 @@ enum QualifierKind <<enumeration>> {
 class QualifierType {
 }
 class Range {
-  +valueType: DataTypeDefXsd 
-  +min: ValueDataType[0..1] 
-  +max: ValueDataType[0..1] 
+  +valueType: DataTypeDefXsd
+  +min: ValueDataType[0..1]
+  +max: ValueDataType[0..1]
 }
 abstract class Referable <<abstract>> {
-  +category: NameType[0..1] 
-  +idShort: IdShortType[0..1] 
-  +displayName: MultiLanguageNameType[0..1] 
-  +description: MultiLanguageTextType[0..1] 
+  +category: NameType[0..1]
+  +idShort: IdShortType[0..1]
+  +displayName: MultiLanguageNameType[0..1]
+  +description: MultiLanguageTextType[0..1]
 }
 class Reference {
-  +type: ReferenceTypes 
-  +referredSemanticId: Reference[0..1] 
-  +key: Key[1..*] 
+  +type: ReferenceTypes
+  +referredSemanticId: Reference[0..1]
+  +key: Key[1..*]
 }
 class ReferenceElement {
-  +value: Reference[0..1] 
+  +value: Reference[0..1]
 }
 enum ReferenceTypes <<enumeration>> {
   ExternalReference
   ModelReference
 }
 class RelationshipElement {
-  +first: Reference 
-  +second: Reference 
+  +first: Reference
+  +second: Reference
 }
 class Resource {
-  +path: PathType 
-  +contentType: ContentType[0..1] 
+  +path: PathType
+  +contentType: ContentType[0..1]
 }
 class RevisionType {
 }
 class SpecificAssetId {
-  +name: LabelType 
-  +value: Identifier 
-  +externalSubjectId: Reference[0..1] 
+  +name: LabelType
+  +value: Identifier
+  +externalSubjectId: Reference[0..1]
 }
 enum StateOfEvent <<enumeration>> {
   on
   off
 }
 class Submodel {
-  +submodelElement: SubmodelElement[0..*] 
+  +submodelElement: SubmodelElement[0..*]
 }
 abstract class SubmodelElement <<abstract>> {
 }
 class SubmodelElementCollection {
-  +value: SubmodelElement[0..*] 
+  +value: SubmodelElement[0..*]
 }
 class SubmodelElementList {
-  +orderRelevant: bool[0..1] 
-  +semanticIdListElement: Reference[0..1] 
-  +typeValueListElement: AasSubmodelElements 
-  +valueTypeListElement: DataTypeDefXsd[0..1] 
-  +value: SubmodelElement[0..*] 
+  +orderRelevant: bool[0..1]
+  +semanticIdListElement: Reference[0..1]
+  +typeValueListElement: AasSubmodelElements
+  +valueTypeListElement: DataTypeDefXsd[0..1]
+  +value: SubmodelElement[0..*]
 }
 class ValueDataType {
 }
 class ValueList {
-  +valueReferencePair: ValueReferencePair[1..*] 
+  +valueReferencePair: ValueReferencePair[1..*]
 }
 class ValueReferencePair {
-  +value: ValueTypeIec61360 
-  +valueId: Reference 
+  +value: ValueTypeIec61360
+  +valueId: Reference
 }
 class ValueTypeIec61360 {
 }

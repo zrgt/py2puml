@@ -3,17 +3,17 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class DataSpecificationIec61360<DataSpecificationContent> {
-  +preferredName: MultiLanguagePreferredNameTypeIec61360 
-  +shortName: MultiLanguageShortNameTypeIec61360[0..1] 
-  +unit: NonEmptyXmlSerializableString[0..1] 
-  +unitId: Reference[0..1] 
-  +sourceOfDefinition: NonEmptyXmlSerializableString[0..1] 
-  +symbol: NonEmptyXmlSerializableString[0..1] 
-  +dataType: DataTypeIec61360[0..1] 
-  +definition: MultiLanguageDefinitionTypeIec61360[0..1] 
-  +valueFormat: NonEmptyXmlSerializableString[0..1] 
-  +valueList: ValueList[0..1] 
-  +value: ValueTypeIec61360[0..1] 
-  +levelType: LevelType[0..1] 
+  +preferredName: MultiLanguagePreferredNameTypeIec61360
+  +shortName: MultiLanguageShortNameTypeIec61360[0..1]
+  +unit: NonEmptyXmlSerializableString[0..1]
+  +unitId: Reference[0..1]
+  +sourceOfDefinition: NonEmptyXmlSerializableString[0..1]
+  +symbol: NonEmptyXmlSerializableString[0..1]
+  +dataType: DataTypeIec61360[0..1]
+  +definition: MultiLanguageDefinitionTypeIec61360[0..1]
+  +valueFormat: NonEmptyXmlSerializableString[0..1]
+  +valueList: ValueList[0..1]
+  +value: ValueTypeIec61360[0..1]
+  +levelType: LevelType[0..1]
 }
 @enduml

@@ -40,7 +40,8 @@ class AasPumlGenerator:
         self.regex_to_replace = {
             # Remove the following strings from the PlantUML file
             r"\{static\}": "",
-            ":  \n": "\n",
+            "( )+\n": "\n",
+            ":\n": "\n",
 
             # Rename classes
             r"DateTimeUtc": "DateTime",  # DateTimeUtc -> DateTime

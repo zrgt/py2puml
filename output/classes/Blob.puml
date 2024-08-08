@@ -3,16 +3,16 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class Blob<DataElement> {
-  +value: BlobType[0..1] 
-  +contentType: ContentType 
-  +category: NameType[0..1] 
-  +idShort: IdShortType[0..1] 
-  +displayName: MultiLanguageNameType[0..1] 
-  +description: MultiLanguageTextType[0..1] 
-  +extension: Extension[0..*] 
-  +semanticId: Reference[0..1] 
-  +supplementalSemanticId: Reference[0..*] 
-  +qualifier: Qualifier[0..*] 
-  +embeddedDataSpecification: EmbeddedDataSpecification[0..*] 
+  +value: BlobType[0..1]
+  +contentType: ContentType
+  +category: NameType[0..1]
+  +idShort: IdShortType[0..1]
+  +displayName: MultiLanguageNameType[0..1]
+  +description: MultiLanguageTextType[0..1]
+  +extension: Extension[0..*]
+  +semanticId: Reference[0..1]
+  +supplementalSemanticId: Reference[0..*]
+  +qualifier: Qualifier[0..*]
+  +embeddedDataSpecification: EmbeddedDataSpecification[0..*]
 }
 @enduml

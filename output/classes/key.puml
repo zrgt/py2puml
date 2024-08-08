@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class Key {
-  +type: KeyTypes 
-  +value: Identifier 
+  +type: KeyTypes
+  +value: Identifier
 }
 @enduml

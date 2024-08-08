@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class ValueReferencePair {
-  +value: ValueTypeIec61360 
-  +valueId: Reference 
+  +value: ValueTypeIec61360
+  +valueId: Reference
 }
 @enduml

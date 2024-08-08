@@ -3,7 +3,7 @@ skinparam classAttributeIconSize 0
 hide methods
 
 class Resource {
-  +path: PathType 
-  +contentType: ContentType[0..1] 
+  +path: PathType
+  +contentType: ContentType[0..1]
 }
 @enduml
