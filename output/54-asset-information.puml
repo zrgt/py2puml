@@ -39,13 +39,13 @@ class RelationshipElement {
   +second: Reference 
 }
 AssetAdministrationShell ..> AssetInformation
+AssetAdministrationShell -->"0..*" Submodel : submodel:ref
+AssetAdministrationShell -->"0..1" AssetAdministrationShell : derivedFrom:ref
 AssetInformation ..> SpecificAssetId
 Entity ..> SubmodelElement
 Entity ..> EntityType
 Entity ..> SpecificAssetId
+Submodel ..> SubmodelElement
 SubmodelElement <|-- Entity
 SubmodelElement <|-- RelationshipElement
-Submodel ..> SubmodelElement
-AssetAdministrationShell -->"0..*" Submodel : submodel:ref
-AssetAdministrationShell -->"0..1" AssetAdministrationShell : derivedFrom:ref
 @enduml

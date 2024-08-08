@@ -11,6 +11,6 @@ class SubmodelElementList {
 }
 abstract class SubmodelElement<Referable\nHasSemantics\nQualifiable\nHasDataSpecification> <<abstract>> {
 }
-SubmodelElementList ..> SubmodelElement
 SubmodelElement <|-- SubmodelElementList
+SubmodelElementList ..> SubmodelElement
 @enduml

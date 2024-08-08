@@ -77,25 +77,25 @@ class OperationVariable {
   +value: SubmodelElement 
 }
 AnnotatedRelationshipElement ..> DataElement
-RelationshipElement <|-- AnnotatedRelationshipElement
-EventElement <|-- BasicEventElement
 DataElement <|-- Blob
-SubmodelElement <|-- Capability
-SubmodelElement <|-- DataElement
-Entity ..> SubmodelElement
-SubmodelElement <|-- Entity
-SubmodelElement <|-- EventElement
 DataElement <|-- File
 DataElement <|-- MultiLanguageProperty
-Operation ..> OperationVariable
-SubmodelElement <|-- Operation
-OperationVariable ..> SubmodelElement
 DataElement <|-- Property
 DataElement <|-- Range
 DataElement <|-- ReferenceElement
+Entity ..> SubmodelElement
+EventElement <|-- BasicEventElement
+Operation ..> OperationVariable
+OperationVariable ..> SubmodelElement
+RelationshipElement <|-- AnnotatedRelationshipElement
+SubmodelElement <|-- Capability
+SubmodelElement <|-- DataElement
+SubmodelElement <|-- Entity
+SubmodelElement <|-- EventElement
+SubmodelElement <|-- Operation
 SubmodelElement <|-- RelationshipElement
-SubmodelElementCollection ..> SubmodelElement
 SubmodelElement <|-- SubmodelElementCollection
-SubmodelElementList ..> SubmodelElement
 SubmodelElement <|-- SubmodelElementList
+SubmodelElementCollection ..> SubmodelElement
+SubmodelElementList ..> SubmodelElement
 @enduml

@@ -18,9 +18,9 @@ class Submodel<Identifiable\nHasKind\nHasSemantics\nQualifiable\nHasDataSpecific
 class ConceptDescription<Identifiable\nHasDataSpecification> {
   +isCaseOf: Reference[0..*] 
 }
+AssetAdministrationShell -->"0..*" Submodel : submodel:ref
+AssetAdministrationShell -->"0..1" AssetAdministrationShell : derivedFrom:ref
 Environment ..> AssetAdministrationShell
 Environment ..> Submodel
 Environment ..> ConceptDescription
-AssetAdministrationShell -->"0..*" Submodel : submodel:ref
-AssetAdministrationShell -->"0..1" AssetAdministrationShell : derivedFrom:ref
 @enduml
